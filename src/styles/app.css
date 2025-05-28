@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.after-effect::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: 30%;
+  background-color: currentColor;
+  opacity: 0;
+  transition: width 0.25s ease-in-out, opacity 0.15s ease-in-out 0.1s; /* fade in starts with slight delay */
+}
+
+.after-effect:hover::after,
+.after-effect.active::after {
+  width: 100%;
+  opacity: 1;
+}
