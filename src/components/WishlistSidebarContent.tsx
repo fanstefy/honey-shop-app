@@ -2,19 +2,24 @@ import { FaTrash } from "react-icons/fa";
 import { useShopStore } from "../store/useShopStore";
 
 const WishlistSidebarContent: React.FC = () => {
-  const { wishlist, addToCart, removeFromWishlist } = useShopStore();
+  // Only extract references, DO NOT derive data in selector
+  const wishlist = useShopStore((state) => state.wishlist);
+  const products = useShopStore((state) => state.products);
+  const addToCart = useShopStore((state) => state.addToCart);
+  const removeFromWishlist = useShopStore((state) => state.removeFromWishlist);
 
-  const products = useShopStore((state) =>
-    state.products?.filter((product) => wishlist.includes(product.id))
-  ); // Assuming you store all products somewhere accessible
+  // Do your filtering inside the component body
+  const wishlistItems = products?.filter((product) =>
+    wishlist.includes(product.id)
+  );
 
-  if (!products || products.length === 0) {
+  if (!wishlistItems || wishlistItems.length === 0) {
     return <p className="text-gray-500">Your wishlist is empty.</p>;
   }
 
   return (
     <ul className="space-y-4">
-      {products.map((product) => (
+      {wishlistItems.map((product) => (
         <li key={product.id} className="flex items-start relative">
           <img
             src={product.image}
@@ -23,7 +28,7 @@ const WishlistSidebarContent: React.FC = () => {
           />
           <div className="flex-1">
             <h3 className="font-semibold">{product.name}</h3>
-            <p className="text-sm text-gray-600">${product.price}</p>
+            <p className="text-sm text-gray-600">{product.price}</p>
             <button
               onClick={() => addToCart(product.id)}
               className="text-green-600 hover:underline text-sm mt-1"

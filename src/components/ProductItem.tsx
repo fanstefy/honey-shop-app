@@ -10,7 +10,7 @@ interface ProductItemProps {
     name: string;
     image: string;
     backImage?: string;
-    price: string;
+    price: number;
     discount?: string;
   };
   hoveredId: number | null;
@@ -34,7 +34,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
   } = useShopStore();
 
   const isInWishlist = wishlist.includes(product.id);
-  const isInCart = cart.includes(product.id);
+  const isInCart = cart.find((item) => item.id === product.id);
 
   return (
     <div
@@ -174,7 +174,12 @@ const ProductItem: React.FC<ProductItemProps> = ({
       <h2 className="text-lg font-semibold text-yellow-700 mb-2">
         {product.name}
       </h2>
-      <p className="text-gray-800 font-bold">{product.price}</p>
+      <p className="text-gray-800 font-bold">
+        {new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(product.price)}
+      </p>
     </div>
   );
 };

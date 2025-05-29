@@ -1,19 +1,19 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaRegHeart, FaUserCircle } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import logo from "../../assets/images/nektarika_logo_1.png";
-import { useEffect, useState } from "react";
+import { useShopStore } from "../../store/useShopStore";
 import Sidebar from "../Sidebar";
+import logo from "../../assets/images/nektarika_logo_1.png";
 
 const LargeScreenHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [sidebarType, setSidebarType] = useState<"cart" | "wishlist" | null>(
     null
-  ); // State to track which sidebar is open
+  );
   const { pathname } = useLocation();
-
-  const wishlistCount = 1; // Replace with dynamic data
-  const cartCount = 5; // Replace with dynamic data
+  const wishlist = useShopStore((state) => state.wishlist);
+  const cart = useShopStore((state) => state.cart);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -131,9 +131,9 @@ const LargeScreenHeader: React.FC = () => {
                 className="mr-4 text-yellow-600 hover:text-yellow-500 transition duration-300"
               />
               {/* Cart Count */}
-              {cartCount > 0 && (
+              {cart.length > 0 && (
                 <span className="absolute font-bold -top-2 right-2 bg-green text-white text-xs rounded-full h-[16px] w-[16px] flex items-center justify-center">
-                  {cartCount}
+                  {cart.length}
                 </span>
               )}
             </div>
@@ -148,9 +148,9 @@ const LargeScreenHeader: React.FC = () => {
                 className="text-yellow-600 hover:text-yellow-500 transition duration-300"
               />
               {/* Wishlist Count */}
-              {wishlistCount > 0 && (
+              {wishlist.length > 0 && (
                 <span className="absolute font-bold -top-2 -right-2 bg-green text-white text-xs rounded-full h-[16px] w-[16px] flex items-center justify-center">
-                  {wishlistCount}
+                  {wishlist.length}
                 </span>
               )}
             </div>
@@ -158,26 +158,19 @@ const LargeScreenHeader: React.FC = () => {
         </div>
       </div>
 
-      {/* Sidebar */}
       <Sidebar
         isOpen={sidebarType === "cart"}
         onClose={closeSidebar}
         title="My Cart"
-        position="right"
-        width="w-[400px]"
-      >
-        <p>Your cart items will appear here.</p>
-      </Sidebar>
+        type="cart"
+      />
 
       <Sidebar
         isOpen={sidebarType === "wishlist"}
         onClose={closeSidebar}
-        title="Wishlist"
-        position="right"
-        width="w-[400px]"
-      >
-        <p>Your wishlist items will appear here.</p>
-      </Sidebar>
+        title="My Wishlist"
+        type="wishlist"
+      />
     </header>
   );
 };

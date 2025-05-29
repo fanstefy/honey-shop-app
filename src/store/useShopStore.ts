@@ -1,73 +1,106 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, subscribeWithSelector } from "zustand/middleware";
 
 interface Product {
   id: number;
   name: string;
   image: string;
   backImage?: string;
-  price: string;
+  price: number;
   discount?: string;
 }
 
 interface ShopState {
-  cart: number[];
+  cart: { id: number; quantity: number }[];
   wishlist: number[];
   products: Product[];
   setProducts: (products: Product[]) => void;
   addToCart: (id: number) => void;
   removeFromCart: (id: number) => void;
+  increaseCartQuantity: (id: number) => void;
+  decreaseCartQuantity: (id: number) => void;
   addToWishlist: (id: number) => void;
   removeFromWishlist: (id: number) => void;
 }
 
 export const useShopStore = create<ShopState>()(
-  persist(
-    (set) => ({
-      cart: [],
-      wishlist: [],
-      products: [],
-      setProducts: (products) => set({ products }),
+  subscribeWithSelector(
+    persist(
+      (set) => ({
+        cart: [],
+        wishlist: [],
+        products: [],
+        setProducts: (products) => set({ products }),
 
-      addToCart: (id) =>
-        set((state) =>
-          state.cart.includes(id)
-            ? state
-            : { ...state, cart: [...state.cart, id] }
-        ),
+        addToCart: (id) =>
+          set((state) => {
+            const existing = state.cart.find((item) => item.id === id);
+            if (existing) {
+              return {
+                ...state,
+                cart: state.cart.map((item) =>
+                  item.id === id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+                ),
+              };
+            } else {
+              return {
+                ...state,
+                cart: [...state.cart, { id, quantity: 1 }],
+              };
+            }
+          }),
 
-      removeFromCart: (id) =>
-        set((state) => ({
-          ...state,
-          cart: state.cart.filter((itemId) => itemId !== id),
-        })),
+        removeFromCart: (id) =>
+          set((state) => ({
+            ...state,
+            cart: state.cart.filter((item) => item.id !== id),
+          })),
 
-      addToWishlist: (id) =>
-        set((state) =>
-          state.wishlist.includes(id)
-            ? state
-            : { ...state, wishlist: [...state.wishlist, id] }
-        ),
+        increaseCartQuantity: (id: number) =>
+          set((state) => ({
+            ...state,
+            cart: state.cart.map((item) =>
+              item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+            ),
+          })),
 
-      removeFromWishlist: (id) =>
-        set((state) => ({
-          ...state,
-          wishlist: state.wishlist.filter((itemId) => itemId !== id),
-        })),
-    }),
-    {
-      name: "shop-storage",
-      // optionally ignore products in localStorage
-      partialize: (state) => ({
-        cart: state.cart,
-        wishlist: state.wishlist,
-        // products NOT included on purpose
+        decreaseCartQuantity: (id: number) =>
+          set((state) => ({
+            ...state,
+            cart: state.cart
+              .map((item) =>
+                item.id === id
+                  ? {
+                      ...item,
+                      quantity: item.quantity > 1 ? item.quantity - 1 : 1,
+                    }
+                  : item
+              )
+              .filter((item) => item.quantity > 0),
+          })),
+
+        addToWishlist: (id) =>
+          set((state) =>
+            state.wishlist.includes(id)
+              ? state
+              : { ...state, wishlist: [...state.wishlist, id] }
+          ),
+
+        removeFromWishlist: (id) =>
+          set((state) => ({
+            ...state,
+            wishlist: state.wishlist.filter((itemId) => itemId !== id),
+          })),
       }),
-    }
+      {
+        name: "shop-storage",
+        partialize: (state) => ({
+          cart: state.cart,
+          wishlist: state.wishlist,
+        }),
+      }
+    )
   )
 );
-
-// Optional: expose to Zukeeper or other devtools
-if (typeof window !== "undefined") {
-  (window as any).store = useShopStore;
-}
