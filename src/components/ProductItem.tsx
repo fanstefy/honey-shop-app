@@ -142,7 +142,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           "
           style={{ lineHeight: "36px" }}
         >
-          {isInCart ? "Read More" : "Add to cart"}
+          {isInCart ? "Veiw Details" : "Add to cart"}
         </span>
         {/* Icon wrapper with higher z-index */}
         <span className="absolute top-0 right-0 z-20 bg-white border-2 rounded-full border-[#eab308] flex items-center justify-center h-9 w-9">

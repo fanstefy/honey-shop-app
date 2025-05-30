@@ -1,6 +1,7 @@
 import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
 import WishlistSidebarContent from "./WishlistSidebarContent"; // adjust path as needed
 import CartSidebarContent from "./CartSidebarContent";
+import { useShopStore } from "../store/useShopStore";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -21,6 +22,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   width = "w-[400px]",
   children,
 }) => {
+  const setSidebarType = useShopStore((state) => state.setSidebarType);
+
   const translateClass =
     position === "right"
       ? isOpen
@@ -34,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const renderContent = () => {
     switch (type) {
       case "wishlist":
-        return <WishlistSidebarContent />;
+        return <WishlistSidebarContent setSidebarType={setSidebarType} />;
       case "cart":
         return <CartSidebarContent />;
       case "custom":

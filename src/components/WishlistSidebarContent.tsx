@@ -1,10 +1,17 @@
 import { FaTrash } from "react-icons/fa";
 import { useShopStore } from "../store/useShopStore";
 
-const WishlistSidebarContent: React.FC = () => {
+interface WishlistSidebarProps {
+  setSidebarType: (type: "cart" | "wishlist" | null) => void;
+}
+
+const WishlistSidebarContent: React.FC<WishlistSidebarProps> = ({
+  setSidebarType,
+}) => {
   // Only extract references, DO NOT derive data in selector
   const wishlist = useShopStore((state) => state.wishlist);
   const products = useShopStore((state) => state.products);
+  const cart = useShopStore((state) => state.cart);
   const addToCart = useShopStore((state) => state.addToCart);
   const removeFromWishlist = useShopStore((state) => state.removeFromWishlist);
 
@@ -30,7 +37,10 @@ const WishlistSidebarContent: React.FC = () => {
             <h3 className="font-semibold">{product.name}</h3>
             <p className="text-sm text-gray-600">{product.price}</p>
             <button
-              onClick={() => addToCart(product.id)}
+              onClick={() => {
+                addToCart(product.id);
+                setSidebarType("cart");
+              }}
               className="text-green-600 hover:underline text-sm mt-1"
             >
               Add to cart

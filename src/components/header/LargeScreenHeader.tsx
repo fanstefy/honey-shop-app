@@ -8,9 +8,10 @@ import logo from "../../assets/images/nektarika_logo_1.png";
 
 const LargeScreenHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [sidebarType, setSidebarType] = useState<"cart" | "wishlist" | null>(
-    null
-  );
+  const sidebarType = useShopStore((state) => state.sidebarType);
+  const setSidebarType = useShopStore((state) => state.setSidebarType);
+  const closeSidebar = useShopStore((state) => state.closeSidebar);
+
   const { pathname } = useLocation();
   const wishlist = useShopStore((state) => state.wishlist);
   const cart = useShopStore((state) => state.cart);
@@ -27,8 +28,6 @@ const LargeScreenHeader: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const closeSidebar = () => setSidebarType(null);
 
   return (
     <header className={`${isScrolled ? "shadow-md" : ""} `}>
