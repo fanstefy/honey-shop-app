@@ -3,6 +3,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { TiEyeOutline } from "react-icons/ti";
 import { useShopStore } from "../store/useShopStore";
+import { useNavigate } from "react-router-dom";
 
 interface ProductItemProps {
   product: {
@@ -32,9 +33,14 @@ const ProductItem: React.FC<ProductItemProps> = ({
     removeFromWishlist,
     removeFromCart,
   } = useShopStore();
+  const navigate = useNavigate();
 
   const isInWishlist = wishlist.includes(product.id);
   const isInCart = cart.find((item) => item.id === product.id);
+
+  const openDetailsPage = () => {
+    navigate(`/product/${product.id}`);
+  };
 
   return (
     <div
@@ -123,9 +129,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           opacity-0 translate-x-6
           group-hover:opacity-100 group-hover:translate-x-0 delay-200"
         type="button"
-        onClick={() =>
-          isInCart ? removeFromCart(product.id) : addToCart(product.id)
-        }
+        onClick={() => (!isInCart ? addToCart(product.id) : openDetailsPage())}
       >
         {/* Expanding span, always behind the icon */}
         <span
@@ -141,15 +145,19 @@ const ProductItem: React.FC<ProductItemProps> = ({
             group-hover/cart:w-36 group-hover/cart:pl-4
           "
           style={{ lineHeight: "36px" }}
+          onClick={(e) => console.log("stefan clicked")}
         >
-          {isInCart ? "Veiw Details" : "Add to cart"}
+          {isInCart ? "View Details" : "Add to cart"}
         </span>
         {/* Icon wrapper with higher z-index */}
         <span className="absolute top-0 right-0 z-20 bg-white border-2 rounded-full border-[#eab308] flex items-center justify-center h-9 w-9">
           <HiOutlineShoppingBag size={20} />
         </span>
       </button>
-      <div className="relative w-[250px] h-[250px] mb-4">
+      <div
+        className="relative w-[250px] h-[250px] mb-4"
+        onClick={openDetailsPage}
+      >
         {/* Front image */}
         <img
           src={product.image}

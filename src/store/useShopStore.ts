@@ -10,6 +10,8 @@ interface Product {
   backImage?: string;
   price: number;
   discount?: string;
+  description?: string;
+  additionalInfo?: string;
 }
 
 interface ShopState {
@@ -17,6 +19,7 @@ interface ShopState {
   wishlist: number[];
   products: Product[];
   setProducts: (products: Product[]) => void;
+  getProductById: (id: number) => Product | null;
   addToCart: (id: number) => void;
   removeFromCart: (id: number) => void;
   increaseCartQuantity: (id: number) => void;
@@ -31,13 +34,18 @@ interface ShopState {
 export const useShopStore = create<ShopState>()(
   subscribeWithSelector(
     persist(
-      (set) => ({
+      (set, get) => ({
         cart: [],
         wishlist: [],
         products: [],
         sidebarType: null,
 
         setProducts: (products) => set({ products }),
+
+        getProductById: (id: number) => {
+          const products = get().products;
+          return products.find((product) => product.id === id) || null;
+        },
 
         addToCart: (id) =>
           set((state) => {
