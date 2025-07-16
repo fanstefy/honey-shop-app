@@ -4,7 +4,7 @@ import { FaRegHeart, FaUserCircle } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { useShopStore } from "../../store/useShopStore";
 import Sidebar from "../Sidebar";
-import logo from "../../assets/images/nektarika_logo_1.png";
+import logo from "../../assets/images/logo_sace_pcela_3.png";
 
 const LargeScreenHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -71,7 +71,7 @@ const LargeScreenHeader: React.FC = () => {
           {/* Navigation */}
           <nav className="navbar">
             <ul
-              className={`flex space-x-6 pt-[17px] ml-20 ${
+              className={`flex space-x-6 pt-[7px] ml-20 ${
                 isScrolled ? "pt-[8px]" : ""
               }`}
             >
