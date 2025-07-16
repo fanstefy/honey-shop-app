@@ -91,7 +91,9 @@ const LargeScreenHeader: React.FC = () => {
                 <Link
                   to="/shop"
                   className={`relative text-yellow-600 transition duration-300 after-effect ${
-                    pathname === "/shop" && "active"
+                    (pathname === "/shop" ||
+                      pathname.includes("/shop/product")) &&
+                    "active"
                   }`}
                 >
                   Shop

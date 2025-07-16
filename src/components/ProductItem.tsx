@@ -39,7 +39,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
   const isInCart = cart.find((item) => item.id === product.id);
 
   const openDetailsPage = () => {
-    navigate(`/product/${product.id}`);
+    navigate(`/shop/product/${product.id}`);
   };
 
   return (
@@ -66,7 +66,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
             absolute right-6
             opacity-0 ${isPopupVisible ? "opacity-100 delay-400" : ""}
             transition-opacity duration-300 ease-in-out pointer-events-none
-            before:content-[''] before:absolute before:top-1/2 before:right-[-8px] before:-translate-y-1/2
+            before:content-[''] before:absolute before:top-1/2 before:right-[-7px] before:-translate-y-1/2
             before:border-y-8 before:border-y-transparent
             before:border-l-8 before:border-l-gray-800 
             before:border-r-0
@@ -109,7 +109,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
             absolute right-10
             opacity-0 ${isQuickViewPopupVisible ? "opacity-100 delay-400" : ""}
             transition-opacity duration-300 ease-in-out pointer-events-none
-            before:content-[''] before:absolute before:top-1/2 before:right-[-8px] before:-translate-y-1/2
+            before:content-[''] before:absolute before:top-1/2 before:right-[-7px] before:-translate-y-1/2
             before:border-y-8 before:border-y-transparent
             before:border-l-8 before:border-l-gray-800 
             before:border-r-0

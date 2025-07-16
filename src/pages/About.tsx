@@ -1,6 +1,6 @@
 const About: React.FC = () => {
   return (
-    <div className="flex-grow">
+    <div className="container mx-auto items-center py-10 px-5 min-h-screen">
       <h1 className="text-4xl font-bold text-center my-8">About Us</h1>
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8 space-y-6">
         {/* Welcome Section */}
