@@ -3,7 +3,7 @@ import { FaUserCircle, FaRegHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FiMenu, FiX } from "react-icons/fi"; // Hamburger and close icons
 import { useState } from "react";
-import logo from "../../assets/images/nektarika_logo_1.png";
+import logo from "../../assets/images/logo_sace_pcela_3.png";
 import { SlArrowLeft } from "react-icons/sl";
 import Sidebar from "../Sidebar";
 

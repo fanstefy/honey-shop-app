@@ -25,6 +25,8 @@ const LargeScreenHeader: React.FC = () => {
       }
     };
 
+    handleScroll(); // Check scroll position immediately on mount
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -60,7 +62,7 @@ const LargeScreenHeader: React.FC = () => {
           {/* Logo */}
           <div
             className={`transition-all duration-50 ease-in-out delay-50 ${
-              isScrolled ? "w-24" : "w-32"
+              isScrolled ? "w-28" : "w-32"
             }`}
           >
             <Link to="/">
