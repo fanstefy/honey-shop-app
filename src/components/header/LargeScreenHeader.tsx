@@ -3,18 +3,17 @@ import { Link, useLocation } from "react-router-dom";
 import { FaRegHeart, FaUserCircle } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { useShopStore } from "../../store/useShopStore";
-import Sidebar from "../Sidebar";
 import logo from "../../assets/images/logo_sace_pcela_3.png";
+import { useSidebarStore } from "../../store/useSidebarStore";
 
 const LargeScreenHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const sidebarType = useShopStore((state) => state.sidebarType);
-  const setSidebarType = useShopStore((state) => state.setSidebarType);
-  const closeSidebar = useShopStore((state) => state.closeSidebar);
-
   const { pathname } = useLocation();
   const wishlist = useShopStore((state) => state.wishlist);
   const cart = useShopStore((state) => state.cart);
+
+  // Use sidebar store for opening sidebar
+  const openSidebar = useSidebarStore((state) => state.openSidebar);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,7 +126,7 @@ const LargeScreenHeader: React.FC = () => {
             {/* Cart Icon */}
             <div
               className="relative cursor-pointer mt-1"
-              onClick={() => setSidebarType("cart")}
+              onClick={() => openSidebar("cart")}
             >
               <HiOutlineShoppingBag
                 size={24}
@@ -144,7 +143,7 @@ const LargeScreenHeader: React.FC = () => {
             {/* Wishlist Icon */}
             <div
               className="relative cursor-pointer mt-1"
-              onClick={() => setSidebarType("wishlist")}
+              onClick={() => openSidebar("wishlist")}
             >
               <FaRegHeart
                 size={24}
@@ -160,20 +159,6 @@ const LargeScreenHeader: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <Sidebar
-        isOpen={sidebarType === "cart"}
-        onClose={closeSidebar}
-        title="My Cart"
-        type="cart"
-      />
-
-      <Sidebar
-        isOpen={sidebarType === "wishlist"}
-        onClose={closeSidebar}
-        title="My Wishlist"
-        type="wishlist"
-      />
     </header>
   );
 };

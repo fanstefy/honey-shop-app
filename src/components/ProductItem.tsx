@@ -4,6 +4,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { TiEyeOutline } from "react-icons/ti";
 import { useShopStore } from "../store/useShopStore";
 import { useNavigate } from "react-router-dom";
+import { useSidebarStore } from "../store/useSidebarStore";
 
 interface ProductItemProps {
   product: {
@@ -25,14 +26,9 @@ const ProductItem: React.FC<ProductItemProps> = ({
 }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isQuickViewPopupVisible, setIsQuickViewPopupVisible] = useState(false);
-  const {
-    cart,
-    wishlist,
-    addToCart,
-    addToWishlist,
-    removeFromWishlist,
-    removeFromCart,
-  } = useShopStore();
+  const { cart, wishlist, addToCart, addToWishlist, removeFromWishlist } =
+    useShopStore();
+  const openSidebar = useSidebarStore((state) => state.openSidebar);
   const navigate = useNavigate();
 
   const isInWishlist = wishlist.includes(product.id);
@@ -62,7 +58,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         {/* Wishlist label, only visible on icon hover */}
         <span
           className={`
-            mr-2 bg-gray-800 text-xs text-white w-max p-2 rounded-lg
+            mr-2 bg-gray-800 text-xs text-white w-max p-[5px] rounded-lg
             absolute right-6
             opacity-0 ${isPopupVisible ? "opacity-100 delay-400" : ""}
             transition-opacity duration-300 ease-in-out pointer-events-none
@@ -99,13 +95,14 @@ const ProductItem: React.FC<ProductItemProps> = ({
           group-hover:opacity-100 group-hover:translate-x-0"
         type="button"
         aria-label="Quick view"
+        onClick={() => openSidebar("quickview", product)}
         onMouseEnter={() => setIsQuickViewPopupVisible(true)}
         onMouseLeave={() => setIsQuickViewPopupVisible(false)}
       >
         {/* Popup label, only visible on icon hover */}
         <span
           className={`
-            mr-2 bg-gray-800 text-xs text-white w-max p-2 rounded-lg
+            mr-2 bg-gray-800 text-xs text-white w-max p-[5px] rounded-lg
             absolute right-10
             opacity-0 ${isQuickViewPopupVisible ? "opacity-100 delay-400" : ""}
             transition-opacity duration-300 ease-in-out pointer-events-none
@@ -140,7 +137,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
             text-white
             whitespace-nowrap overflow-hidden
             w-0 pl-0 pr-9
-            transition-all duration-500
+            transition-all duration-300
             z-10
             group-hover/cart:w-36 group-hover/cart:pl-4
           "

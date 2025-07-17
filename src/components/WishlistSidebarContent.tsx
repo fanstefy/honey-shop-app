@@ -1,21 +1,14 @@
 import { FaTrash } from "react-icons/fa";
 import { useShopStore } from "../store/useShopStore";
+import { useSidebarStore } from "../store/useSidebarStore";
 
-interface WishlistSidebarProps {
-  setSidebarType: (type: "cart" | "wishlist" | null) => void;
-}
-
-const WishlistSidebarContent: React.FC<WishlistSidebarProps> = ({
-  setSidebarType,
-}) => {
-  // Only extract references, DO NOT derive data in selector
+const WishlistSidebarContent: React.FC = ({}) => {
   const wishlist = useShopStore((state) => state.wishlist);
   const products = useShopStore((state) => state.products);
-  const cart = useShopStore((state) => state.cart);
   const addToCart = useShopStore((state) => state.addToCart);
   const removeFromWishlist = useShopStore((state) => state.removeFromWishlist);
+  const openSidebar = useSidebarStore((state) => state.openSidebar);
 
-  // Do your filtering inside the component body
   const wishlistItems = products?.filter((product) =>
     wishlist.includes(product.id)
   );
@@ -39,7 +32,7 @@ const WishlistSidebarContent: React.FC<WishlistSidebarProps> = ({
             <button
               onClick={() => {
                 addToCart(product.id);
-                setSidebarType("cart");
+                openSidebar("cart");
               }}
               className="text-green-600 hover:underline text-sm mt-1"
             >

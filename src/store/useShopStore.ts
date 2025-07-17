@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
 
-type SidebarType = "wishlist" | "cart" | null;
-
 interface Product {
   id: number;
   name: string;
@@ -26,9 +24,6 @@ interface ShopState {
   decreaseCartQuantity: (id: number) => void;
   addToWishlist: (id: number) => void;
   removeFromWishlist: (id: number) => void;
-  sidebarType: SidebarType;
-  setSidebarType: (type: SidebarType) => void;
-  closeSidebar: () => void;
 }
 
 export const useShopStore = create<ShopState>()(
@@ -38,7 +33,6 @@ export const useShopStore = create<ShopState>()(
         cart: [],
         wishlist: [],
         products: [],
-        sidebarType: null,
 
         setProducts: (products) => set({ products }),
 
@@ -108,10 +102,6 @@ export const useShopStore = create<ShopState>()(
             ...state,
             wishlist: state.wishlist.filter((itemId) => itemId !== id),
           })),
-
-        setSidebarType: (type) => set({ sidebarType: type }),
-
-        closeSidebar: () => set({ sidebarType: null }),
       }),
 
       {

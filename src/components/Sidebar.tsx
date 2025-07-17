@@ -1,13 +1,14 @@
 import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
-import WishlistSidebarContent from "./WishlistSidebarContent"; // adjust path as needed
+import WishlistSidebarContent from "./WishlistSidebarContent";
 import CartSidebarContent from "./CartSidebarContent";
-import { useShopStore } from "../store/useShopStore";
+import { useSidebarStore } from "../store/useSidebarStore";
+import QuickViewSidebarContent from "./QuickViewSidebarContent";
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  type?: "wishlist" | "cart" | "custom";
+  type?: "wishlist" | "cart" | "quickview" | "custom";
   position?: "left" | "right";
   width?: string;
   children?: React.ReactNode; // fallback for custom content
@@ -22,7 +23,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   width = "w-[400px]",
   children,
 }) => {
-  const setSidebarType = useShopStore((state) => state.setSidebarType);
+  // Optional: get quickViewProduct from sidebar store for quickview sidebar
+  const quickViewProduct = useSidebarStore((state) => state.quickViewProduct);
 
   const translateClass =
     position === "right"
@@ -37,9 +39,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   const renderContent = () => {
     switch (type) {
       case "wishlist":
-        return <WishlistSidebarContent setSidebarType={setSidebarType} />;
+        return <WishlistSidebarContent />;
       case "cart":
         return <CartSidebarContent />;
+      case "quickview":
+        return <QuickViewSidebarContent product={quickViewProduct} />;
       case "custom":
       default:
         return children;

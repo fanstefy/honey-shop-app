@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -18,6 +18,8 @@ import honey_1_back from "./assets/images/honey_1_back.jpg";
 import honey_4_back from "./assets/images/honey_4_back.jpg";
 import { useShopStore } from "./store/useShopStore";
 import ScrollToTop from "./components/ScrollToTop";
+import Sidebar from "./components/Sidebar";
+import { useSidebarStore } from "./store/useSidebarStore";
 
 const initialProducts = [
   {
@@ -66,26 +68,45 @@ const initialProducts = [
 
 const App: React.FC = () => {
   const setProducts = useShopStore((state) => state.setProducts);
+  const isOpen = useSidebarStore((state) => state.isOpen);
+  const sidebarType = useSidebarStore((state) => state.sidebarType);
+  const closeSidebar = useSidebarStore((state) => state.closeSidebar);
 
   useEffect(() => {
     setProducts(initialProducts);
   }, [setProducts]);
 
   return (
-    <BrowserRouter>
-      <div className="grid grid-rows-layout min-h-screen">
-        <Header />
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/shop/product/:id" element={<ProductDetails />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <div className="grid grid-rows-layout min-h-screen">
+          <Header />
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/shop/product/:id" element={<ProductDetails />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+          <Footer />
+        </div>
+      </BrowserRouter>
+      <Sidebar
+        isOpen={isOpen}
+        onClose={closeSidebar}
+        title={
+          sidebarType === "cart"
+            ? "My Cart"
+            : sidebarType === "wishlist"
+            ? "My Wishlist"
+            : sidebarType === "quickview"
+            ? "Quick View"
+            : ""
+        }
+        type={sidebarType || "custom"}
+      />
+    </>
   );
 };
 
