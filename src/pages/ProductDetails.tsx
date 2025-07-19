@@ -82,12 +82,12 @@ const ProductDetails: React.FC = () => {
               </div>
               {/* Action Buttons */}
               <button
-                className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded"
+                className="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-2 px-6 rounded"
                 onClick={handleAddToCart}
               >
                 Add to Cart
               </button>
-              <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded">
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-2 px-6 rounded">
                 Buy Now
               </button>
             </div>

@@ -176,7 +176,10 @@ const ProductItem: React.FC<ProductItemProps> = ({
           />
         )}
       </div>
-      <h2 className="text-lg font-semibold text-yellow-700 mb-2">
+      <h2
+        className="text-lg font-semibold text-yellow-700 mb-2"
+        onClick={openDetailsPage}
+      >
         {product.name}
       </h2>
       <p className="text-gray-800 font-bold">

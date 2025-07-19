@@ -18,7 +18,7 @@ import honey_1_back from "./assets/images/honey_1_back.jpg";
 import honey_4_back from "./assets/images/honey_4_back.jpg";
 import { useShopStore } from "./store/useShopStore";
 import ScrollToTop from "./components/ScrollToTop";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/sidebar/Sidebar";
 import { useSidebarStore } from "./store/useSidebarStore";
 
 const initialProducts = [
@@ -97,9 +97,9 @@ const App: React.FC = () => {
         onClose={closeSidebar}
         title={
           sidebarType === "cart"
-            ? "My Cart"
+            ? "Cart"
             : sidebarType === "wishlist"
-            ? "My Wishlist"
+            ? "Wishlist"
             : sidebarType === "quickview"
             ? "Quick View"
             : ""

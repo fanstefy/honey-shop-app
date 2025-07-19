@@ -1,8 +1,8 @@
 import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
-import WishlistSidebarContent from "./WishlistSidebarContent";
+import { useSidebarStore } from "../../store/useSidebarStore";
 import CartSidebarContent from "./CartSidebarContent";
-import { useSidebarStore } from "../store/useSidebarStore";
 import QuickViewSidebarContent from "./QuickViewSidebarContent";
+import WishlistSidebarContent from "./WishlistSidebarContent";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -49,6 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         return children;
     }
   };
+
   return (
     <>
       {/* Sidebar */}
@@ -57,7 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           position === "right" ? "right-0" : "left-0"
         } h-full ${width} bg-white shadow-lg z-50 transform ${translateClass} transition-transform duration-[0.4s] ease-in-out`}
       >
-        <div className="flex items-baseline px-4 py-4 border-b border-gray-300">
+        <div className="flex items-center px-4 py-4 border-b border-gray-300">
           <button
             onClick={onClose}
             className={`group ${

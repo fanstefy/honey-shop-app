@@ -1,5 +1,5 @@
-import { useShopStore } from "../store/useShopStore";
-import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import { useShopStore } from "../../store/useShopStore";
+import { RxCross1, RxMinus, RxPlus } from "react-icons/rx";
 
 const CartSidebarContent: React.FC = () => {
   const cart = useShopStore((state) => state.cart);
@@ -37,19 +37,21 @@ const CartSidebarContent: React.FC = () => {
           />
           <div className="flex-1">
             <h3 className="font-semibold">{product?.name}</h3>
-            <div className="flex items-center mt-1 space-x-2">
+            <div className="flex items-center mt-1 ">
               <button
                 onClick={() => decreaseCartQuantity(id)}
-                className="p-1 border rounded text-sm"
+                className="p-1 border rounded-l-xl text-sm hover:bg-gray-200 transition-colors duration-300"
               >
-                <FaMinus size={10} />
+                <RxMinus size={10} />
               </button>
-              <span className="min-w-[20px] text-center">{quantity}</span>
+              <button className="min-w-[22px] border-b border-t  text-[12px] text-center">
+                {quantity}
+              </button>
               <button
                 onClick={() => increaseCartQuantity(id)}
-                className="p-1 border rounded text-sm"
+                className="p-1 border rounded-r-xl text-sm hover:bg-gray-200 transition-colors duration-300"
               >
-                <FaPlus size={10} />
+                <RxPlus size={10} />
               </button>
             </div>
             <p className="text-sm mt-1 text-gray-700">
@@ -62,9 +64,9 @@ const CartSidebarContent: React.FC = () => {
 
           <button
             onClick={() => removeFromCart(id)}
-            className="absolute top-0 right-0 p-1 text-red-500 hover:text-red-700"
+            className="absolute top-0 right-0 p-2 rounded-full hover:bg-gray-100 transition-colors duration-300"
           >
-            <FaTrash />
+            <RxCross1 size={14} />
           </button>
         </li>
       ))}

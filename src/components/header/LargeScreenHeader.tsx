@@ -129,12 +129,12 @@ const LargeScreenHeader: React.FC = () => {
               onClick={() => openSidebar("cart")}
             >
               <HiOutlineShoppingBag
-                size={24}
+                size={22}
                 className="mr-4 text-yellow-600 hover:text-yellow-500 transition duration-300"
               />
               {/* Cart Count */}
               {cart.length > 0 && (
-                <span className="absolute font-bold -top-2 right-2 bg-green text-white text-xs rounded-full h-[16px] w-[16px] flex items-center justify-center">
+                <span className="absolute font-bold -top-2 right-3 bg-green text-white text-[10px] rounded-full h-[14px] w-[14px] flex items-center justify-center">
                   {cart.length}
                 </span>
               )}
@@ -146,12 +146,12 @@ const LargeScreenHeader: React.FC = () => {
               onClick={() => openSidebar("wishlist")}
             >
               <FaRegHeart
-                size={24}
+                size={22}
                 className="text-yellow-600 hover:text-yellow-500 transition duration-300"
               />
               {/* Wishlist Count */}
               {wishlist.length > 0 && (
-                <span className="absolute font-bold -top-2 -right-2 bg-green text-white text-xs rounded-full h-[16px] w-[16px] flex items-center justify-center">
+                <span className="absolute font-bold -top-2 -right-1 bg-green text-white text-[10px] rounded-full h-[14px] w-[14px] flex items-center justify-center">
                   {wishlist.length}
                 </span>
               )}

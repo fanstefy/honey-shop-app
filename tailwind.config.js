@@ -8,8 +8,8 @@ export default {
         green: "#90C785",
       },
       fontFamily: {
-        sans: ["Poppins", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
+        quicksand: ["Quicksand", "sans-serif"],
       },
     },
   },

@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+h1,
+h2,
+h3,
+a {
+  font-family: "quicksand", sans-serif;
+}
+
+button {
+  font-family: "poppins", sans-serif;
+}
+
 .after-effect::after {
   content: "";
   position: absolute;

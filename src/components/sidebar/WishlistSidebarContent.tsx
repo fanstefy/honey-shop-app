@@ -1,8 +1,8 @@
-import { FaTrash } from "react-icons/fa";
-import { useShopStore } from "../store/useShopStore";
-import { useSidebarStore } from "../store/useSidebarStore";
+import { useShopStore } from "../../store/useShopStore";
+import { useSidebarStore } from "../../store/useSidebarStore";
+import { RxCross1 } from "react-icons/rx";
 
-const WishlistSidebarContent: React.FC = ({}) => {
+const WishlistSidebarContent: React.FC = () => {
   const wishlist = useShopStore((state) => state.wishlist);
   const products = useShopStore((state) => state.products);
   const addToCart = useShopStore((state) => state.addToCart);
@@ -29,7 +29,7 @@ const WishlistSidebarContent: React.FC = ({}) => {
           />
           <div className="flex-1">
             <h3 className="font-semibold">{product.name}</h3>
-            <p className="text-sm text-gray-600">{product.price}</p>
+            <p className="text-sm text-gray-600">${product.price}</p>
             <button
               onClick={() => {
                 addToCart(product.id);
@@ -38,16 +38,16 @@ const WishlistSidebarContent: React.FC = ({}) => {
                   openSidebar("cart");
                 }, 200);
               }}
-              className="text-green-600 hover:underline text-sm mt-1"
+              className="text-green-600 uppercase text-xs font-thin mt-1 hover:text-yellow-700 transition-colors duration-300"
             >
               Add to cart
             </button>
           </div>
           <button
             onClick={() => removeFromWishlist(product.id)}
-            className="absolute top-0 right-0 p-1 text-red-500 hover:text-red-700"
+            className="absolute top-0 right-0 p-2 text-gray-500 rounded-full hover:bg-gray-100 transition-colors duration-300"
           >
-            <FaTrash />
+            <RxCross1 size={14} />
           </button>
         </li>
       ))}

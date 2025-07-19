@@ -5,7 +5,7 @@ import { FiMenu, FiX } from "react-icons/fi"; // Hamburger and close icons
 import { useState } from "react";
 import logo from "../../assets/images/logo_sace_pcela_3.png";
 import { SlArrowLeft } from "react-icons/sl";
-import Sidebar from "../Sidebar";
+import Sidebar from "../sidebar/Sidebar";
 
 const SmallScreenHeader: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar toggle
