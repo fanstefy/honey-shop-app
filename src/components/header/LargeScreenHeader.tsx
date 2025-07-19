@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaRegHeart, FaUserCircle } from "react-icons/fa";
-import { HiOutlineShoppingBag } from "react-icons/hi";
 import { useShopStore } from "../../store/useShopStore";
 import logo from "../../assets/images/logo_sace_pcela_3.png";
 import { useSidebarStore } from "../../store/useSidebarStore";
+import { FaUserCircle } from "react-icons/fa";
+import { RxHeart } from "react-icons/rx";
+import { BsCart3 } from "react-icons/bs";
 
 const LargeScreenHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -128,9 +129,9 @@ const LargeScreenHeader: React.FC = () => {
               className="relative cursor-pointer mt-1"
               onClick={() => openSidebar("cart")}
             >
-              <HiOutlineShoppingBag
-                size={22}
-                className="mr-4 text-yellow-600 hover:text-yellow-500 transition duration-300"
+              <BsCart3
+                size={21}
+                className="mr-4 text-yellow-500 hover:text-yellow-600 transition duration-300"
               />
               {/* Cart Count */}
               {cart.length > 0 && (
@@ -145,9 +146,9 @@ const LargeScreenHeader: React.FC = () => {
               className="relative cursor-pointer mt-1"
               onClick={() => openSidebar("wishlist")}
             >
-              <FaRegHeart
-                size={22}
-                className="text-yellow-600 hover:text-yellow-500 transition duration-300"
+              <RxHeart
+                size={21}
+                className="text-yellow-500 hover:text-yellow-600 transition duration-300"
               />
               {/* Wishlist Count */}
               {wishlist.length > 0 && (

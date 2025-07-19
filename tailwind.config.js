@@ -10,6 +10,7 @@ export default {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         quicksand: ["Quicksand", "sans-serif"],
+        nunito: ["Nunito", "sans-serif"],
       },
     },
   },
