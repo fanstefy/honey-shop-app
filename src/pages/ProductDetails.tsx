@@ -7,6 +7,8 @@ import {
   TiSocialTwitter,
 } from "react-icons/ti";
 import { CiDeliveryTruck, CiShare2 } from "react-icons/ci";
+import { IoArrowBackOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -33,7 +35,16 @@ const ProductDetails: React.FC = () => {
 
   return (
     <div className="container mx-auto items-center py-10 px-5 min-h-screen">
+      <div className="mb-4"></div>
+
       <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-8 mt-10">
+        <Link
+          to="/shop"
+          className="flex items-center w-fit text-sm mb-6 px-1 py-[2px] text-yellow-500 hover:text-yellow-600 transition-colors duration-300"
+        >
+          <IoArrowBackOutline className="mr-1" />
+          Back
+        </Link>
         {/* Main Info Row */}
         <div className="flex flex-col md:flex-row gap-8">
           {/* Product Image */}

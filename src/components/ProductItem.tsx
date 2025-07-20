@@ -59,7 +59,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         <span
           className={`
             mr-2 bg-gray-800 text-xs text-white w-max p-[5px] rounded-lg
-            absolute right-6
+            absolute right-5
             opacity-0 ${isPopupVisible ? "opacity-100 delay-400" : ""}
             transition-opacity duration-300 ease-in-out pointer-events-none
             before:content-[''] before:absolute before:top-1/2 before:right-[-7px] before:-translate-y-1/2
@@ -91,7 +91,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         className="absolute top-12 right-0 z-10 flex items-center
           text-gray-500 bg-gray-500 h-9 w-9 rounded-full shadow
           transition-all duration-300 justify-center hover:bg-gray-800
-          opacity-0 translate-x-6
+          opacity-0 translate-x-3
           group-hover:opacity-100 group-hover:translate-x-0"
         type="button"
         aria-label="Quick view"
@@ -123,7 +123,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           bg-white border-yellow-400 hover:bg-yellow-50
           text-yellow-500 h-9 w-9 rounded-full overflow-visible
           transition-all duration-300 group/cart shadow
-          opacity-0 translate-x-6
+          opacity-0 translate-x-3
           group-hover:opacity-100 group-hover:translate-x-0 delay-200"
         type="button"
         onClick={() => (!isInCart ? addToCart(product.id) : openDetailsPage())}

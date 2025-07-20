@@ -126,7 +126,7 @@ const LargeScreenHeader: React.FC = () => {
           <div className="ml-auto flex mt-[7px] relative">
             {/* Cart Icon */}
             <div
-              className="relative cursor-pointer mt-1"
+              className="relative cursor-pointer mt-1 group"
               onClick={() => openSidebar("cart")}
             >
               <BsCart3
@@ -139,11 +139,15 @@ const LargeScreenHeader: React.FC = () => {
                   {cart.length}
                 </span>
               )}
+              {/* Tooltip */}
+              <span className="absolute -bottom-5 left-4 border border-black text-black text-xs px-2 opacity-0 group-hover:opacity-100 group-hover:delay-[1000ms] pointer-events-none">
+                Cart
+              </span>
             </div>
 
             {/* Wishlist Icon */}
             <div
-              className="relative cursor-pointer mt-1"
+              className="relative cursor-pointer mt-1 group"
               onClick={() => openSidebar("wishlist")}
             >
               <RxHeart
@@ -156,6 +160,10 @@ const LargeScreenHeader: React.FC = () => {
                   {wishlist.length}
                 </span>
               )}
+              {/* Tooltip */}
+              <span className="absolute -bottom-5 left-4 border border-black text-black text-xs px-2 opacity-0 group-hover:opacity-100 group-hover:delay-[1000ms] pointer-events-none">
+                Wishlist
+              </span>
             </div>
           </div>
         </div>
