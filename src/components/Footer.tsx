@@ -1,34 +1,48 @@
+import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-yellow-500 text-white py-6">
+    <footer className="bg-[#90C785] text-white py-8">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
           {/* Copyright */}
-          <p className="text-sm md:text-base">
+          <div className="text-sm md:text-base">
             &copy; {new Date().getFullYear()} Honey Shop. All rights reserved.
-          </p>
+          </div>
 
           {/* Contact Info */}
-          <p className="text-sm md:text-base mt-4 md:mt-0">
-            Contact us:{" "}
+          <div className="text-sm md:text-base">
+            Contact us:&nbsp;
             <a
               href="mailto:info@honeyshop.com"
-              className="underline hover:text-yellow-200"
+              className="underline hover:text-white/80 transition"
             >
               info@honeyshop.com
             </a>
-          </p>
+          </div>
 
           {/* Social Media */}
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="hover:text-yellow-200">
-              <i className="fab fa-facebook-f"></i> Facebook
+          <div className="flex gap-4 justify-center md:justify-end">
+            <a
+              href="#"
+              className="hover:bg-white/20 p-2 rounded-full transition"
+              title="Facebook"
+            >
+              <FaFacebookF size={16} />
             </a>
-            <a href="#" className="hover:text-yellow-200">
-              <i className="fab fa-twitter"></i> Twitter
+            <a
+              href="#"
+              className="hover:bg-white/20 p-2 rounded-full transition"
+              title="Twitter"
+            >
+              <FaTwitter size={16} />
             </a>
-            <a href="#" className="hover:text-yellow-200">
-              <i className="fab fa-instagram"></i> Instagram
+            <a
+              href="#"
+              className="hover:bg-white/20 p-2 rounded-full transition"
+              title="Instagram"
+            >
+              <FaInstagram size={16} />
             </a>
           </div>
         </div>

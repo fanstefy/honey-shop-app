@@ -40,7 +40,7 @@ const ProductDetails: React.FC = () => {
       <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-8 mt-10">
         <Link
           to="/shop"
-          className="flex items-center w-fit text-sm mb-6 px-1 py-[2px] text-yellow-500 hover:text-yellow-600 transition-colors duration-300"
+          className="flex items-center w-fit text-sm mb-6 px-2 py-2 text-yellow-500 rounded-lg hover:text-yellow-600 hover:bg-gray-100 transition-colors duration-300"
         >
           <IoArrowBackOutline className="mr-1" />
           Back
