@@ -29,7 +29,7 @@ const initialProducts = [
     backImage: honey_1_back,
     price: 10,
     discount: "0%",
-    description: "bla bla bla",
+    description: "description",
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const initialProducts = [
     image: honey_2,
     price: 12,
     discount: "0%",
-    description: "bla bla bla",
+    description: "description",
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ const initialProducts = [
     image: honey_3,
     price: 25,
     discount: "0%",
-    description: "bla bla bla",
+    description: "description",
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ const initialProducts = [
     backImage: honey_4_back,
     price: 15,
     discount: "0%",
-    description: "bla bla bla",
+    description: "description",
   },
   {
     id: 5,
@@ -62,7 +62,7 @@ const initialProducts = [
     image: honey_5,
     price: 18,
     discount: "0%",
-    description: "bla bla bla",
+    description: "description",
   },
 ];
 
