@@ -20,7 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   title,
   type = "custom", // default type
   position = "right",
-  width = "w-[400px]",
+  width = "w-[350px]",
   children,
 }) => {
   // Optional: get quickViewProduct from sidebar store for quickview sidebar
@@ -62,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <button
             onClick={onClose}
             className={`group ${
-              position === "right" ? "-ml-[35px]" : "float-right -mr-[36px]"
+              position === "right" ? "-ml-[35px]" : "float-right"
             } bg-white transition duration-300 hover:bg-green hover:border-green p-3 border rounded-full`}
           >
             {position === "right" ? (
@@ -79,7 +79,9 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
           <h2 className="text-xl font-bold text-yellow-600 ml-4">{title}</h2>
         </div>
-        <div className="p-4">{renderContent()}</div>
+        <div className="flex flex-col h-[calc(100%-75px)] justify-between p-4">
+          {renderContent()}
+        </div>
       </div>
 
       {/* Overlay */}

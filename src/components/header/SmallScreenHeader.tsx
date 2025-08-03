@@ -6,10 +6,12 @@ import { useState } from "react";
 import logo from "../../assets/images/logo_sace_pcela_3.png";
 import { SlArrowLeft } from "react-icons/sl";
 import Sidebar from "../sidebar/Sidebar";
+import { useSidebarStore } from "../../store/useSidebarStore";
 
 const SmallScreenHeader: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar toggle
   const { pathname } = useLocation(); // Get the current route
+  const openRightSidebar = useSidebarStore((state) => state.openSidebar);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-300">
@@ -34,12 +36,12 @@ const SmallScreenHeader: React.FC = () => {
       <Sidebar
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
-        title="My Cart"
+        title="Nektarika"
         position="left" // Sidebar slides from right to left
         width="w-[265px]"
       >
         {/* Navigation Links */}
-        <nav className="mt-16 px-4">
+        <nav className="px-4">
           <ul className="space-y-4">
             <li>
               <Link
@@ -55,8 +57,10 @@ const SmallScreenHeader: React.FC = () => {
             <li>
               <Link
                 to="/shop"
-                className={`block text-yellow-600 hover:text-yellow-500 transition duration-300 ${
-                  pathname === "/shop" ? "underline font-bold" : ""
+                className={`block text-yellow-600 hover:text-yellow-500 transition duration-300 after-effect  ${
+                  pathname === "/shop" || pathname.includes("/shop/product")
+                    ? "underline font-bold active"
+                    : ""
                 }`}
                 onClick={() => setIsSidebarOpen(false)}
               >
@@ -89,14 +93,24 @@ const SmallScreenHeader: React.FC = () => {
         </nav>
 
         {/* Icons at the Bottom */}
-        <div className="absolute bottom-4 left-4 w-full px-4">
+        <div className="bottom-4 left-4 w-full px-4">
           <div className="flex items-center space-x-4 mb-4">
             <HiOutlineShoppingBag className="text-yellow-600 text-2xl" />
-            <span className="text-yellow-600">Cart</span>
+            <span
+              className="text-yellow-600"
+              onClick={() => openRightSidebar("cart")}
+            >
+              Cart
+            </span>
           </div>
           <div className="flex items-center space-x-4 mb-4">
             <FaRegHeart className="text-yellow-600 text-2xl" />
-            <span className="text-yellow-600">Wishlist</span>
+            <span
+              className="text-yellow-600"
+              onClick={() => openRightSidebar("wishlist")}
+            >
+              Wishlist
+            </span>
           </div>
           <div className="flex items-center space-x-4">
             <FaUserCircle className="text-yellow-600 text-2xl" />

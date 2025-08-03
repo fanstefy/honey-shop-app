@@ -140,7 +140,7 @@ const ProductDetails: React.FC = () => {
         <div className="mt-8">
           <div className="flex border-b mb-2">
             <button
-              className={`px-4 py-2 font-semibold ${
+              className={`px-2 sm:px-4 py-2 font-semibold ${
                 activeTab === "description"
                   ? "border-b-2 border-yellow-500 text-yellow-700"
                   : "text-gray-600"
@@ -150,7 +150,7 @@ const ProductDetails: React.FC = () => {
               Description
             </button>
             <button
-              className={`px-4 py-2 font-semibold ${
+              className={`px-2 sm:px-4 py-2 font-semibold ${
                 activeTab === "additional"
                   ? "border-b-2 border-yellow-500 text-yellow-700"
                   : "text-gray-600"
@@ -160,7 +160,7 @@ const ProductDetails: React.FC = () => {
               Additional Information
             </button>
             <button
-              className={`px-4 py-2 font-semibold ${
+              className={`px-2 sm:px-4 py-2 font-semibold ${
                 activeTab === "reviews"
                   ? "border-b-2 border-yellow-500 text-yellow-700"
                   : "text-gray-600"
