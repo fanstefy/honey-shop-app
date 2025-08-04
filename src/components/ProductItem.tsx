@@ -52,10 +52,10 @@ const ProductItem: React.FC<ProductItemProps> = ({
             ? removeFromWishlist(product.id)
             : addToWishlist(product.id)
         }
-        aria-label="wishlist"
+        aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+        title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
         type="button"
       >
-        {/* Wishlist label, only visible on icon hover */}
         <span
           className={`
             mr-2 bg-gray-800 text-xs text-white w-max p-[5px] rounded-lg
@@ -70,7 +70,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         >
           {isInWishlist ? "Added to wishlist" : "Add to wishlist"}
         </span>
-        {wishlist.includes(product.id) ? (
+        {isInWishlist ? (
           <AiFillHeart
             size={20}
             className="text-[#eab308] transition-colors duration-300"
@@ -86,7 +86,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
           />
         )}
       </button>
-      {/* Quick View Icon - top right, always visible */}
+
+      {/* Quick View Icon */}
       <button
         className="absolute top-12 right-0 z-10 flex items-center
           text-gray-500 bg-gray-500 h-9 w-9 rounded-full shadow
@@ -94,12 +95,12 @@ const ProductItem: React.FC<ProductItemProps> = ({
           opacity-0 translate-x-3
           group-hover:opacity-100 group-hover:translate-x-0"
         type="button"
-        aria-label="Quick view"
+        aria-label={`Quick view ${product.name}`}
+        title={`Quick view ${product.name}`}
         onClick={() => openSidebar("quickview", product)}
         onMouseEnter={() => setIsQuickViewPopupVisible(true)}
         onMouseLeave={() => setIsQuickViewPopupVisible(false)}
       >
-        {/* Popup label, only visible on icon hover */}
         <span
           className={`
             mr-2 bg-gray-800 text-xs text-white w-max p-[5px] rounded-lg
@@ -117,7 +118,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
         </span>
         <TiEyeOutline size={22} color="white" />
       </button>
-      {/* Cart Icon - bottom right, only visible on card hover */}
+
+      {/* Add to Cart Icon */}
       <button
         className="absolute bottom-16 right-0 z-10 flex items-center
           bg-white border-yellow-400 hover:bg-yellow-50
@@ -126,9 +128,10 @@ const ProductItem: React.FC<ProductItemProps> = ({
           opacity-0 translate-x-3
           group-hover:opacity-100 group-hover:translate-x-0 delay-200"
         type="button"
+        aria-label={isInCart ? "View product details" : "Add to cart"}
+        title={isInCart ? "View details" : "Add to cart"}
         onClick={() => (!isInCart ? addToCart(product.id) : openDetailsPage())}
       >
-        {/* Expanding span, always behind the icon */}
         <span
           className="
             absolute top-0 right-0 h-9 flex items-center
@@ -142,43 +145,46 @@ const ProductItem: React.FC<ProductItemProps> = ({
             group-hover/cart:w-36 group-hover/cart:pl-4
           "
           style={{ lineHeight: "36px" }}
-          onClick={(e) => console.log("stefan clicked")}
         >
           {isInCart ? "View Details" : "Add to cart"}
         </span>
-        {/* Icon wrapper with higher z-index */}
         <span className="absolute top-0 right-0 z-20 bg-white border-2 rounded-full border-[#eab308] flex items-center justify-center h-9 w-9">
           <HiOutlineShoppingBag size={20} />
         </span>
       </button>
+
+      {/* Product Image with Hover Effect */}
       <div
         className="relative w-[250px] h-[250px] mb-4"
         onClick={openDetailsPage}
       >
-        {/* Front image */}
         <img
           src={product.image}
-          alt={product.name}
+          alt={`Front image of ${product.name}`}
+          title={`Buy ${product.name} - organic honey`}
           className={`absolute inset-0 w-full h-full object-cover rounded transition-opacity duration-700 ${
             hoveredId === product.id && product.backImage
               ? "opacity-0"
               : "opacity-100"
           }`}
         />
-        {/* Back image (only if exists) */}
         {product.backImage && (
           <img
             src={product.backImage}
-            alt={product.name + " back"}
+            alt={`Back image of ${product.name}`}
+            title={`${product.name} - alternate view`}
             className={`absolute inset-0 w-full h-full object-cover rounded transition-opacity duration-700 ${
               hoveredId === product.id ? "opacity-100" : "opacity-0"
             }`}
           />
         )}
       </div>
+
+      {/* Product Name and Price */}
       <h2
         className="text-lg font-semibold text-yellow-700 mb-2"
         onClick={openDetailsPage}
+        title={`Open ${product.name} details`}
       >
         {product.name}
       </h2>

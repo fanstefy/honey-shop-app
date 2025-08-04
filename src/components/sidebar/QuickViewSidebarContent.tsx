@@ -69,12 +69,12 @@ const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
 
         {/* Action Buttons */}
         <button
-          className="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300"
+          className="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-2 px-2 rounded-l-xl rounded-r-xl transition-colors duration-300"
           onClick={handleAddToCart}
         >
           Add to Cart
         </button>
-        <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300">
+        <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-2 px-2 rounded-l-xl rounded-r-xl transition-colors duration-300">
           Buy Now
         </button>
       </div>

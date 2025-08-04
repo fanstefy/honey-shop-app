@@ -1,13 +1,19 @@
 import { useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
+import Sidebar from "./components/sidebar/Sidebar";
+
 import Home from "./pages/Home";
+import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import "./styles/app.css";
-import Shop from "./pages/Shop";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import { useShopStore } from "./store/useShopStore";
+import { useSidebarStore } from "./store/useSidebarStore";
 
 import honey_1 from "./assets/images/honey_1.jpg";
 import honey_2 from "./assets/images/honey_2.jpg";
@@ -16,10 +22,8 @@ import honey_4 from "./assets/images/honey_4.jpg";
 import honey_5 from "./assets/images/honey_5.jpg";
 import honey_1_back from "./assets/images/honey_1_back.jpg";
 import honey_4_back from "./assets/images/honey_4_back.jpg";
-import { useShopStore } from "./store/useShopStore";
-import ScrollToTop from "./components/ScrollToTop";
-import Sidebar from "./components/sidebar/Sidebar";
-import { useSidebarStore } from "./store/useSidebarStore";
+
+import "./styles/app.css";
 
 const initialProducts = [
   {
@@ -29,7 +33,7 @@ const initialProducts = [
     backImage: honey_1_back,
     price: 10,
     discount: "0%",
-    description: "description",
+    description: "A rich and floral honey gathered from wildflowers.",
   },
   {
     id: 2,
@@ -37,7 +41,7 @@ const initialProducts = [
     image: honey_2,
     price: 12,
     discount: "0%",
-    description: "description",
+    description: "Light and mild, ideal for tea and baking.",
   },
   {
     id: 3,
@@ -45,7 +49,7 @@ const initialProducts = [
     image: honey_3,
     price: 25,
     discount: "0%",
-    description: "description",
+    description: "Premium medicinal honey from the Manuka tree.",
   },
   {
     id: 4,
@@ -54,7 +58,7 @@ const initialProducts = [
     backImage: honey_4_back,
     price: 15,
     discount: "0%",
-    description: "description",
+    description: "Sweet citrus flavor from orange blossoms.",
   },
   {
     id: 5,
@@ -62,7 +66,8 @@ const initialProducts = [
     image: honey_5,
     price: 18,
     discount: "0%",
-    description: "description",
+    description:
+      "Clear, mild, and slow to crystallize — perfect for every day.",
   },
 ];
 
@@ -92,6 +97,7 @@ const App: React.FC = () => {
           <Footer />
         </div>
       </BrowserRouter>
+
       <Sidebar
         isOpen={isOpen}
         onClose={closeSidebar}

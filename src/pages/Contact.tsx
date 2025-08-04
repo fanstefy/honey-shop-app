@@ -1,8 +1,44 @@
+import Helmet from "react-helmet";
+
 const Contact: React.FC = () => {
   return (
-    <div className="container mx-auto items-center py-10 px-5 min-h-screen">
+    <div className="max-w-md w-full mx-auto items-center mb-[100px] mt-8 px-5">
+      <Helmet>
+        <title>Contact Us | Nektarika</title>
+        <meta
+          name="description"
+          content="Get in touch with Nektarika. We'd love to hear from you! Contact us for inquiries, support, or feedback regarding our organic honey products."
+        />
+        <link rel="canonical" href="https://www.nektarika.rs/contact" />
+
+        <meta property="og:title" content="Contact Us | Nektarika" />
+        <meta
+          property="og:description"
+          content="Reach out to Nektarika with any questions, feedback, or support needs. We're here to help!"
+        />
+        <meta property="og:url" content="https://www.nektarika.rs/contact" />
+        <meta
+          property="og:image"
+          content="https://www.nektarika.rs/images/cover.jpg"
+        />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "ContactPage",
+              "name": "Contact Us | Nektarika",
+              "url": "https://www.nektarika.rs/contact",
+              "description": "Get in touch with Nektarika for product inquiries or support."
+            }
+          `}
+        </script>
+      </Helmet>
+
       <h1 className="text-4xl font-bold text-center my-8">Contact Us</h1>
-      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
+      <div className="mx-auto bg-white shadow-md rounded-lg p-8">
         <form className="space-y-6">
           {/* Name Field */}
           <div>

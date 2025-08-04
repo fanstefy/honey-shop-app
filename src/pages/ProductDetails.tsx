@@ -1,5 +1,6 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import { useShopStore } from "../store/useShopStore";
 import {
   TiSocialFacebook,
@@ -8,7 +9,6 @@ import {
 } from "react-icons/ti";
 import { CiDeliveryTruck, CiShare2 } from "react-icons/ci";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,6 +18,7 @@ const ProductDetails: React.FC = () => {
     "description" | "additional" | "reviews"
   >("description");
   const { addToCart } = useShopStore();
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
@@ -33,29 +34,41 @@ const ProductDetails: React.FC = () => {
     );
   }
 
+  const seoDescription =
+    product.description?.slice(0, 160) ||
+    "Discover organic honey and natural products from Nektarika.";
+  const seoKeywords = `${product.name}, organic honey, Nektarika, natural product`;
+
   return (
     <div className="container mx-auto items-center py-10 px-5 min-h-screen">
+      <Helmet>
+        <title>{product.name} | Nektarika</title>
+        <meta name="description" content={seoDescription} />
+        <meta name="keywords" content={seoKeywords} />
+        <meta property="og:title" content={product.name} />
+        <meta property="og:description" content={seoDescription} />
+        <meta property="og:image" content={product.image} />
+      </Helmet>
+
       <div className="mb-4"></div>
 
-      <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-8 mt-10">
-        <Link
-          to="/shop"
+      <div className="mx-auto bg-white rounded-lg shadow-md p-8 mt-10">
+        <button
+          onClick={() => navigate(-1)}
           className="flex items-center w-fit text-sm mb-6 px-2 py-2 text-yellow-500 border border-transparent rounded-lg hover:text-yellow-600 hover:border-yellow-500 transition-colors duration-300"
         >
           <IoArrowBackOutline className="mr-1" />
           Back
-        </Link>
-        {/* Main Info Row */}
+        </button>
+
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Product Image */}
           <div className="md:w-2/5 flex justify-center items-start">
             <img
               src={product.image}
               alt={product.name}
-              className="w-full max-w-xs rounded-lg object-cover border"
+              className="w-full max-w-xs rounded-lg object-cover"
             />
           </div>
-          {/* Product Info */}
           <div className="md:w-3/5 flex flex-col">
             <h1 className="text-3xl font-bold text-yellow-700 mb-2">
               {product.name}
@@ -64,9 +77,7 @@ const ProductDetails: React.FC = () => {
               ${product.price}
             </p>
 
-            {/* Quantity + Action Buttons */}
             <div className="flex items-center gap-4 mb-8">
-              {/* Quantity Input + Plus/Minus Buttons */}
               <div className="flex items-center">
                 <input
                   type="number"
@@ -98,19 +109,17 @@ const ProductDetails: React.FC = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <button
-                className="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300"
+                className="bg-yellow-500 hover:bg-yellow-600 text-xs sm:text-lg text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300"
                 onClick={handleAddToCart}
               >
                 Add to Cart
               </button>
-              <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300">
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-xs sm:text-lg text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300">
                 Buy Now
               </button>
             </div>
 
-            {/* Estimated Delivery: */}
             <div className="flex items-center gap-2 mt-20 mb-3">
               <CiDeliveryTruck size={20} />
               <p className="inline-block ml-1 text-sm text-gray-600 font-poppins">
@@ -119,9 +128,8 @@ const ProductDetails: React.FC = () => {
               </p>
             </div>
 
-            {/* Social Media Share Buttons */}
             <div className="flex gap-3 mb-6 items-center text-sm">
-              <CiShare2 size={20} />{" "}
+              <CiShare2 size={20} />
               <span className="font-semibold font-poppins">Share</span>
               <button className="hover:opacity-80" title="Share on Facebook">
                 <TiSocialFacebook size={20} color="gray" />
@@ -136,7 +144,6 @@ const ProductDetails: React.FC = () => {
           </div>
         </div>
 
-        {/* Tabs Section - now under both image and info */}
         <div className="mt-8">
           <div className="flex border-b mb-2">
             <button
@@ -171,20 +178,12 @@ const ProductDetails: React.FC = () => {
             </button>
           </div>
           <div className="mt-4">
-            {activeTab === "description" && (
-              <div>
-                <p>{product.description}</p>
-              </div>
-            )}
+            {activeTab === "description" && <p>{product.description}</p>}
             {activeTab === "additional" && (
-              <div>
-                <p>{product.additionalInfo || "No additional information."}</p>
-              </div>
+              <p>{product.additionalInfo || "No additional information."}</p>
             )}
             {activeTab === "reviews" && (
-              <div>
-                <p className="text-gray-500 italic">No reviews yet.</p>
-              </div>
+              <p className="text-gray-500 italic">No reviews yet.</p>
             )}
           </div>
         </div>
