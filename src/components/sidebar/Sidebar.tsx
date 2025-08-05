@@ -18,12 +18,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
   onClose,
   title,
-  type = "custom", // default type
+  type = "custom",
   position = "right",
   width = "w-[350px]",
   children,
 }) => {
-  // Optional: get quickViewProduct from sidebar store for quickview sidebar
   const quickViewProduct = useSidebarStore((state) => state.quickViewProduct);
 
   const translateClass =
@@ -35,7 +34,6 @@ const Sidebar: React.FC<SidebarProps> = ({
       ? "translate-x-0"
       : "-translate-x-[290px]";
 
-  // Decide what content to render based on `type`
   const renderContent = () => {
     switch (type) {
       case "wishlist":
@@ -52,8 +50,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <>
-      {/* Sidebar */}
-      <div
+      <aside
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sidebar-title"
+        tabIndex={-1}
         className={`fixed top-0 ${
           position === "right" ? "right-0" : "left-0"
         } h-full ${width} bg-white shadow-lg z-50 transform ${translateClass} transition-transform duration-[0.4s] ease-in-out`}
@@ -64,6 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             className={`group ${
               position === "right" ? "-ml-[35px]" : "float-right"
             } bg-white transition duration-300 hover:bg-green hover:border-green p-3 border rounded-full`}
+            aria-label="Close Sidebar"
           >
             {position === "right" ? (
               <SlArrowRight
@@ -77,15 +79,21 @@ const Sidebar: React.FC<SidebarProps> = ({
               />
             )}
           </button>
-          <h2 className="text-xl font-bold text-yellow-600 ml-4">{title}</h2>
+          <h2
+            id="sidebar-title"
+            className="text-xl font-bold text-yellow-600 ml-4"
+          >
+            {title}
+          </h2>
         </div>
         <div className="flex flex-col h-[calc(100%-75px)] justify-between p-4">
           {renderContent()}
         </div>
-      </div>
+      </aside>
 
-      {/* Overlay */}
+      {/* Overlay with accessibility handling */}
       <div
+        aria-hidden={!isOpen}
         className={`fixed inset-0 bg-black z-40 transition-opacity duration-500 ${
           isOpen
             ? "opacity-50 pointer-events-auto"

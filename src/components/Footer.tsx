@@ -3,14 +3,31 @@ import { MdPrivacyTip } from "react-icons/md";
 import { AiOutlineFileProtect } from "react-icons/ai";
 import { BiRecycle } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 const Footer: React.FC = () => {
+  const footerLinksRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(footerLinksRef.current, {
+        x: -20,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out",
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <footer className="" role="contentinfo">
       <div className="bg-[#90C785] text-white py-8">
-        <div className=" container mx-auto px-6 flex justify-around">
+        <div className="container mx-auto px-6 flex flex-col md:flex-row gap-8 md:gap-0 justify-around">
           {/* Column 1: About Us */}
-          <section className="w-1/3" aria-labelledby="footer-about">
+          <section className="w-full md:w-1/3" aria-labelledby="footer-about">
             <h3 id="footer-about" className="text-xl font-semibold mb-4">
               About Us
             </h3>
@@ -49,7 +66,7 @@ const Footer: React.FC = () => {
 
           {/* Column 2: Certifications & Contact */}
           <section
-            className="w-1/3 px-6"
+            className="w-full md:w-1/3 px-0 md:px-6"
             aria-labelledby="footer-certifications"
           >
             <h3
@@ -83,7 +100,11 @@ const Footer: React.FC = () => {
           </section>
 
           {/* Column 3: Site Links */}
-          <nav aria-labelledby="footer-links" role="navigation">
+          <nav
+            ref={footerLinksRef}
+            aria-labelledby="footer-links"
+            role="navigation"
+          >
             <h3 id="footer-links" className="text-xl font-semibold mb-4">
               Site Links
             </h3>

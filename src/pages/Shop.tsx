@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Helmet from "react-helmet";
 import ProductItem from "../components/ProductItem";
 import { useShopStore } from "../store/useShopStore";
+import { Helmet } from "react-helmet-async";
 
 const Shop: React.FC = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);

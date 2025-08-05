@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../../store/useShopStore";
 import { useSidebarStore } from "../../store/useSidebarStore";
 import { RxCross1 } from "react-icons/rx";
@@ -15,43 +16,85 @@ const WishlistSidebarContent: React.FC = () => {
   );
 
   if (!wishlistItems || wishlistItems.length === 0) {
-    return <p className="text-gray-500">Your wishlist is empty.</p>;
+    return (
+      <section role="region" aria-label="Empty wishlist" aria-live="polite">
+        <Helmet>
+          <title>Your Wishlist | Nektarika</title>
+          <meta
+            name="description"
+            content="Your wishlist is currently empty."
+          />
+        </Helmet>
+        <p className="text-gray-500">Your wishlist is empty.</p>
+      </section>
+    );
   }
 
   return (
-    <ul className="space-y-4">
-      {wishlistItems.map((product) => (
-        <li key={product.id} className="flex items-start relative">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-16 h-16 object-cover rounded mr-4"
-          />
-          <div className="flex-1">
-            <h3 className="font-semibold">{product.name}</h3>
-            <p className="text-sm text-gray-600">${product.price}</p>
-            <button
-              onClick={() => {
-                addToCart(product.id);
-                closeSidebar();
-                setTimeout(() => {
-                  openSidebar("cart");
-                }, 200);
-              }}
-              className="text-green-600 uppercase text-xs font-thin mt-1 hover:text-yellow-700 transition-colors duration-300"
-            >
-              Add to cart
-            </button>
-          </div>
-          <button
-            onClick={() => removeFromWishlist(product.id)}
-            className="absolute top-0 right-0 p-2 text-gray-500 rounded-full hover:bg-gray-100 transition-colors duration-300"
+    <section aria-labelledby="wishlist-title" aria-live="polite" role="region">
+      <Helmet>
+        <title>Wishlist | Nektarika</title>
+        <meta
+          name="description"
+          content="View and manage your saved honey products from Nektarika."
+        />
+      </Helmet>
+
+      <h2 id="wishlist-title" className="sr-only">
+        Your Wishlist
+      </h2>
+
+      <ul className="space-y-4">
+        {wishlistItems.map((product) => (
+          <li
+            key={product.id}
+            className="flex items-start relative border-b border-gray-200 pb-4"
+            role="listitem"
+            aria-label={`Wishlist item: ${product.name}`}
           >
-            <RxCross1 size={14} />
-          </button>
-        </li>
-      ))}
-    </ul>
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-16 h-16 object-cover rounded mr-4"
+              loading="lazy"
+            />
+            <article
+              className="flex-1"
+              aria-labelledby={`wishlist-product-${product.id}`}
+            >
+              <h3
+                id={`wishlist-product-${product.id}`}
+                className="font-semibold"
+              >
+                {product.name}
+              </h3>
+              <p className="text-sm text-gray-600">
+                ${product.price.toFixed(2)}
+              </p>
+              <button
+                onClick={() => {
+                  addToCart(product.id);
+                  closeSidebar();
+                  setTimeout(() => openSidebar("cart"), 200);
+                }}
+                className="text-green-600 uppercase text-xs font-thin mt-1 hover:text-yellow-700 transition-colors duration-300"
+                aria-label={`Add ${product.name} to cart`}
+              >
+                Add to cart
+              </button>
+            </article>
+
+            <button
+              onClick={() => removeFromWishlist(product.id)}
+              className="absolute top-0 right-0 p-2 text-gray-500 rounded-full hover:bg-gray-100 transition-colors duration-300"
+              aria-label={`Remove ${product.name} from wishlist`}
+            >
+              <RxCross1 size={14} />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 };
 

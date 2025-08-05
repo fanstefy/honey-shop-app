@@ -2,9 +2,9 @@ import React from "react";
 
 const About: React.FC = () => {
   return (
-    <div className="mx-auto px-4 py-10 min-h-screen">
+    <div className="mx-auto px-4 py-10 min-h-screen mt-8">
       {/* Title */}
-      <h1 className="text-4xl font-bold text-center text-yellow-700 mb-10">
+      <h1 className="text-4xl font-bold text-gray-700 mb-10 text-center">
         About Our Beekeeping Journey
       </h1>
 

@@ -1,8 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import coverImage from "../assets/images/cover.jpg";
 import { Link } from "react-router-dom";
-import Helmet from "react-helmet";
 import {
   FaHandsHelping,
   FaLeaf,
@@ -11,14 +10,60 @@ import {
 } from "react-icons/fa";
 import ProductItem from "../components/ProductItem";
 import { useShopStore } from "../store/useShopStore";
+import gsap from "gsap";
+import { Helmet } from "react-helmet-async";
 
 const Home: React.FC = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const products = useShopStore((state) => state.products);
 
+  const coverTextRef = useRef<HTMLDivElement>(null);
+  const coverImageRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const featureCardsRef = useRef<HTMLDivElement>(null);
+
   const bestSellingProducts = useMemo(() => {
     return [...products].sort(() => 0.5 - Math.random()).slice(0, 3);
   }, [products]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(coverTextRef.current, {
+        x: -50,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out",
+      });
+
+      gsap.from(coverImageRef.current, {
+        x: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out",
+        delay: 0.1,
+      });
+
+      gsap.from(buttonRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+        delay: 0.2,
+      });
+
+      const cards = featureCardsRef.current;
+      gsap.from(cards, {
+        delay: 0.3,
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        stagger: 0.2,
+        ease: "back.out(1.7)power2.out",
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <main className="container mx-auto min-h-screen pt-[60px] lg:pt-0">
@@ -62,15 +107,17 @@ const Home: React.FC = () => {
       <section className="py-12 px-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="md:w-1/2 text-center md:text-left pl-4 pr-1">
-            <h1 className="text-[25px] font-bold leading-[35px] mb-2 text-gray-700">
-              Discover 100% Organic Honey – Straight from Nature
-            </h1>
-            <p className="text-gray-700">
-              At Nektarika, we produce pure, organic honey that supports your
-              health and well-being. From wildflower to manuka, every jar is
-              packed with natural goodness.
-            </p>
-            <div className="w-full text-center mt-[50px]">
+            <div ref={coverTextRef}>
+              <h1 className="text-[25px] font-bold leading-[35px] mb-2 text-gray-700">
+                Discover 100% Organic Honey – Straight from Nature
+              </h1>
+              <p className="text-gray-700">
+                At Nektarika, we produce pure, organic honey that supports your
+                health and well-being. From wildflower to manuka, every jar is
+                packed with natural goodness.
+              </p>
+            </div>
+            <div ref={buttonRef} className="w-full text-center mt-[50px]">
               <Link
                 to="/shop"
                 className="inline-flex items-center gap-3 bg-yellow-500 hover:bg-yellow-600 text-white font-medium px-6 py-2 rounded-full transition duration-300 uppercase"
@@ -85,7 +132,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div className="md:w-1/2">
+          <div ref={coverImageRef} className="md:w-1/2">
             <img
               src={coverImage}
               alt="Jars of organic honey"
@@ -96,8 +143,11 @@ const Home: React.FC = () => {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 max-w-7xl mx-auto px-4">
-          <div className="flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
+        <div
+          ref={featureCardsRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 max-w-7xl mx-auto px-4"
+        >
+          <div className="feature-card flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaShippingFast size={24} className="text-yellow-600 mt-1" />
             <div>
               <h3 className="text-md font-semibold text-gray-800">
@@ -109,7 +159,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
+          <div className="feature-card flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaLeaf size={24} className="text-yellow-600 mt-1" />
             <div>
               <h3 className="text-md font-semibold text-gray-800">
@@ -119,7 +169,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
+          <div className="feature-card flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaRegSmile size={24} className="text-yellow-600 mt-1" />
             <div>
               <h3 className="text-md font-semibold text-gray-800">
@@ -131,7 +181,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
+          <div className="feature-card flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaHandsHelping size={24} className="text-yellow-600 mt-1" />
             <div>
               <h3 className="text-md font-semibold text-gray-800">

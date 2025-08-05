@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
@@ -83,27 +83,25 @@ const App: React.FC = () => {
 
   return (
     <>
-      <BrowserRouter>
-        <div className="grid grid-rows-layout min-h-screen">
-          <Header />
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/shop/product/:id" element={<ProductDetails />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <div className="grid grid-rows-layout min-h-screen">
+        <Header />
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/product/:id" element={<ProductDetails />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+        <Footer />
+      </div>
 
       <Sidebar
         isOpen={isOpen}
         onClose={closeSidebar}
         title={
           sidebarType === "cart"
-            ? "Cart"
+            ? "My Cart"
             : sidebarType === "wishlist"
             ? "Wishlist"
             : sidebarType === "quickview"
