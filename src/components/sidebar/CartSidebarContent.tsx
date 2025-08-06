@@ -1,7 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../../store/useShopStore";
 import { RxCross1, RxMinus, RxPlus } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSidebarStore } from "../../store/useSidebarStore";
 
 const CartSidebarContent: React.FC = () => {
   const cart = useShopStore((state) => state.cart);
@@ -13,6 +14,9 @@ const CartSidebarContent: React.FC = () => {
     (state) => state.decreaseCartQuantity
   );
   const removeFromCart = useShopStore((state) => state.removeFromCart);
+
+  const navigate = useNavigate();
+  const closeSidebar = useSidebarStore((state) => state.closeSidebar);
 
   const cartItems = cart
     .map((cartItem) => {
@@ -154,12 +158,15 @@ const CartSidebarContent: React.FC = () => {
         </div>
 
         <div className="flex flex-col gap-3">
-          <Link
-            to="/cart"
+          <button
+            onClick={() => {
+              closeSidebar();
+              navigate("/cart");
+            }}
             className="w-full text-center bg-white text-gray-800 border border-gray-300 rounded-full py-2 text-sm font-semibold hover:bg-gray-100 transition"
           >
             View Cart
-          </Link>
+          </button>
 
           <button
             className="w-full bg-yellow-500 text-white rounded-full py-2 text-sm font-semibold hover:bg-yellow-600 transition"

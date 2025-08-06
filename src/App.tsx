@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Header from "./components/header/Header";
@@ -24,6 +24,8 @@ import honey_1_back from "./assets/images/honey_1_back.jpg";
 import honey_4_back from "./assets/images/honey_4_back.jpg";
 
 import "./styles/app.css";
+import Cart from "./pages/Cart";
+import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 
 const initialProducts = [
   {
@@ -72,14 +74,29 @@ const initialProducts = [
 ];
 
 const App: React.FC = () => {
+  const [isScrollToTopBtnVisible, setIsScrollToTopBtnVisible] = useState(false);
+
   const setProducts = useShopStore((state) => state.setProducts);
   const isOpen = useSidebarStore((state) => state.isOpen);
   const sidebarType = useSidebarStore((state) => state.sidebarType);
   const closeSidebar = useSidebarStore((state) => state.closeSidebar);
 
   useEffect(() => {
+    const handleScroll = () => {
+      setIsScrollToTopBtnVisible(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     setProducts(initialProducts);
   }, [setProducts]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -92,6 +109,7 @@ const App: React.FC = () => {
           <Route path="/shop/product/:id" element={<ProductDetails />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
         <Footer />
       </div>
@@ -110,6 +128,16 @@ const App: React.FC = () => {
         }
         type={sidebarType || "custom"}
       />
+
+      {isScrollToTopBtnVisible && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-5 right-5 z-50 bg-yellow-500 hover:bg-yellow-600 text-white p-3 rounded-full shadow-lg transition duration-300"
+          aria-label="Scroll to top"
+        >
+          <MdOutlineKeyboardArrowUp />
+        </button>
+      )}
     </>
   );
 };

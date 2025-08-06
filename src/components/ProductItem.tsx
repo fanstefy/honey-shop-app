@@ -38,6 +38,11 @@ const ProductItem: React.FC<ProductItemProps> = ({
     navigate(`/shop/product/${product.id}`);
   };
 
+  const addToCartHandler = () => {
+    addToCart(product.id);
+    openSidebar("cart");
+  };
+
   return (
     <div
       className="bg-white rounded-lg flex flex-col justify-self-center items-center relative size-fit group cursor-pointer"
@@ -130,7 +135,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         type="button"
         aria-label={isInCart ? "View product details" : "Add to cart"}
         title={isInCart ? "View details" : "Add to cart"}
-        onClick={() => (!isInCart ? addToCart(product.id) : openDetailsPage())}
+        onClick={() => (!isInCart ? addToCartHandler() : openDetailsPage())}
       >
         <span
           className="

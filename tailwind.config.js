@@ -12,6 +12,18 @@ export default {
         quicksand: ["Quicksand", "sans-serif"],
         nunito: ["Nunito", "sans-serif"],
       },
+      keyframes: {
+        buzz: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "20%": { transform: "translateX(-6px) rotate(-10deg)" },
+          "40%": { transform: "translateX(6px) rotate(10deg)" },
+          "60%": { transform: "translateX(-4px) rotate(-6deg)" },
+          "80%": { transform: "translateX(4px) rotate(6deg)" },
+        },
+      },
+      animation: {
+        buzz: "buzz 0.6s infinite linear",
+      },
     },
   },
   plugins: [],

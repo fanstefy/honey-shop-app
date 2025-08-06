@@ -147,7 +147,7 @@ const Home: React.FC = () => {
           ref={featureCardsRef}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 max-w-7xl mx-auto px-4"
         >
-          <div className="feature-card flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
+          <div className="feature-card flex items-start gap-4 px-4 py-6 border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaShippingFast size={24} className="text-yellow-600 mt-1" />
             <div>
               <h3 className="text-md font-semibold text-gray-800">
@@ -159,7 +159,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div className="feature-card flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
+          <div className="feature-card flex items-start gap-4 px-4 py-6 border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaLeaf size={24} className="text-yellow-600 mt-1" />
             <div>
               <h3 className="text-md font-semibold text-gray-800">
@@ -169,7 +169,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div className="feature-card flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
+          <div className="feature-card flex items-start gap-4 px-4 py-6 border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaRegSmile size={24} className="text-yellow-600 mt-1" />
             <div>
               <h3 className="text-md font-semibold text-gray-800">
@@ -181,7 +181,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div className="feature-card flex items-start gap-4 px-4 py-6 border border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
+          <div className="feature-card flex items-start gap-4 px-4 py-6 border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaHandsHelping size={24} className="text-yellow-600 mt-1" />
             <div>
               <h3 className="text-md font-semibold text-gray-800">

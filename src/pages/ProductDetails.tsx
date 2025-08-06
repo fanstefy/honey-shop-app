@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../store/useShopStore";
+import { useSidebarStore } from "../store/useSidebarStore";
 import {
   TiSocialFacebook,
   TiSocialInstagram,
@@ -18,12 +19,14 @@ const ProductDetails: React.FC = () => {
     "description" | "additional" | "reviews"
   >("description");
   const { addToCart } = useShopStore();
+  const openSidebar = useSidebarStore((state) => state.openSidebar);
   const navigate = useNavigate();
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
       addToCart(Number(product?.id));
     }
+    openSidebar("cart");
   };
 
   if (!product) {
