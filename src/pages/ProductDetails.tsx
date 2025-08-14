@@ -29,6 +29,16 @@ const ProductDetails: React.FC = () => {
     openSidebar("cart");
   };
 
+  // NEW: Buy Now -> add selected quantity, navigate to /checkout
+  const handleBuyNow = () => {
+    if (!product) return;
+    for (let i = 0; i < quantity; i++) {
+      addToCart(Number(product.id));
+    }
+    // Kada implementiraš checkout, ova ruta će raditi odmah
+    navigate("/checkout");
+  };
+
   if (!product) {
     return (
       <div className="max-w-2xl mx-auto mt-20 text-center text-xl text-red-600">
@@ -118,7 +128,10 @@ const ProductDetails: React.FC = () => {
               >
                 Add to Cart
               </button>
-              <button className="bg-yellow-500 hover:bg-yellow-600 text-xs sm:text-lg text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300">
+              <button
+                className="bg-yellow-500 hover:bg-yellow-600 text-xs sm:text-lg text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300"
+                onClick={handleBuyNow}
+              >
                 Buy Now
               </button>
             </div>

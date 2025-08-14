@@ -51,7 +51,7 @@ const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
         <img
           src={product.image}
           alt={product.name}
-          className="object-cover rounded mb-4"
+          className="object-cover rounded mb-4 w-3/4 justify-self-center"
           itemProp="image"
         />
         <header>

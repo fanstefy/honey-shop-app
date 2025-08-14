@@ -17,7 +17,12 @@ const WishlistSidebarContent: React.FC = () => {
 
   if (!wishlistItems || wishlistItems.length === 0) {
     return (
-      <section role="region" aria-label="Empty wishlist" aria-live="polite">
+      <section
+        role="region"
+        aria-label="Empty wishlist"
+        aria-live="polite"
+        className="p-4"
+      >
         <Helmet>
           <title>Your Wishlist | Nektarika</title>
           <meta
@@ -31,7 +36,12 @@ const WishlistSidebarContent: React.FC = () => {
   }
 
   return (
-    <section aria-labelledby="wishlist-title" aria-live="polite" role="region">
+    <section
+      aria-labelledby="wishlist-title"
+      aria-live="polite"
+      role="region"
+      className="flex flex-col h-full"
+    >
       <Helmet>
         <title>Wishlist | Nektarika</title>
         <meta
@@ -44,7 +54,8 @@ const WishlistSidebarContent: React.FC = () => {
         Your Wishlist
       </h2>
 
-      <ul className="space-y-4">
+      {/* Scrollable list area */}
+      <ul className="space-y-4 overflow-y-auto flex-1 pr-1 p-4">
         {wishlistItems.map((product) => (
           <li
             key={product.id}
@@ -58,6 +69,7 @@ const WishlistSidebarContent: React.FC = () => {
               className="w-16 h-16 object-cover rounded mr-4"
               loading="lazy"
             />
+
             <article
               className="flex-1"
               aria-labelledby={`wishlist-product-${product.id}`}
@@ -71,6 +83,7 @@ const WishlistSidebarContent: React.FC = () => {
               <p className="text-sm text-gray-600">
                 ${product.price.toFixed(2)}
               </p>
+
               <button
                 onClick={() => {
                   addToCart(product.id);

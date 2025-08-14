@@ -222,8 +222,8 @@ const CartPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-6 flex flex-col gap-3">
-              <button className="w-full bg-yellow-500 text-white text-sm uppercase rounded-full py-2 font-semibold hover:bg-yellow-600 transition">
+            <div className="mt-6 flex flex-col items-center sm:items-stretch">
+              <button className="w-full sm:max-w-[300px] bg-yellow-500 text-white text-sm uppercase rounded-full py-2 font-semibold hover:bg-yellow-600 transition">
                 Proceed to Checkout
               </button>
             </div>
