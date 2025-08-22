@@ -31,7 +31,7 @@ const LargeScreenHeader: React.FC = () => {
             <FaUserCircle />
           </span>
           <Link
-            to="/account"
+            to="/profile"
             className="text-black text-sm text-yellow-600 hover:text-yellow-500 transition duration-300"
             aria-label="Go to My Account"
           >

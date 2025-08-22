@@ -129,7 +129,7 @@ const SmallScreenHeader: React.FC = () => {
           <div className="flex items-center space-x-4">
             <FaUserCircle className="text-yellow-600 text-2xl" />
             <Link
-              to="/account"
+              to="/profile"
               className="text-yellow-600 hover:text-yellow-500 transition duration-300"
               onClick={() => setIsSidebarOpen(false)}
               aria-label="Go to My Account"

@@ -11,6 +11,13 @@ import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Cart from "./pages/Cart";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+import PrivateRoute from "./components/PrivateRoute";
+import ForgotPassword from "./components/ForgetPassword";
 
 import { useShopStore } from "./store/useShopStore";
 import { useSidebarStore } from "./store/useSidebarStore";
@@ -24,8 +31,9 @@ import honey_1_back from "./assets/images/honey_1_back.jpg";
 import honey_4_back from "./assets/images/honey_4_back.jpg";
 
 import "./styles/app.css";
-import Cart from "./pages/Cart";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
+import { AuthProvider } from "./contexts/AuthContext";
+import ResetPassword from "./pages/ResetPassword";
 
 const initialProducts = [
   {
@@ -99,18 +107,48 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
+    <AuthProvider>
       <div className="grid grid-rows-layout min-h-screen">
         <Header />
         <ScrollToTop />
+
+        {/* reCAPTCHA container - potreban za phone auth (nevidljiv) */}
+        <div id="recaptcha-container"></div>
+
         <Routes>
+          {/* Postojeće rute */}
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/product/:id" element={<ProductDetails />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
+
+          {/* Auth rute */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Privatne rute */}
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/my-orders"
+            element={
+              <PrivateRoute>
+                <div>My Orders - Coming Soon</div>
+              </PrivateRoute>
+            }
+          />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
+
         <Footer />
       </div>
 
@@ -138,7 +176,7 @@ const App: React.FC = () => {
           <MdOutlineKeyboardArrowUp />
         </button>
       )}
-    </>
+    </AuthProvider>
   );
 };
 
