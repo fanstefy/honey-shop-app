@@ -8,9 +8,16 @@ import {
   Unsubscribe,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { User } from "firebase/auth";
 
-export interface WishlistData {
+interface CartItem {
+  id: number;
+  quantity: number;
+}
+
+export interface UserData {
   wishlist: number[];
+  cart: CartItem[];
   lastUpdated?: any; // Firestore Timestamp
 }
 
@@ -21,7 +28,7 @@ export const loadUserWishlist = async (userId: string): Promise<number[]> => {
     const userDoc = await getDoc(userDocRef);
 
     if (userDoc.exists()) {
-      const data = userDoc.data() as WishlistData;
+      const data = userDoc.data() as UserData;
       return data.wishlist || [];
     }
     return [];
@@ -52,6 +59,7 @@ export const saveUserWishlist = async (
       // Kreiraj novi dokument
       await setDoc(userDocRef, {
         wishlist,
+        cart: [],
         lastUpdated: serverTimestamp(),
       });
     }
@@ -59,6 +67,35 @@ export const saveUserWishlist = async (
     console.error("Error saving wishlist:", error);
     throw error;
   }
+};
+
+// Real-time listener za user podatke (wishlist + cart)
+export const subscribeToUserData = (
+  userId: string,
+  callback: (data: { wishlist: number[]; cart: CartItem[] }) => void
+): Unsubscribe => {
+  const userDocRef = doc(db, "users", userId);
+
+  return onSnapshot(
+    userDocRef,
+    (doc) => {
+      if (doc.exists()) {
+        const data = doc.data() as UserData;
+        callback({
+          wishlist: data.wishlist || [],
+          cart: data.cart || [],
+        });
+      } else {
+        callback({
+          wishlist: [],
+          cart: [],
+        });
+      }
+    },
+    (error) => {
+      console.error("Error listening to user data:", error);
+    }
+  );
 };
 
 // Real-time listener za wishlist
@@ -72,7 +109,7 @@ export const subscribeToUserWishlist = (
     userDocRef,
     (doc) => {
       if (doc.exists()) {
-        const data = doc.data() as WishlistData;
+        const data = doc.data() as UserData;
         callback(data.wishlist || []);
       } else {
         callback([]);

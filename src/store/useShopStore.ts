@@ -1,7 +1,11 @@
 import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
 import { User } from "firebase/auth";
-import { saveUserWishlist } from "../services/wishlistFirebaseService";
+import {
+  loadUserWishlist,
+  saveUserWishlist,
+} from "../services/wishlistFirebaseService";
+import { loadUserCart, saveUserCart } from "../services/cartFirebaseService";
 
 interface Product {
   id: number;
@@ -35,6 +39,9 @@ interface ShopState {
   // User management
   setCurrentUser: (user: User | null) => void;
   syncWishlistToFirebase: () => Promise<void>;
+  syncCartToFirebase: () => Promise<void>;
+  syncAllToFirebase: () => Promise<void>;
+  mergeWithFirebase: () => Promise<void>;
 }
 
 export const useShopStore = create<ShopState>()(
@@ -53,12 +60,14 @@ export const useShopStore = create<ShopState>()(
           return products.find((product) => product.id === id) || null;
         },
 
-        // Cart akcije (ostaju nepromenjen)
+        // Cart akcije sa Firebase sync
         addToCart: (id) =>
           set((state) => {
             const existing = state.cart.find((item) => item.id === id);
+            let newState;
+
             if (existing) {
-              return {
+              newState = {
                 ...state,
                 cart: state.cart.map((item) =>
                   item.id === id
@@ -67,43 +76,89 @@ export const useShopStore = create<ShopState>()(
                 ),
               };
             } else {
-              return {
+              newState = {
                 ...state,
                 cart: [...state.cart, { id, quantity: 1 }],
               };
             }
+
+            // Async sync sa Firebase
+            setTimeout(() => {
+              const currentState = get();
+              if (currentState.currentUser) {
+                currentState.syncCartToFirebase().catch(console.error);
+              }
+            }, 0);
+
+            return newState;
           }),
 
         removeFromCart: (id) =>
-          set((state) => ({
-            ...state,
-            cart: state.cart.filter((item) => item.id !== id),
-          })),
+          set((state) => {
+            const newState = {
+              ...state,
+              cart: state.cart.filter((item) => item.id !== id),
+            };
+
+            // Async sync sa Firebase
+            setTimeout(() => {
+              const currentState = get();
+              if (currentState.currentUser) {
+                currentState.syncCartToFirebase().catch(console.error);
+              }
+            }, 0);
+
+            return newState;
+          }),
 
         increaseCartQuantity: (id: number) =>
-          set((state) => ({
-            ...state,
-            cart: state.cart.map((item) =>
-              item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-            ),
-          })),
+          set((state) => {
+            const newState = {
+              ...state,
+              cart: state.cart.map((item) =>
+                item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+              ),
+            };
+
+            // Async sync sa Firebase
+            setTimeout(() => {
+              const currentState = get();
+              if (currentState.currentUser) {
+                currentState.syncCartToFirebase().catch(console.error);
+              }
+            }, 0);
+
+            return newState;
+          }),
 
         decreaseCartQuantity: (id: number) =>
-          set((state) => ({
-            ...state,
-            cart: state.cart
-              .map((item) =>
-                item.id === id
-                  ? {
-                      ...item,
-                      quantity: item.quantity > 1 ? item.quantity - 1 : 1,
-                    }
-                  : item
-              )
-              .filter((item) => item.quantity > 0),
-          })),
+          set((state) => {
+            const newState = {
+              ...state,
+              cart: state.cart
+                .map((item) =>
+                  item.id === id
+                    ? {
+                        ...item,
+                        quantity: item.quantity > 1 ? item.quantity - 1 : 1,
+                      }
+                    : item
+                )
+                .filter((item) => item.quantity > 0),
+            };
 
-        // Jednostavne wishlist akcije
+            // Async sync sa Firebase
+            setTimeout(() => {
+              const currentState = get();
+              if (currentState.currentUser) {
+                currentState.syncCartToFirebase().catch(console.error);
+              }
+            }, 0);
+
+            return newState;
+          }),
+
+        // Wishlist akcije (ostaju iste)
         addToWishlist: (id) =>
           set((state) => {
             if (state.wishlist.includes(id)) return state;
@@ -142,17 +197,17 @@ export const useShopStore = create<ShopState>()(
             return newState;
           }),
 
-        // User management
-        setCurrentUser: (user) => {
-          set({ currentUser: user });
+        // User management sa cart sync
+        // setCurrentUser: (user) => {
+        //   set({ currentUser: user });
 
-          // Kada se korisnik uloguje, sync postojeći wishlist sa Firebase
-          if (user) {
-            setTimeout(() => {
-              get().syncWishlistToFirebase().catch(console.error);
-            }, 0);
-          }
-        },
+        //   // Kada se korisnik uloguje, sync postojeći wishlist i cart sa Firebase
+        //   if (user) {
+        //     setTimeout(() => {
+        //       get().syncAllToFirebase().catch(console.error);
+        //     }, 0);
+        //   }
+        // },
 
         syncWishlistToFirebase: async () => {
           const { currentUser, wishlist } = get();
@@ -162,6 +217,101 @@ export const useShopStore = create<ShopState>()(
             await saveUserWishlist(currentUser.uid, wishlist);
           } catch (error) {
             console.error("Error syncing wishlist to Firebase:", error);
+          }
+        },
+
+        syncCartToFirebase: async () => {
+          const { currentUser, cart } = get();
+          if (!currentUser) return;
+
+          try {
+            await saveUserCart(currentUser.uid, cart);
+          } catch (error) {
+            console.error("Error syncing cart to Firebase:", error);
+          }
+        },
+
+        syncAllToFirebase: async () => {
+          const { currentUser, wishlist, cart } = get();
+          if (!currentUser) return;
+
+          try {
+            // Sync oba odjednom
+            await Promise.all([
+              saveUserWishlist(currentUser.uid, wishlist),
+              saveUserCart(currentUser.uid, cart),
+            ]);
+          } catch (error) {
+            console.error("Error syncing data to Firebase:", error);
+          }
+        },
+
+        // User management sa merge logikom
+        setCurrentUser: (user) => {
+          set({ currentUser: user });
+
+          // Kada se korisnik uloguje, merguj lokalne podatke sa Firebase
+          if (user) {
+            setTimeout(() => {
+              get().mergeWithFirebase().catch(console.error);
+            }, 0);
+          }
+        },
+
+        // Nova funkcija za merge
+        mergeWithFirebase: async () => {
+          const {
+            currentUser,
+            wishlist: localWishlist,
+            cart: localCart,
+          } = get();
+          if (!currentUser) return;
+
+          try {
+            // Učitaj postojeće podatke iz Firebase
+            const [firebaseWishlist, firebaseCart] = await Promise.all([
+              loadUserWishlist(currentUser.uid),
+              loadUserCart(currentUser.uid),
+            ]);
+
+            // Merge wishlist - kombinuj bez duplikata
+            const mergedWishlist = Array.from(
+              new Set([...firebaseWishlist, ...localWishlist])
+            );
+
+            // Merge cart - kombinuj količine za iste proizvode
+            const mergedCart = [...firebaseCart];
+
+            localCart.forEach((localItem) => {
+              const existingIndex = mergedCart.findIndex(
+                (item) => item.id === localItem.id
+              );
+              if (existingIndex >= 0) {
+                // Proizvod već postoji u Firebase cart-u, dodaj količinu
+                mergedCart[existingIndex].quantity += localItem.quantity;
+              } else {
+                // Novi proizvod, dodaj u cart
+                mergedCart.push(localItem);
+              }
+            });
+
+            // Ažuriraj lokalni state
+            set({
+              wishlist: mergedWishlist,
+              cart: mergedCart,
+            });
+
+            // Sačuvaj merged podatke u Firebase
+            await Promise.all([
+              saveUserWishlist(currentUser.uid, mergedWishlist),
+              saveUserCart(currentUser.uid, mergedCart),
+            ]);
+
+            console.log("Successfully merged local data with Firebase");
+          } catch (error) {
+            console.error("Error merging data with Firebase:", error);
+            // Fallback: samo sync-uj postojeće lokalne podatke
+            await get().syncAllToFirebase();
           }
         },
       }),
