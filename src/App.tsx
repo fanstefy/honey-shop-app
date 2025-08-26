@@ -34,6 +34,7 @@ import "./styles/app.css";
 import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { AuthProvider } from "./contexts/AuthContext";
 import ResetPassword from "./pages/ResetPassword";
+import { useAuthSync } from "./hooks/useAuthSync";
 
 const initialProducts = [
   {
@@ -82,12 +83,23 @@ const initialProducts = [
 ];
 
 const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+};
+
+// Kreira wrapper komponentu koja koristi hook-ove
+const AppContent: React.FC = () => {
   const [isScrollToTopBtnVisible, setIsScrollToTopBtnVisible] = useState(false);
 
   const setProducts = useShopStore((state) => state.setProducts);
   const isOpen = useSidebarStore((state) => state.isOpen);
   const sidebarType = useSidebarStore((state) => state.sidebarType);
   const closeSidebar = useSidebarStore((state) => state.closeSidebar);
+
+  useAuthSync();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -107,7 +119,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <AuthProvider>
+    <>
+      {" "}
       <div className="grid grid-rows-layout min-h-screen">
         <Header />
         <ScrollToTop />
@@ -151,7 +164,6 @@ const App: React.FC = () => {
 
         <Footer />
       </div>
-
       <Sidebar
         isOpen={isOpen}
         onClose={closeSidebar}
@@ -166,7 +178,6 @@ const App: React.FC = () => {
         }
         type={sidebarType || "custom"}
       />
-
       {isScrollToTopBtnVisible && (
         <button
           onClick={scrollToTop}
@@ -176,7 +187,7 @@ const App: React.FC = () => {
           <MdOutlineKeyboardArrowUp />
         </button>
       )}
-    </AuthProvider>
+    </>
   );
 };
 

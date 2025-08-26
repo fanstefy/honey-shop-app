@@ -34,3 +34,7 @@ Thumbs.db
 # Testing
 coverage/
 node_modules/
+
+
+# custom files
+beleske.txt

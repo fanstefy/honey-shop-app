@@ -12,7 +12,13 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { signIn, signInWithGoogle, currentUser, error, setError } = useAuth();
+  const {
+    login: signIn,
+    loginWithGoogle,
+    currentUser,
+    error,
+    setError,
+  } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -58,7 +64,7 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
-      await signInWithGoogle();
+      await loginWithGoogle();
       // Navigation će se desiti automatski preko useEffect
     } catch (error: any) {
       console.error("Google sign in error:", error);

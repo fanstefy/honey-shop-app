@@ -5,20 +5,17 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import { User, UserCredential, ConfirmationResult } from "firebase/auth";
 import {
-  User,
-  UserCredential,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signInWithPhoneNumber,
-  signOut,
-  onAuthStateChanged,
-  sendPasswordResetEmail,
-  updateProfile,
-  ConfirmationResult,
-} from "firebase/auth";
-import { auth, googleProvider, setupRecaptcha } from "../lib/firebase";
+  signUpService,
+  loginService,
+  loginWithGoogleService,
+  sendSMSCodeService,
+  confirmSMSCodeService,
+  resetPasswordService,
+  logoutService,
+  onAuthChange,
+} from "../services/firebaseService";
 
 interface AuthContextType {
   currentUser: User | null;
@@ -29,8 +26,8 @@ interface AuthContextType {
     password: string,
     displayName?: string
   ) => Promise<UserCredential>;
-  signIn: (email: string, password: string) => Promise<UserCredential>;
-  signInWithGoogle: () => Promise<UserCredential>;
+  login: (email: string, password: string) => Promise<UserCredential>;
+  loginWithGoogle: () => Promise<UserCredential>;
   sendSMSCode: (phoneNumber: string) => Promise<ConfirmationResult>;
   confirmSMSCode: (
     confirmationResult: ConfirmationResult,
@@ -38,7 +35,6 @@ interface AuthContextType {
   ) => Promise<UserCredential>;
   resetPassword: (email: string) => Promise<void>;
   logout: () => Promise<void>;
-
   setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -52,159 +48,112 @@ export const useAuth = (): AuthContextType => {
   return context;
 };
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  // Registracija sa email/password
+  useEffect(() => {
+    const unsubscribe = onAuthChange((user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+    return unsubscribe;
+  }, []);
+
   const signUp = async (
     email: string,
     password: string,
     displayName?: string
-  ): Promise<UserCredential> => {
+  ) => {
     try {
       setError("");
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      // Dodaj display name ako je prosledjen
-      if (displayName && result.user) {
-        await updateProfile(result.user, { displayName });
-      }
-
-      return result;
-    } catch (error: any) {
-      setError(error.message);
-      throw error;
+      return await signUpService(email, password, displayName);
+    } catch (err: any) {
+      setError(err.message);
+      throw err;
     }
   };
 
-  // Prijava sa email/password
-  const signIn = async (
-    email: string,
-    password: string
-  ): Promise<UserCredential> => {
+  const login = async (email: string, password: string) => {
     try {
       setError("");
-      return await signInWithEmailAndPassword(auth, email, password);
-    } catch (error: any) {
-      setError(error.message);
-      throw error;
+      return await loginService(email, password);
+    } catch (err: any) {
+      setError(err.message);
+      throw err;
     }
   };
 
-  // Google prijava
-  const signInWithGoogle = async (): Promise<UserCredential> => {
+  const loginWithGoogle = async () => {
     try {
       setError("");
-      return await signInWithPopup(auth, googleProvider);
-    } catch (error: any) {
-      setError(error.message);
-      throw error;
+      return await loginWithGoogleService();
+    } catch (err: any) {
+      setError(err.message);
+      throw err;
     }
   };
 
-  // Phone prijava - korak 1: pošalji SMS
-  const sendSMSCode = async (
-    phoneNumber: string
-  ): Promise<ConfirmationResult> => {
+  const sendSMSCode = async (phoneNumber: string) => {
     try {
       setError("");
-      const recaptcha = setupRecaptcha("recaptcha-container");
-      const confirmationResult = await signInWithPhoneNumber(
-        auth,
-        phoneNumber,
-        recaptcha
-      );
-      return confirmationResult;
-    } catch (error: any) {
-      setError(error.message);
-      throw error;
+      return await sendSMSCodeService(phoneNumber);
+    } catch (err: any) {
+      setError(err.message);
+      throw err;
     }
   };
 
-  // Phone prijava - korak 2: potvrdi kod
   const confirmSMSCode = async (
     confirmationResult: ConfirmationResult,
     code: string
-  ): Promise<UserCredential> => {
+  ) => {
     try {
       setError("");
-      return await confirmationResult.confirm(code);
-    } catch (error: any) {
-      setError(error.message);
-      throw error;
+      return await confirmSMSCodeService(confirmationResult, code);
+    } catch (err: any) {
+      setError(err.message);
+      throw err;
     }
   };
 
-  // Reset password
-  // const resetPassword = async (email: string): Promise<void> => {
-  //   try {
-  //     setError("");
-  //     return await sendPasswordResetEmail(auth, email);
-  //   } catch (error: any) {
-  //     setError(error.message);
-  //     throw error;
-  //   }
-  // };
-  const resetPassword = async (email: string): Promise<void> => {
+  const resetPassword = async (email: string) => {
     try {
       setError("");
-      return await sendPasswordResetEmail(auth, email, {
-        url: "http://localhost:5173/reset-password", // ovde tvoj domen
-        handleCodeInApp: true,
-      });
-    } catch (error: any) {
-      setError(error.message);
-      throw error;
+      return await resetPasswordService(email);
+    } catch (err: any) {
+      setError(err.message);
+      throw err;
     }
   };
 
-  // Odjava
-  const logout = async (): Promise<void> => {
+  const logout = async () => {
     try {
       setError("");
-      return await signOut(auth);
-    } catch (error: any) {
-      setError(error.message);
-      throw error;
+      return await logoutService();
+    } catch (err: any) {
+      setError(err.message);
+      throw err;
     }
-  };
-
-  // Praćenje auth state-a
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
-      setCurrentUser(user);
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  const value: AuthContextType = {
-    currentUser,
-    loading,
-    error,
-    signUp,
-    signIn,
-    signInWithGoogle,
-    sendSMSCode,
-    confirmSMSCode,
-    resetPassword,
-    logout,
-    setError,
   };
 
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider
+      value={{
+        currentUser,
+        loading,
+        error,
+        signUp,
+        login: login,
+        loginWithGoogle,
+        sendSMSCode,
+        confirmSMSCode,
+        resetPassword,
+        logout,
+        setError,
+      }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );

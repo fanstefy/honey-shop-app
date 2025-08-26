@@ -1,4 +1,3 @@
-// pages/Profile.tsx
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +16,10 @@ import {
   FaShieldAlt,
   FaEye,
   FaEyeSlash,
+  FaTimes,
+  FaShoppingCart,
 } from "react-icons/fa";
+import { useShopStore } from "../store/useShopStore";
 
 const Profile = () => {
   const { currentUser, logout } = useAuth();
@@ -26,6 +28,9 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [showPersonalInfo, setShowPersonalInfo] = useState(false);
+
+  const { wishlist, products, getProductById, removeFromWishlist, addToCart } =
+    useShopStore();
 
   // Mock data - u stvarnoj aplikaciji bi ovo došlo iz baze podataka
   const [userStats] = useState({
@@ -67,6 +72,10 @@ const Profile = () => {
     city: "",
     postalCode: "",
   });
+
+  const wishlistItems = products?.filter((product) =>
+    wishlist.includes(product.id)
+  );
 
   const handleLogout = async () => {
     setIsLoading(true);
@@ -186,7 +195,6 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Navigation Tabs */}
           <div className="border-b border-gray-200">
             <div className="flex space-x-8 px-8">
               {tabs.map((tab) => (
@@ -201,6 +209,11 @@ const Profile = () => {
                 >
                   <tab.icon className="text-sm" />
                   <span>{tab.label}</span>
+                  {tab.id === "favorites" && wishlist.length > 0 && (
+                    <span className="bg-yellow-500 text-white text-xs rounded-full px-2 py-1">
+                      {wishlist.length}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -507,28 +520,101 @@ const Profile = () => {
             </div>
           )}
 
-          {/* Favorites Tab */}
+          {/* Favorites Tab - NOVA IMPLEMENTACIJA */}
           {activeTab === "favorites" && (
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Omiljeni proizvodi
-              </h2>
-              <div className="text-center py-12">
-                <FaHeart className="mx-auto text-6xl text-gray-300 mb-4" />
-                <h3 className="text-xl font-medium text-gray-900 mb-2">
-                  Još uvek nemate omiljene proizvode
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Počnite da dodajete proizvode u omiljene dok pretražujete naš
-                  katalog
-                </p>
-                <button
-                  onClick={() => navigate("/shop")}
-                  className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200"
-                >
-                  Idite u prodavnicu
-                </button>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Omiljeni proizvodi
+                </h2>
+                {wishlist.length > 0 && (
+                  <span className="text-gray-600">
+                    {wishlist.length} proizvoda
+                  </span>
+                )}
               </div>
+
+              {wishlistItems.length === 0 ? (
+                <div className="text-center py-12">
+                  <FaHeart className="mx-auto text-6xl text-gray-300 mb-4" />
+                  <h3 className="text-xl font-medium text-gray-900 mb-2">
+                    Još uvek nemate omiljene proizvode
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Počnite da dodajete proizvode u omiljene dok pretražujete
+                    naš katalog
+                  </p>
+                  <button
+                    onClick={() => navigate("/shop")}
+                    className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200"
+                  >
+                    Idite u prodavnicu
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {wishlistItems.map((product) => (
+                    <div
+                      key={product.id}
+                      className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition duration-200"
+                    >
+                      {/* Slika proizvoda */}
+                      <div className="relative">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-48 object-cover"
+                        />
+                        <button
+                          onClick={() => removeFromWishlist(product.id)}
+                          className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md hover:bg-gray-50 transition duration-200"
+                        >
+                          <FaTimes className="text-red-500 text-sm" />
+                        </button>
+                        {product.discount && (
+                          <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-medium">
+                            {product.discount}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Info proizvoda */}
+                      <div className="p-4">
+                        <h3 className="font-bold text-lg text-gray-900 mb-2">
+                          {product.name}
+                        </h3>
+                        {product.description && (
+                          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                            {product.description}
+                          </p>
+                        )}
+                        <div className="flex items-center justify-between">
+                          <div className="text-2xl font-bold text-yellow-600">
+                            ${product.price}
+                          </div>
+                          <div className="flex space-x-2">
+                            <button
+                              onClick={() => addToCart(product.id)}
+                              className="flex items-center space-x-1 px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200 text-sm"
+                            >
+                              <FaShoppingCart className="text-xs" />
+                              <span>Dodaj</span>
+                            </button>
+                            <button
+                              onClick={() =>
+                                navigate(`/shop/product/${product.id}`)
+                              }
+                              className="px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-200 text-sm"
+                            >
+                              Detalji
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

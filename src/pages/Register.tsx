@@ -26,7 +26,7 @@ const Register = () => {
     feedback: "",
   });
 
-  const { signUp, signInWithGoogle, currentUser, error, setError } = useAuth();
+  const { signUp, loginWithGoogle, currentUser, error, setError } = useAuth();
   const navigate = useNavigate();
 
   // Redirect ako je korisnik već ulogovan
@@ -103,7 +103,12 @@ const Register = () => {
 
     setIsLoading(true);
     try {
-      await signUp(formData.email, formData.password, formData.displayName);
+      const result = await signUp(
+        formData.email,
+        formData.password,
+        formData.displayName
+      );
+
       // Navigation će se desiti automatski preko useEffect
     } catch (error: any) {
       console.error("Registration error:", error);
@@ -116,7 +121,7 @@ const Register = () => {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
-      await signInWithGoogle();
+      await loginWithGoogle();
       // Navigation će se desiti automatski preko useEffect
     } catch (error: any) {
       console.error("Google sign in error:", error);
