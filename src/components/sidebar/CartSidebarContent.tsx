@@ -170,7 +170,10 @@ const CartSidebarContent: React.FC = () => {
 
           <button
             className="w-full bg-yellow-500 text-white rounded-full py-2 text-sm font-semibold hover:bg-yellow-600 transition"
-            onClick={() => alert("Proceed to Checkout")}
+            onClick={() => {
+              closeSidebar();
+              navigate("/checkout");
+            }}
           >
             CHECKOUT
           </button>

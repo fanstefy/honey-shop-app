@@ -29,6 +29,7 @@ interface ShopState {
   getProductById: (id: number) => Product | null;
   addToCart: (id: number) => void;
   removeFromCart: (id: number) => void;
+  clearCart: () => void;
   increaseCartQuantity: (id: number) => void;
   decreaseCartQuantity: (id: number) => void;
 
@@ -99,6 +100,21 @@ export const useShopStore = create<ShopState>()(
               ...state,
               cart: state.cart.filter((item) => item.id !== id),
             };
+
+            // Async sync sa Firebase
+            setTimeout(() => {
+              const currentState = get();
+              if (currentState.currentUser) {
+                currentState.syncCartToFirebase().catch(console.error);
+              }
+            }, 0);
+
+            return newState;
+          }),
+
+        clearCart: () =>
+          set((state) => {
+            const newState = { ...state, cart: [] };
 
             // Async sync sa Firebase
             setTimeout(() => {

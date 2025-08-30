@@ -1,6 +1,6 @@
 // pages/Register.tsx
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import {
   FaGoogle,
@@ -28,11 +28,13 @@ const Register = () => {
 
   const { signUp, loginWithGoogle, currentUser, error, setError } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Redirect ako je korisnik već ulogovan
   useEffect(() => {
     if (currentUser) {
-      navigate("/profile", { replace: true });
+      const from = location.state?.from?.pathname || "/profile";
+      navigate(from, { replace: true });
     }
   }, [currentUser, navigate]);
 

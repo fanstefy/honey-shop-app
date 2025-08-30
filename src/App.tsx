@@ -35,6 +35,8 @@ import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { AuthProvider } from "./contexts/AuthContext";
 import ResetPassword from "./pages/ResetPassword";
 import { useAuthSync } from "./hooks/useAuthSync";
+import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
 
 const initialProducts = [
   {
@@ -160,6 +162,8 @@ const AppContent: React.FC = () => {
           />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order-success/:orderId" element={<OrderSuccess />} />
         </Routes>
 
         <Footer />

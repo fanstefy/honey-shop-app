@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {
@@ -20,6 +20,8 @@ import {
   FaShoppingCart,
 } from "react-icons/fa";
 import { useShopStore } from "../store/useShopStore";
+import { getUserOrders, Order } from "../services/ordersFirebaseService";
+import { formatFirebaseDate, translateStatus } from "../utils/utilities";
 
 const Profile = () => {
   const { currentUser, logout } = useAuth();
@@ -33,36 +35,58 @@ const Profile = () => {
     useShopStore();
 
   // Mock data - u stvarnoj aplikaciji bi ovo došlo iz baze podataka
-  const [userStats] = useState({
-    totalOrders: 12,
-    totalSpent: 245.5,
-    favoriteProducts: 8,
-    rewardPoints: 1250,
-  });
+  // const [userStats] = useState({
+  //   totalOrders: 12,
+  //   totalSpent: 245.5,
+  //   favoriteProducts: 8,
+  //   rewardPoints: 1250,
+  // });
 
-  const [recentOrders] = useState([
-    {
-      id: "ORD-001",
-      date: "2024-12-15",
-      total: 45.0,
-      status: "Isporučeno",
-      items: 3,
-    },
-    {
-      id: "ORD-002",
-      date: "2024-12-08",
-      total: 32.5,
-      status: "U pripremi",
-      items: 2,
-    },
-    {
-      id: "ORD-003",
-      date: "2024-11-28",
-      total: 67.25,
-      status: "Isporučeno",
-      items: 5,
-    },
-  ]);
+  const [recentOrders, setRecentOrders] = useState<Order[]>([]);
+
+  // Umesto mock userStats, kalkuliši realne statistike
+  const userStats = useMemo(() => {
+    const totalOrders = recentOrders.length;
+    const totalSpent = recentOrders.reduce(
+      (sum, order) => sum + order.total,
+      0
+    );
+    const favoriteProducts = wishlist.length;
+
+    // Mock rewards system - možeš implementirati kasnije
+    const rewardPoints = Math.floor(totalSpent * 10); // 10 poena po dolaru
+
+    return {
+      totalOrders,
+      totalSpent,
+      favoriteProducts,
+      rewardPoints,
+    };
+  }, [recentOrders, wishlist.length]);
+
+  // const [recentOrders] = useState([
+  //   {
+  //     id: "ORD-001",
+  //     date: "2024-12-15",
+  //     total: 45.0,
+  //     status: "Isporučeno",
+  //     items: 3,
+  //   },
+  //   {
+  //     id: "ORD-002",
+  //     date: "2024-12-08",
+  //     total: 32.5,
+  //     status: "U pripremi",
+  //     items: 2,
+  //   },
+  //   {
+  //     id: "ORD-003",
+  //     date: "2024-11-28",
+  //     total: 67.25,
+  //     status: "Isporučeno",
+  //     items: 5,
+  //   },
+  // ]);
 
   const [editForm, setEditForm] = useState({
     displayName: currentUser?.displayName || "",
@@ -76,6 +100,17 @@ const Profile = () => {
   const wishlistItems = products?.filter((product) =>
     wishlist.includes(product.id)
   );
+
+  useEffect(() => {
+    const loadUserOrders = async () => {
+      if (currentUser) {
+        const orders = await getUserOrders(currentUser.uid);
+        setRecentOrders(orders);
+      }
+    };
+
+    loadUserOrders();
+  }, [currentUser]);
 
   const handleLogout = async () => {
     setIsLoading(true);
@@ -477,46 +512,117 @@ const Profile = () => {
           )}
 
           {/* Orders Tab */}
+          {/* Orders Tab */}
           {activeTab === "orders" && (
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 Moje porudžbine
               </h2>
-              <div className="space-y-4">
-                {recentOrders.map((order) => (
-                  <div
-                    key={order.id}
-                    className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition duration-200"
+
+              {recentOrders.length === 0 ? (
+                <div className="text-center py-12">
+                  <FaShoppingBag className="mx-auto text-6xl text-gray-300 mb-4" />
+                  <h3 className="text-xl font-medium text-gray-900 mb-2">
+                    Nemate porudžbine
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Kada napravite prvu porudžbinu, pojaviće se ovde
+                  </p>
+                  <button
+                    onClick={() => navigate("/shop")}
+                    className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200"
                   >
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-2">
-                          <h3 className="font-bold text-lg">#{order.id}</h3>
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                              order.status
-                            )}`}
+                    Idite u prodavnicu
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {recentOrders.map((order) => (
+                    <div
+                      key={order.id}
+                      className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition duration-200"
+                    >
+                      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-3 mb-2">
+                            <h3 className="font-bold text-lg">
+                              #{order.orderId}
+                            </h3>
+                            <span
+                              className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                                order.status
+                              )}`}
+                            >
+                              {translateStatus(order.status)}
+                            </span>
+                          </div>
+
+                          <div className="text-gray-600 space-y-1 mb-4">
+                            <p>
+                              <strong>Datum:</strong>{" "}
+                              {order.createdAt
+                                ? formatFirebaseDate(order.createdAt)
+                                : "N/A"}
+                            </p>
+                            <p>
+                              <strong>Stavke:</strong> {order.items.length}{" "}
+                              proizvod(a)
+                            </p>
+                            <p>
+                              <strong>Dostava:</strong>{" "}
+                              {order.shippingAddress.fullName}
+                            </p>
+                            <p>
+                              <strong>Adresa:</strong>{" "}
+                              {order.shippingAddress.address},{" "}
+                              {order.shippingAddress.city}
+                            </p>
+                          </div>
+
+                          {/* Order Items Preview */}
+                          <div className="bg-gray-50 rounded-lg p-3 mb-4">
+                            <h4 className="font-medium text-sm text-gray-700 mb-2">
+                              Proizvodi:
+                            </h4>
+                            <div className="space-y-1">
+                              {order.items.map((item, index) => (
+                                <div
+                                  key={index}
+                                  className="flex justify-between text-sm"
+                                >
+                                  <span>
+                                    {item.name} x{item.quantity}
+                                  </span>
+                                  <span>
+                                    ${(item.price * item.quantity).toFixed(2)}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 lg:mt-0 lg:text-right lg:ml-6">
+                          <div className="text-2xl font-bold text-gray-900 mb-2">
+                            ${order.total.toFixed(2)}
+                          </div>
+                          <div className="text-sm text-gray-600 mb-3">
+                            Dostava: ${order.shippingCost.toFixed(2)}
+                          </div>
+                          <button
+                            onClick={() =>
+                              navigate(`/order-success/${order.orderId}`)
+                            }
+                            className="px-4 py-2 text-yellow-600 border border-yellow-600 rounded-lg hover:bg-yellow-50 transition duration-200"
                           >
-                            {order.status}
-                          </span>
+                            Pogledaj detalje
+                          </button>
                         </div>
-                        <div className="text-gray-600 space-y-1">
-                          <p>Datum: {formatDate(order.date)}</p>
-                          <p>Stavke: {order.items}</p>
-                        </div>
-                      </div>
-                      <div className="mt-4 md:mt-0 md:text-right">
-                        <div className="text-2xl font-bold text-gray-900">
-                          ${order.total}
-                        </div>
-                        <button className="mt-2 px-4 py-2 text-yellow-600 border border-yellow-600 rounded-lg hover:bg-yellow-50 transition duration-200">
-                          Pogledaj detalje
-                        </button>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

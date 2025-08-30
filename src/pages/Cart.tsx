@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../store/useShopStore";
 import { RxCross1 } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
 
 const CartPage: React.FC = () => {
   const cart = useShopStore((state) => state.cart);
@@ -12,6 +13,8 @@ const CartPage: React.FC = () => {
     (state) => state.decreaseCartQuantity
   );
   const removeFromCart = useShopStore((state) => state.removeFromCart);
+
+  const navigate = useNavigate();
 
   const cartItems = cart
     .map((cartItem) => {
@@ -223,7 +226,10 @@ const CartPage: React.FC = () => {
             </div>
 
             <div className="mt-6 flex flex-col items-center sm:items-stretch">
-              <button className="w-full sm:max-w-[300px] bg-yellow-500 text-white text-sm uppercase rounded-full py-2 font-semibold hover:bg-yellow-600 transition">
+              <button
+                onClick={() => navigate("/checkout")}
+                className="w-full sm:max-w-[300px] bg-yellow-500 text-white text-sm uppercase rounded-full py-2 font-semibold hover:bg-yellow-600 transition"
+              >
                 Proceed to Checkout
               </button>
             </div>
