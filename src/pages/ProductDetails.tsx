@@ -19,14 +19,14 @@ const ProductDetails: React.FC = () => {
     "description" | "additional" | "reviews"
   >("description");
   const { addToCart } = useShopStore();
-  const openSidebar = useSidebarStore((state) => state.openSidebar);
+  const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
   const navigate = useNavigate();
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
       addToCart(Number(product?.id));
     }
-    openSidebar("cart");
+    openRightSidebar("cart");
   };
 
   // NEW: Buy Now -> add selected quantity, navigate to /checkout

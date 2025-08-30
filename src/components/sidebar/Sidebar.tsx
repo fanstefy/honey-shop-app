@@ -23,7 +23,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   width = "w-[350px]",
   children,
 }) => {
-  const quickViewProduct = useSidebarStore((state) => state.quickViewProduct);
+  const quickViewProduct = useSidebarStore(
+    (state) => state.rightSidebar.quickViewProduct
+  );
 
   const translateClass =
     position === "right"

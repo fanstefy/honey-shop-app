@@ -16,7 +16,7 @@ const CartSidebarContent: React.FC = () => {
   const removeFromCart = useShopStore((state) => state.removeFromCart);
 
   const navigate = useNavigate();
-  const closeSidebar = useSidebarStore((state) => state.closeSidebar);
+  const closeAllSidebars = useSidebarStore((state) => state.closeAllSidebars);
 
   const cartItems = cart
     .map((cartItem) => {
@@ -160,7 +160,7 @@ const CartSidebarContent: React.FC = () => {
         <div className="flex flex-col gap-3">
           <button
             onClick={() => {
-              closeSidebar();
+              closeAllSidebars();
               navigate("/cart");
             }}
             className="w-full text-center bg-white text-gray-800 border border-gray-300 rounded-full py-2 text-sm font-semibold hover:bg-gray-100 transition"
@@ -171,7 +171,7 @@ const CartSidebarContent: React.FC = () => {
           <button
             className="w-full bg-yellow-500 text-white rounded-full py-2 text-sm font-semibold hover:bg-yellow-600 transition"
             onClick={() => {
-              closeSidebar();
+              closeAllSidebars();
               navigate("/checkout");
             }}
           >

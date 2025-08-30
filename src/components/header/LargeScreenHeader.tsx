@@ -12,7 +12,7 @@ const LargeScreenHeader: React.FC = () => {
   const { pathname } = useLocation();
   const wishlist = useShopStore((state) => state.wishlist);
   const cart = useShopStore((state) => state.cart);
-  const openSidebar = useSidebarStore((state) => state.openSidebar);
+  const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -132,7 +132,7 @@ const LargeScreenHeader: React.FC = () => {
             {/* Cart Icon */}
             <div
               className="relative cursor-pointer mt-1 group"
-              onClick={() => openSidebar("cart")}
+              onClick={() => openRightSidebar("cart")}
               role="button"
               aria-label="Open Cart Sidebar"
               tabIndex={0}
@@ -154,7 +154,7 @@ const LargeScreenHeader: React.FC = () => {
             {/* Wishlist Icon */}
             <div
               className="relative cursor-pointer mt-1 group"
-              onClick={() => openSidebar("wishlist")}
+              onClick={() => openRightSidebar("wishlist")}
               role="button"
               aria-label="Open Wishlist Sidebar"
               tabIndex={0}

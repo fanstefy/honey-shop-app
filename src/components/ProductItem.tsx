@@ -28,7 +28,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
   const [isQuickViewPopupVisible, setIsQuickViewPopupVisible] = useState(false);
   const { cart, wishlist, addToCart, addToWishlist, removeFromWishlist } =
     useShopStore();
-  const openSidebar = useSidebarStore((state) => state.openSidebar);
+  const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
   const navigate = useNavigate();
 
   const isInWishlist = wishlist.includes(product.id);
@@ -40,7 +40,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
 
   const addToCartHandler = () => {
     addToCart(product.id);
-    openSidebar("cart");
+    openRightSidebar("cart");
   };
 
   return (
@@ -102,7 +102,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         type="button"
         aria-label={`Quick view ${product.name}`}
         title={`Quick view ${product.name}`}
-        onClick={() => openSidebar("quickview", product)}
+        onClick={() => openRightSidebar("quickview", product)}
         onMouseEnter={() => setIsQuickViewPopupVisible(true)}
         onMouseLeave={() => setIsQuickViewPopupVisible(false)}
       >

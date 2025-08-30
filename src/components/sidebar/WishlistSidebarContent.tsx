@@ -8,8 +8,8 @@ const WishlistSidebarContent: React.FC = () => {
   const products = useShopStore((state) => state.products);
   const addToCart = useShopStore((state) => state.addToCart);
   const removeFromWishlist = useShopStore((state) => state.removeFromWishlist);
-  const openSidebar = useSidebarStore((state) => state.openSidebar);
-  const closeSidebar = useSidebarStore((state) => state.closeSidebar);
+  const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
+  const closeRightSidebar = useSidebarStore((state) => state.closeRightSidebar);
 
   const wishlistItems = products?.filter((product) =>
     wishlist.includes(product.id)
@@ -87,8 +87,8 @@ const WishlistSidebarContent: React.FC = () => {
               <button
                 onClick={() => {
                   addToCart(product.id);
-                  closeSidebar();
-                  setTimeout(() => openSidebar("cart"), 200);
+                  closeRightSidebar();
+                  setTimeout(() => openRightSidebar("cart"), 200);
                 }}
                 className="text-green-600 uppercase text-xs font-thin mt-1 hover:text-yellow-700 transition-colors duration-300"
                 aria-label={`Add ${product.name} to cart`}

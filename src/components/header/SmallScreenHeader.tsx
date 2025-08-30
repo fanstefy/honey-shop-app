@@ -10,7 +10,12 @@ import { useSidebarStore } from "../../store/useSidebarStore";
 const SmallScreenHeader: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { pathname } = useLocation();
-  const openRightSidebar = useSidebarStore((state) => state.openSidebar);
+  const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
+  const openLeftSidebar = useSidebarStore((state) => state.openLeftSidebar);
+  const closeLeftSidebar = useSidebarStore((state) => state.closeLeftSidebar);
+  const isLeftSidebarOpen = useSidebarStore(
+    (state) => state.leftSidebar.isOpen
+  );
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-300">
@@ -28,7 +33,7 @@ const SmallScreenHeader: React.FC = () => {
 
         {/* Hamburger Menu */}
         <button
-          onClick={() => setIsSidebarOpen(true)}
+          onClick={() => openLeftSidebar()}
           className="text-yellow-600 text-2xl focus:outline-none"
           aria-label="Open Menu"
         >
@@ -38,8 +43,8 @@ const SmallScreenHeader: React.FC = () => {
 
       {/* Sidebar */}
       <Sidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
+        isOpen={isLeftSidebarOpen}
+        onClose={() => closeLeftSidebar()}
         title="Nektarika"
         position="left"
         width="w-[265px]"

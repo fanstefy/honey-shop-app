@@ -97,9 +97,11 @@ const AppContent: React.FC = () => {
   const [isScrollToTopBtnVisible, setIsScrollToTopBtnVisible] = useState(false);
 
   const setProducts = useShopStore((state) => state.setProducts);
-  const isOpen = useSidebarStore((state) => state.isOpen);
-  const sidebarType = useSidebarStore((state) => state.sidebarType);
-  const closeSidebar = useSidebarStore((state) => state.closeSidebar);
+  const isRightSidebarOpen = useSidebarStore(
+    (state) => state.rightSidebar.isOpen
+  );
+  const sidebarType = useSidebarStore((state) => state.rightSidebar.type);
+  const closeSidebar = useSidebarStore((state) => state.closeRightSidebar);
 
   useAuthSync();
 
@@ -169,7 +171,7 @@ const AppContent: React.FC = () => {
         <Footer />
       </div>
       <Sidebar
-        isOpen={isOpen}
+        isOpen={isRightSidebarOpen}
         onClose={closeSidebar}
         title={
           sidebarType === "cart"
