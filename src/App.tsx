@@ -187,7 +187,7 @@ const AppContent: React.FC = () => {
       {isScrollToTopBtnVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-5 right-5 z-50 bg-yellow-500 hover:bg-yellow-600 text-white p-3 rounded-full shadow-lg transition duration-300"
+          className="fixed bottom-5 right-5 z-50 bg-yellow-500 hover:bg-yellow-600 opacity-70 text-white p-3 rounded-full shadow-lg transition duration-300"
           aria-label="Scroll to top"
         >
           <MdOutlineKeyboardArrowUp />

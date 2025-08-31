@@ -43,7 +43,7 @@ const CartPage: React.FC = () => {
         />
       </Helmet>
 
-      <main className="container min-h-screen mx-auto px-4 py-8 oveflow-y-scroll">
+      <main className="container min-h-screen mx-auto px-4 py-[75px] oveflow-y-scroll">
         <h1 className="text-2xl font-bold mb-6">Shopping Cart</h1>
 
         <div className="flex flex-col lg:flex-row gap-8">

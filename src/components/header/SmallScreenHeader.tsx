@@ -58,7 +58,10 @@ const SmallScreenHeader: React.FC = () => {
                 className={`block text-yellow-600 hover:text-yellow-500 transition duration-300 ${
                   pathname === "/" ? "underline font-bold" : ""
                 }`}
-                onClick={() => setIsSidebarOpen(false)}
+                onClick={() => {
+                  setIsSidebarOpen(false);
+                  closeLeftSidebar();
+                }}
                 aria-current={pathname === "/" ? "page" : undefined}
               >
                 Home
@@ -72,7 +75,10 @@ const SmallScreenHeader: React.FC = () => {
                     ? "underline font-bold"
                     : ""
                 }`}
-                onClick={() => setIsSidebarOpen(false)}
+                onClick={() => {
+                  setIsSidebarOpen(false);
+                  closeLeftSidebar();
+                }}
                 aria-current={
                   pathname === "/shop" || pathname.includes("/shop/product")
                     ? "page"
@@ -88,7 +94,10 @@ const SmallScreenHeader: React.FC = () => {
                 className={`block text-yellow-600 hover:text-yellow-500 transition duration-300 ${
                   pathname === "/about" ? "underline font-bold" : ""
                 }`}
-                onClick={() => setIsSidebarOpen(false)}
+                onClick={() => {
+                  setIsSidebarOpen(false);
+                  closeLeftSidebar();
+                }}
                 aria-current={pathname === "/about" ? "page" : undefined}
               >
                 About
@@ -100,7 +109,10 @@ const SmallScreenHeader: React.FC = () => {
                 className={`block text-yellow-600 hover:text-yellow-500 transition duration-300 ${
                   pathname === "/contact" ? "underline font-bold" : ""
                 }`}
-                onClick={() => setIsSidebarOpen(false)}
+                onClick={() => {
+                  setIsSidebarOpen(false);
+                  closeLeftSidebar();
+                }}
                 aria-current={pathname === "/contact" ? "page" : undefined}
               >
                 Contact
@@ -136,7 +148,10 @@ const SmallScreenHeader: React.FC = () => {
             <Link
               to="/profile"
               className="text-yellow-600 hover:text-yellow-500 transition duration-300"
-              onClick={() => setIsSidebarOpen(false)}
+              onClick={() => {
+                setIsSidebarOpen(false);
+                closeLeftSidebar();
+              }}
               aria-label="Go to My Account"
             >
               My Account
