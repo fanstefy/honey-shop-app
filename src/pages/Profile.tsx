@@ -9,13 +9,25 @@ import {
   FaCalendarAlt,
   FaChevronDown,
   FaChevronUp,
+  FaCrown, // Admin icon
 } from "react-icons/fa";
 import { useShopStore } from "../store/useShopStore";
 import { getUserOrders, Order } from "../services/ordersFirebaseService";
+import { isUserAdmin, subscribeToOrders } from "../services/adminOrdersService";
 import Settings from "../components/Settings";
 import Favorites from "../components/Favorites";
 import Orders from "../components/Orders";
+import AdminOrders from "../components/AdminOrders";
 import PersonalInformation from "../components/PersonalInformation";
+
+interface TabItem {
+  id: string;
+  label: string;
+  shortLabel: string;
+  icon: React.ComponentType<any>;
+  count?: number;
+  isAdmin?: boolean;
+}
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -25,6 +37,24 @@ const Profile = () => {
   const { wishlist, products } = useShopStore();
 
   const [recentOrders, setRecentOrders] = useState<Order[]>([]);
+
+  // Check if current user is admin
+  const userIsAdmin = isUserAdmin(currentUser?.email || null);
+
+  // Add state for pending orders count
+  const [pendingOrdersCount, setPendingOrdersCount] = useState(0);
+
+  useEffect(() => {
+    // Load pending orders count for admin
+    if (userIsAdmin) {
+      // Use the same subscriber to get pending orders count
+      const unsubscribe = subscribeToOrders((orders) => {
+        setPendingOrdersCount(orders.length);
+      }, "pending"); // Filter only pending orders
+
+      return () => unsubscribe();
+    }
+  }, [userIsAdmin]);
 
   // Real statistics calculation
   const userStats = useMemo(() => {
@@ -50,14 +80,15 @@ const Profile = () => {
 
   useEffect(() => {
     const loadUserOrders = async () => {
-      if (currentUser) {
+      if (currentUser && !userIsAdmin) {
+        // Regular users load their own orders
         const orders = await getUserOrders(currentUser.uid);
         setRecentOrders(orders);
       }
     };
 
     loadUserOrders();
-  }, [currentUser]);
+  }, [currentUser, userIsAdmin]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("sr-RS", {
@@ -77,53 +108,61 @@ const Profile = () => {
       .slice(0, 2);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "delivered":
-      case "Isporučeno":
-        return "bg-green-100 text-green-800";
-      case "shipped":
-      case "Poslato":
-        return "bg-blue-100 text-blue-800";
-      case "confirmed":
-      case "Potvrđeno":
-        return "bg-yellow-100 text-yellow-800";
-      case "pending":
-      case "U pripremi":
-        return "bg-gray-100 text-gray-800";
-      case "cancelled":
-      case "Otkazano":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
+  // Dynamic tabs based on user role
+  const tabs = useMemo(() => {
+    const baseTabs: TabItem[] = [
+      { id: "profile", label: "Profil", shortLabel: "Prof", icon: FaUser },
+    ];
 
-  const tabs = [
-    { id: "profile", label: "Profil", shortLabel: "Prof", icon: FaUser },
-    {
-      id: "orders",
-      label: "Porudžbine",
-      shortLabel: "Ord",
-      icon: FaShoppingBag,
-      count: userStats.totalOrders,
-    },
-    {
-      id: "favorites",
-      label: "Omiljeno",
-      shortLabel: "Fav",
-      icon: FaHeart,
-      count: wishlist.length,
-    },
-    { id: "settings", label: "Podešavanja", shortLabel: "Set", icon: FaCog },
-  ];
+    if (userIsAdmin) {
+      console.log(
+        "userIsAdmin is true, pendingOrdersCount:",
+        pendingOrdersCount
+      );
+      baseTabs.push({
+        id: "admin-orders",
+        label: "Admin Porudžbine",
+        shortLabel: "Admin",
+        icon: FaCrown,
+        isAdmin: true,
+        count: pendingOrdersCount,
+      });
+    } else {
+      baseTabs.push({
+        id: "orders",
+        label: "Porudžbine",
+        shortLabel: "Ord",
+        icon: FaShoppingBag,
+        count: userStats.totalOrders,
+      });
+    }
+
+    baseTabs.push(
+      {
+        id: "favorites",
+        label: "Omiljeno",
+        shortLabel: "Fav",
+        icon: FaHeart,
+        count: wishlist.length,
+      },
+      { id: "settings", label: "Podešavanja", shortLabel: "Set", icon: FaCog }
+    );
+
+    return baseTabs;
+  }, [userIsAdmin, userStats.totalOrders, wishlist.length, pendingOrdersCount]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-orange-100 py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Header - Mobile Optimized */}
         <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl overflow-hidden mb-6 sm:mb-8">
-          <div className="bg-gradient-to-r from-yellow-500 to-orange-500 px-4 sm:px-8 py-8 sm:py-12">
+          <div
+            className={`${
+              userIsAdmin
+                ? "bg-gradient-to-r from-purple-600 to-indigo-600"
+                : "bg-gradient-to-r from-yellow-500 to-orange-500"
+            } px-4 sm:px-8 py-8 sm:py-12`}
+          >
             <div className="flex flex-col items-center space-y-4 sm:flex-row sm:items-start sm:space-y-0 sm:space-x-6">
               {/* Avatar */}
               <div className="relative flex-shrink-0">
@@ -140,6 +179,12 @@ const Profile = () => {
                     </span>
                   </div>
                 )}
+                {/* Admin Badge */}
+                {userIsAdmin && (
+                  <div className="absolute -top-2 -right-2 bg-purple-500 rounded-full p-2 shadow-lg">
+                    <FaCrown className="text-white text-xs sm:text-sm" />
+                  </div>
+                )}
                 <button className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition duration-200">
                   <FaCamera className="text-gray-600 text-xs sm:text-sm" />
                 </button>
@@ -147,13 +192,28 @@ const Profile = () => {
 
               {/* User Info */}
               <div className="text-white text-center sm:text-left flex-1 min-w-0">
-                <h1 className="text-2xl sm:text-3xl font-bold break-words">
-                  {currentUser?.displayName || "Bez imena"}
-                </h1>
-                <p className="text-yellow-100 mt-1 text-sm sm:text-base break-all">
+                <div className="flex items-center justify-center sm:justify-start space-x-2">
+                  <h1 className="text-2xl sm:text-3xl font-bold break-words">
+                    {currentUser?.displayName || "Bez imena"}
+                  </h1>
+                  {userIsAdmin && (
+                    <span className="bg-white/20 px-2 py-1 rounded-full text-xs font-medium">
+                      ADMIN
+                    </span>
+                  )}
+                </div>
+                <p
+                  className={`${
+                    userIsAdmin ? "text-purple-100" : "text-yellow-100"
+                  } mt-1 text-sm sm:text-base break-all`}
+                >
                   {currentUser?.email}
                 </p>
-                <p className="text-yellow-100 text-xs sm:text-sm mt-2">
+                <p
+                  className={`${
+                    userIsAdmin ? "text-purple-100" : "text-yellow-100"
+                  } text-xs sm:text-sm mt-2`}
+                >
                   <FaCalendarAlt className="inline mr-1 flex-shrink-0" />
                   Član od:{" "}
                   {formatDate(
@@ -171,10 +231,12 @@ const Profile = () => {
                     onClick={() => setShowMobileStats(!showMobileStats)}
                     className="w-full bg-white/10 rounded-lg p-3 mb-2 flex items-center justify-between hover:bg-white/20 transition-colors"
                   >
-                    <span className="font-medium">Statistike</span>
+                    <span className="font-medium">
+                      {userIsAdmin ? "Admin Panel" : "Statistike"}
+                    </span>
                     {showMobileStats ? <FaChevronUp /> : <FaChevronDown />}
                   </button>
-                  {showMobileStats && (
+                  {showMobileStats && !userIsAdmin && (
                     <div className="grid grid-cols-2 gap-2">
                       <div className="bg-white/10 rounded-lg p-3 text-center">
                         <div className="text-lg font-bold">
@@ -192,23 +254,39 @@ const Profile = () => {
                       </div>
                     </div>
                   )}
+                  {showMobileStats && userIsAdmin && (
+                    <div className="bg-white/10 rounded-lg p-3 text-center">
+                      <FaCrown className="mx-auto mb-2 text-lg" />
+                      <div className="text-sm">Administratorski pristup</div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Desktop: Always Visible Stats */}
-                <div className="hidden sm:grid grid-cols-2 gap-4 md:gap-6">
-                  <div className="bg-white/10 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold">
-                      {userStats.totalOrders}
+                {!userIsAdmin && (
+                  <div className="hidden sm:grid grid-cols-2 gap-4 md:gap-6">
+                    <div className="bg-white/10 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold">
+                        {userStats.totalOrders}
+                      </div>
+                      <div className="text-yellow-100 text-sm">Porudžbina</div>
                     </div>
-                    <div className="text-yellow-100 text-sm">Porudžbina</div>
-                  </div>
-                  <div className="bg-white/10 rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold">
-                      ${userStats.totalSpent.toFixed(2)}
+                    <div className="bg-white/10 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold">
+                        ${userStats.totalSpent.toFixed(2)}
+                      </div>
+                      <div className="text-yellow-100 text-sm">Ukupno</div>
                     </div>
-                    <div className="text-yellow-100 text-sm">Ukupno</div>
                   </div>
-                </div>
+                )}
+
+                {/* Admin Badge - Desktop */}
+                {userIsAdmin && (
+                  <div className="hidden sm:block bg-white/10 rounded-lg p-4 text-center">
+                    <FaCrown className="mx-auto mb-2 text-2xl" />
+                    <div className="text-sm font-medium">Administrator</div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -216,21 +294,33 @@ const Profile = () => {
           {/* Navigation Tabs - Mobile Optimized */}
           <div className="border-b border-gray-200">
             <div className="flex px-4 sm:px-8">
-              {tabs.map((tab) => (
+              {tabs.map((tab: any) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex-1 sm:flex-initial py-3 sm:py-4 px-2 sm:px-2 sm:mr-8 border-b-2 font-medium text-xs sm:text-sm transition duration-200 flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 ${
                     activeTab === tab.id
-                      ? "border-yellow-500 text-yellow-600"
+                      ? tab.isAdmin
+                        ? "border-purple-500 text-purple-600"
+                        : "border-yellow-500 text-yellow-600"
                       : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                  <tab.icon className="text-xs sm:text-sm flex-shrink-0" />
+                  <tab.icon
+                    className={`text-xs sm:text-sm flex-shrink-0 ${
+                      tab.isAdmin && activeTab === tab.id
+                        ? "text-purple-600"
+                        : ""
+                    }`}
+                  />
                   <span className="hidden sm:inline">{tab.label}</span>
                   <span className="sm:hidden text-xs">{tab.shortLabel}</span>
                   {tab.count && tab.count > 0 && (
-                    <span className="bg-yellow-500 text-white text-xs rounded-full px-1 py-0.5 min-w-[16px] h-4 flex items-center justify-center leading-none">
+                    <span
+                      className={`${
+                        tab.isAdmin ? "bg-yellow-500" : "bg-yellow-500"
+                      } text-white text-xs rounded-full px-1 py-0.5 min-w-[16px] h-4 flex items-center justify-center leading-none`}
+                    >
                       {tab.count}
                     </span>
                   )}
@@ -250,8 +340,13 @@ const Profile = () => {
             </div>
           )}
 
-          {/* Orders Tab - Mobile Optimized */}
-          {activeTab === "orders" && <Orders orders={recentOrders} />}
+          {/* Orders Tab - For Regular Users */}
+          {activeTab === "orders" && !userIsAdmin && (
+            <Orders orders={recentOrders} />
+          )}
+
+          {/* Admin Orders Tab - For Admin Users */}
+          {activeTab === "admin-orders" && userIsAdmin && <AdminOrders />}
 
           {/* Favorites Tab - Mobile Optimized */}
           {activeTab === "favorites" && (
