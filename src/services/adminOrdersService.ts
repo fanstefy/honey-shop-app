@@ -16,8 +16,8 @@ import { Order } from "./ordersFirebaseService";
 
 // Admin emails - dodaj ovde sve admin email adrese
 const ADMIN_EMAILS = [
-  "predolac_stefan@yahoo.com",
   // Dodaj svoj email ovde (onaj sa kojim se uloguješ):
+  "predolac_stefan@yahoo.com",
   // "your-email@example.com",
 ];
 
