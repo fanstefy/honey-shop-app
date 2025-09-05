@@ -28,42 +28,53 @@ const Home: React.FC = () => {
   }, [products]);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(coverTextRef.current, {
-        x: -50,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-      });
+    const timeout = setTimeout(() => {
+      const ctx = gsap.context(() => {
+        gsap.set(
+          [
+            coverTextRef.current,
+            coverImageRef.current,
+            buttonRef.current,
+            featureCardsRef.current,
+          ],
+          { opacity: 0 }
+        );
 
-      gsap.from(coverImageRef.current, {
-        x: 50,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-        delay: 0.1,
-      });
+        gsap.to(coverTextRef.current, {
+          x: 20,
+          opacity: 1,
+          duration: 1,
+          ease: "power2.out",
+        });
+        gsap.to(coverImageRef.current, {
+          x: 30,
+          opacity: 1,
+          duration: 1,
+          ease: "power2.out",
+          delay: 0.1,
+        });
+        gsap.to(buttonRef.current, {
+          y: 30,
+          opacity: 1,
+          duration: 0.8,
+          ease: "back.out(1.7)",
+          delay: 0.2,
+        });
 
-      gsap.from(buttonRef.current, {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "back.out(1.7)",
-        delay: 0.2,
+        const cards = featureCardsRef.current;
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          stagger: 0.2,
+          delay: 0.2,
+          ease: "back.out(1.7)",
+        });
       });
+      return () => ctx.revert();
+    }, 150); // 150ms mali delay pre paljenja animacije
 
-      const cards = featureCardsRef.current;
-      gsap.from(cards, {
-        delay: 0.3,
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        stagger: 0.2,
-        ease: "back.out(1.7)power2.out",
-      });
-    });
-
-    return () => ctx.revert();
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -108,7 +119,7 @@ const Home: React.FC = () => {
       <section className="py-12 px-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="md:w-1/2 text-center md:text-left pl-4 pr-1">
-            <div ref={coverTextRef}>
+            <div ref={coverTextRef} className="opacity-0">
               <h1 className="text-[25px] font-bold leading-[35px] mb-2 text-gray-700">
                 Discover 100% Organic Honey – Straight from Nature
               </h1>
@@ -118,7 +129,10 @@ const Home: React.FC = () => {
                 packed with natural goodness.
               </p>
             </div>
-            <div ref={buttonRef} className="w-full text-center mt-[50px]">
+            <div
+              ref={buttonRef}
+              className="w-full text-center mt-[50px]  opacity-0"
+            >
               <Link
                 to="/shop"
                 className="inline-flex items-center gap-3 bg-yellow-500 hover:bg-yellow-600 text-white font-medium px-6 py-2 rounded-full transition duration-300 uppercase"
@@ -133,7 +147,7 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div ref={coverImageRef} className="md:w-1/2">
+          <div ref={coverImageRef} className="opacity-0 md:w-1/2">
             <img
               src={coverImage}
               alt="Jars of organic honey"
@@ -146,7 +160,7 @@ const Home: React.FC = () => {
         {/* Feature Cards */}
         <div
           ref={featureCardsRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 max-w-7xl mx-auto px-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 max-w-7xl mx-auto px-4 opacity-0"
         >
           <div className="feature-card flex items-start gap-4 px-4 py-6 border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaShippingFast size={24} className="text-yellow-600 mt-1" />
