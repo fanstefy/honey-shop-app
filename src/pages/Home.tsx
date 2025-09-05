@@ -12,6 +12,7 @@ import ProductItem from "../components/ProductItem";
 import { useShopStore } from "../store/useShopStore";
 import gsap from "gsap";
 import { Helmet } from "react-helmet-async";
+import ImageGallery from "../components/ImageGallery";
 
 const Home: React.FC = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
@@ -217,6 +218,9 @@ const Home: React.FC = () => {
           </p>
         </div>
       </section>
+
+      {/* Image Gallery Section */}
+      <ImageGallery />
 
       {/* Best Selling Section */}
       <section className="py-12 px-4 bg-white">
