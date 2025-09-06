@@ -1,0 +1,18 @@
+{
+  "accountSettings": "Account Settings",
+  "security": "Security",
+  "changePassword": "Change Password",
+  "updatePasswod": "Update Password",
+  "change": "Change",
+  "notifications": "Notifications",
+  "emailNotifications": "Email Notifications",
+  "receiveOrderNotifications": "Receive Order Notifications",
+  "marketingMessages": "Marketing Messages",
+  "receiveInfoAboutNewProducts": "Receive information about new products",
+  "dangerZone": "Danger Zone",
+  "deleteAccount": "Delete Account",
+  "deleteAccountPermanently": "Delete Account Permanently",
+  "logOut": "Logout",
+  "loggingOut": "Logging out...",
+  "logOutOfYourAccount": "Log Out Of Your Account"
+}

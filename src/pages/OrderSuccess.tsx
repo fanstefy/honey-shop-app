@@ -8,12 +8,14 @@ import {
   FaHome,
   FaEnvelope,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const OrderSuccess = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const navigate = useNavigate();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const loadOrder = async () => {
@@ -89,21 +91,21 @@ const OrderSuccess = () => {
             <div className="mb-4">
               <FaCheckCircle className="w-16 h-16 text-green-500 mx-auto" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              Porudžbina je uspešno kreirana!
-            </h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2"></h1>
             <p className="text-gray-600 mb-4">
-              Hvala vam na poverenju. Vaša porudžbina će biti obrađena u
-              najkraćem roku.
+              {t("orderSuccess:thankYouMessage")}
             </p>
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
               <div className="flex items-center">
                 <div className="ml-3">
                   <p className="text-sm text-yellow-700">
-                    Broj porudžbine: <strong>{order.orderId}</strong>
+                    {t(
+                      "orderSuccess:pleaseSaveThisNumberForLaterOrderTracking"
+                    )}{" "}
+                    <strong>{order.orderId}</strong>
                   </p>
                   <p className="text-sm text-yellow-700 mt-1">
-                    Molimo sačuvajte ovaj broj za kasnije praćenje porudžbine
+                    {t("orderSuccess:")}
                   </p>
                 </div>
               </div>
@@ -113,7 +115,7 @@ const OrderSuccess = () => {
           {/* Order Details */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-lg font-bold text-gray-900 mb-4">
-              Detalji porudžbine
+              {t("orderSuccess:orderDetails")} {order.orderId}
             </h2>
 
             {/* Order Items */}
@@ -132,7 +134,7 @@ const OrderSuccess = () => {
                     <div>
                       <p className="font-medium text-gray-900">{item.name}</p>
                       <p className="text-gray-500 text-sm">
-                        Količina: {item.quantity}
+                        {t("orderSuccess:quantity")}:{item.quantity}
                       </p>
                     </div>
                   </div>
@@ -146,15 +148,15 @@ const OrderSuccess = () => {
             {/* Order Totals */}
             <div className="border-t pt-4 space-y-2">
               <div className="flex justify-between text-sm">
-                <span>Subtotal:</span>
+                <span>{t("orderSuccess:subtotal")}:</span>
                 <span>${order.subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span>Dostava:</span>
+                <span>{t("orderSuccess:deliveryPrice")}:</span>
                 <span>${order.shippingCost.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-bold text-lg border-t pt-2">
-                <span>Ukupno:</span>
+                <span>{t("orderSuccess:total")}:</span>
                 <span>${order.total.toFixed(2)}</span>
               </div>
             </div>
@@ -162,7 +164,7 @@ const OrderSuccess = () => {
             {/* Shipping Info */}
             <div className="mt-6 bg-gray-50 rounded-lg p-4">
               <h3 className="font-medium text-gray-900 mb-2">
-                Dostava na adresu:
+                {t("orderSuccess:shippingAddress")}
               </h3>
               <div className="text-sm text-gray-600">
                 <p>
@@ -173,7 +175,8 @@ const OrderSuccess = () => {
                 <p>{order.shippingAddress.phone}</p>
                 {order.shippingAddress.notes && (
                   <p className="mt-2">
-                    <strong>Napomene:</strong> {order.shippingAddress.notes}
+                    <strong>{t("orderSuccess:additionalNotes")}:</strong>{" "}
+                    {order.shippingAddress.notes}
                   </p>
                 )}
               </div>
@@ -182,16 +185,18 @@ const OrderSuccess = () => {
             {/* Payment Method */}
             <div className="mt-4 bg-gray-50 rounded-lg p-4">
               <h3 className="font-medium text-gray-900 mb-2">
-                Način plaćanja:
+                {t("orderSuccess:paymentMethod")}
               </h3>
-              <p className="text-sm text-gray-600">Plaćanje pouzećem</p>
+              <p className="text-sm text-gray-600">
+                {t("orderSuccess:cacheOnDelivery")}
+              </p>
             </div>
           </div>
 
           {/* Next Steps */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <h2 className="text-lg font-bold text-gray-900 mb-4">
-              Šta je sledeće?
+              {t("orderSuccess:whatIsNext")}
             </h2>
             <div className="space-y-3">
               <div className="flex items-start">
@@ -200,10 +205,10 @@ const OrderSuccess = () => {
                 </div>
                 <div className="ml-3">
                   <p className="font-medium text-gray-900">
-                    Potvrda porudžbine
+                    {t("orderSuccess:orderConfirmation")}
                   </p>
                   <p className="text-sm text-gray-600">
-                    Kontaktiraćemo vas telefonom u naredna 24 sata radi potvrde
+                    {t("orderSuccess:weAreProcessingYourOrder")}
                   </p>
                 </div>
               </div>
@@ -213,9 +218,11 @@ const OrderSuccess = () => {
                   2
                 </div>
                 <div className="ml-3">
-                  <p className="font-medium text-gray-900">Priprema pošiljke</p>
+                  <p className="font-medium text-gray-900">
+                    {t("orderSuccess:packaging")}
+                  </p>
                   <p className="text-sm text-gray-600">
-                    Pakujemo vašu porudžbinu sa najvećom pažnjom
+                    {t("orderSuccess:yourOrderIsBeingCarefullyPackaged")}
                   </p>
                 </div>
               </div>
@@ -225,9 +232,11 @@ const OrderSuccess = () => {
                   3
                 </div>
                 <div className="ml-3">
-                  <p className="font-medium text-gray-900">Dostava</p>
+                  <p className="font-medium text-gray-900">
+                    {t("orderSuccess:delivery")}
+                  </p>
                   <p className="text-sm text-gray-600">
-                    Pošiljka stiže na vašu adresu u roku od 2-5 radnih dana
+                    {t("orderSuccess:onceShippedYouWillReceiveATrackingNumber")}
                   </p>
                 </div>
               </div>
@@ -240,9 +249,12 @@ const OrderSuccess = () => {
               <div className="flex items-center">
                 <FaEnvelope className="text-blue-600 mr-3" />
                 <div>
-                  <p className="font-medium text-blue-800">Email potvrda</p>
+                  <p className="font-medium text-blue-800">
+                    {t("orderSuccess:emailConfirmationSent")}
+                  </p>
                   <p className="text-blue-600 text-sm">
-                    Detalji porudžbine su poslati na {order.userEmail}
+                    {t("orderSuccess:orderDetailsHaveBeenSentTo")}{" "}
+                    {order.userEmail}
                   </p>
                 </div>
               </div>
@@ -256,7 +268,7 @@ const OrderSuccess = () => {
               className="flex-1 bg-yellow-500 text-white py-3 px-6 rounded-lg hover:bg-yellow-600 transition duration-200 flex items-center justify-center"
             >
               <FaShoppingBag className="mr-2" />
-              Nastavi kupovinu
+              {t("orderSuccess:continueShopping")}
             </button>
 
             <button
@@ -264,7 +276,7 @@ const OrderSuccess = () => {
               className="flex-1 bg-gray-600 text-white py-3 px-6 rounded-lg hover:bg-gray-700 transition duration-200 flex items-center justify-center"
             >
               <FaHome className="mr-2" />
-              Početna strana
+              {t("orderSuccess:backToHome")}
             </button>
 
             {order.userId && (
@@ -272,7 +284,7 @@ const OrderSuccess = () => {
                 onClick={() => navigate("/profile")}
                 className="flex-1 border border-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-50 transition duration-200"
               >
-                Moje porudžbine
+                {t("orderSuccess:viewMyOrders")}
               </button>
             )}
           </div>
@@ -280,14 +292,14 @@ const OrderSuccess = () => {
           {/* Contact Info */}
           <div className="mt-8 text-center">
             <p className="text-gray-600 text-sm">
-              Imate pitanja? Kontaktirajte nas na{" "}
+              {t("orderSuccess:needHelpContactUs")}{" "}
               <a
                 href="mailto:info@nektarika.com"
                 className="text-yellow-600 hover:underline"
               >
                 info@nektarika.com
               </a>{" "}
-              ili{" "}
+              {t("orderSuccess:or")}{" "}
               <a
                 href="tel:+381601234567"
                 className="text-yellow-600 hover:underline"

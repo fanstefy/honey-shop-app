@@ -3,6 +3,7 @@ import { useShopStore } from "../../store/useShopStore";
 import { RxCross1, RxMinus, RxPlus } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../store/useSidebarStore";
+import { useTranslation } from "react-i18next";
 
 const CartSidebarContent: React.FC = () => {
   const cart = useShopStore((state) => state.cart);
@@ -17,6 +18,8 @@ const CartSidebarContent: React.FC = () => {
 
   const navigate = useNavigate();
   const closeAllSidebars = useSidebarStore((state) => state.closeAllSidebars);
+
+  const { t } = useTranslation();
 
   const cartItems = cart
     .map((cartItem) => {
@@ -68,7 +71,7 @@ const CartSidebarContent: React.FC = () => {
       </Helmet>
 
       <h2 id="shopping-cart" className="sr-only">
-        Shopping Cart
+        {t("sidebar:shoppingCart")}
       </h2>
 
       <ul className="space-y-4 overflow-y-auto flex-1 pr-1 p-4">
@@ -117,7 +120,7 @@ const CartSidebarContent: React.FC = () => {
               </div>
 
               <p className="text-sm text-gray-500">
-                Price:{" "}
+                {t("sidebar:price")}{" "}
                 {new Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "USD",
@@ -148,7 +151,7 @@ const CartSidebarContent: React.FC = () => {
       {/* Subtotal + Buttons */}
       <div className="border-t border-gray-200 p-4">
         <div className="flex justify-between text-gray-700 font-semibold mb-4">
-          <span>Subtotal:</span>
+          <span>{t("sidebar:subtotal")}</span>
           <span>
             {new Intl.NumberFormat("en-US", {
               style: "currency",
@@ -165,7 +168,7 @@ const CartSidebarContent: React.FC = () => {
             }}
             className="w-full text-center bg-white text-gray-800 border border-gray-300 rounded-full py-2 text-sm font-semibold hover:bg-gray-100 transition"
           >
-            View Cart
+            {t("sidebar:viewCart")}
           </button>
 
           <button
@@ -175,7 +178,7 @@ const CartSidebarContent: React.FC = () => {
               navigate("/checkout");
             }}
           >
-            CHECKOUT
+            {t("sidebar:checkout")}
           </button>
         </div>
       </div>

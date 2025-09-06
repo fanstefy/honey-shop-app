@@ -1,11 +1,14 @@
+import logo from "../../assets/images/logo_sace_pcela_3.png";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useShopStore } from "../../store/useShopStore";
-import logo from "../../assets/images/logo_sace_pcela_3.png";
 import { useSidebarStore } from "../../store/useSidebarStore";
 import { FaUserCircle } from "react-icons/fa";
 import { RxHeart } from "react-icons/rx";
 import { BsCart3 } from "react-icons/bs";
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
+import { MdLanguage } from "react-icons/md";
 
 const LargeScreenHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,6 +16,8 @@ const LargeScreenHeader: React.FC = () => {
   const wishlist = useShopStore((state) => state.wishlist);
   const cart = useShopStore((state) => state.cart);
   const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,7 +40,7 @@ const LargeScreenHeader: React.FC = () => {
             className="text-black text-sm text-yellow-600 hover:text-yellow-500 transition duration-300"
             aria-label="Go to My Account"
           >
-            My Account
+            {t("myAccount")}
           </Link>
         </div>
       </div>
@@ -82,7 +87,7 @@ const LargeScreenHeader: React.FC = () => {
                   }`}
                   aria-current={pathname === "/" ? "page" : undefined}
                 >
-                  Home
+                  {t("home")}
                 </Link>
               </li>
               <li>
@@ -99,7 +104,7 @@ const LargeScreenHeader: React.FC = () => {
                       : undefined
                   }
                 >
-                  Shop
+                  {t("shop")}
                 </Link>
               </li>
               <li>
@@ -110,7 +115,7 @@ const LargeScreenHeader: React.FC = () => {
                   }`}
                   aria-current={pathname === "/about" ? "page" : undefined}
                 >
-                  About
+                  {t("about")}
                 </Link>
               </li>
               <li>
@@ -121,7 +126,7 @@ const LargeScreenHeader: React.FC = () => {
                   }`}
                   aria-current={pathname === "/contact" ? "page" : undefined}
                 >
-                  Contact
+                  {t("contact")}
                 </Link>
               </li>
             </ul>
@@ -147,7 +152,7 @@ const LargeScreenHeader: React.FC = () => {
                 </span>
               )}
               <span className="absolute -bottom-5 left-4 border border-black text-black text-xs px-2 opacity-0 group-hover:opacity-100 group-hover:delay-[1000ms] pointer-events-none">
-                Cart
+                {t("cart")}
               </span>
             </div>
 
@@ -169,8 +174,41 @@ const LargeScreenHeader: React.FC = () => {
                 </span>
               )}
               <span className="absolute -bottom-5 left-4 border border-black text-black text-xs px-2 opacity-0 group-hover:opacity-100 group-hover:delay-[1000ms] pointer-events-none">
-                Wishlist
+                {t("wishlist")}
               </span>
+            </div>
+
+            {/* Language Selector */}
+            <div className="relative ml-4 mt-[3px] group">
+              <button className="text-yellow-600 font-semibold flex items-center">
+                <MdLanguage
+                  size={21}
+                  className="text-yellow-500 hover:text-yellow-600 transition duration-300"
+                />
+                <span className="text-sm pl-1 text-yellow-600 font-normal">
+                  {i18n.language.toUpperCase()}
+                </span>
+              </button>
+              <div className="absolute right-0 mt-2 w-22 bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 transition duration-300 z-50">
+                <button
+                  onClick={() => i18n.changeLanguage("sr")}
+                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                >
+                  SR
+                </button>
+                <button
+                  onClick={() => i18n.changeLanguage("en")}
+                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => i18n.changeLanguage("ru")}
+                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                >
+                  RU
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -1,0 +1,18 @@
+{
+  "accountSettings": "Настройки учетной записи",
+  "security": "Безопасность",
+  "changePassword": "Изменить пароль",
+  "updatePasswod": "Обновить пароль",
+  "change": "Изменять",
+  "notifications": "Уведомления",
+  "emailNotifications": "Уведомления по электронной почте",
+  "receiveOrderNotifications": "Получать уведомления о заказах",
+  "marketingMessages": "Маркетинговые сообщения",
+  "receiveInfoAboutNewProducts": "Получать информацию о новых продуктах",
+  "dangerZone": "Опасная зона",
+  "deleteAccount": "Удалить аккаунт",
+  "deleteAccountPermanently": "Удалить навсегда свою учетную запись и все данные",
+  "logOut": "Выйти",
+  "loggingOut": "Выход из системы...",
+  "logOutOfYourAccount": "Выйдите из своей учетной записи"
+}

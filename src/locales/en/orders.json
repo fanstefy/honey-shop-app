@@ -1,0 +1,18 @@
+{
+  "myOrders": "My Orders",
+  "dontHaveOrders": "You don't have any orders",
+  "firstOrderWillAppearHere": "When you place your first order, it will appear here",
+  "shopNow": "Shop Now",
+  "delivery": "Delivery",
+  "delivered": "Delivered",
+  "orderDate": "Date",
+  "items": "Items",
+  "item": "item",
+  "address": "Address",
+  "itemsInOrder": "Items in Order",
+  "viewDetails": "View Details",
+  "sent": "Sent",
+  "confirmed": "Confirmed",
+  "pending": "Pending",
+  "cancelled": "Cancelled"
+}

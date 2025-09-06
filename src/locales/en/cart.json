@@ -1,0 +1,12 @@
+{
+  "title": "Shopping Cart",
+  "product": "Product",
+  "price": "Price",
+  "quantity": "Quantity",
+  "subtotal": "Subtotal",
+  "cartTotals": "Cart Totals",
+  "discount": "Discount",
+  "total": "Total",
+  "youSaved": "You saved",
+  "proceedToCheckout": "Proceed to Checkout"
+}

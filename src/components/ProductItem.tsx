@@ -5,6 +5,7 @@ import { TiEyeOutline } from "react-icons/ti";
 import { useShopStore } from "../store/useShopStore";
 import { useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../store/useSidebarStore";
+import { useTranslation } from "react-i18next";
 
 interface ProductItemProps {
   product: {
@@ -34,6 +35,8 @@ const ProductItem: React.FC<ProductItemProps> = ({
   const isInWishlist = wishlist.includes(product.id);
   const isInCart = cart.find((item) => item.id === product.id);
 
+  const { t } = useTranslation();
+
   const openDetailsPage = () => {
     navigate(`/shop/product/${product.id}`);
   };
@@ -57,8 +60,16 @@ const ProductItem: React.FC<ProductItemProps> = ({
             ? removeFromWishlist(product.id)
             : addToWishlist(product.id)
         }
-        aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
-        title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+        aria-label={
+          isInWishlist
+            ? t("productItem:removeFromWishlist")
+            : t("productItem:addToWishlist")
+        }
+        title={
+          isInWishlist
+            ? t("productItem:removeFromWishlist")
+            : t("productItem:addToWishlist")
+        }
         type="button"
       >
         <span
@@ -73,7 +84,9 @@ const ProductItem: React.FC<ProductItemProps> = ({
             before:border-r-0
           `}
         >
-          {isInWishlist ? "Added to wishlist" : "Add to wishlist"}
+          {isInWishlist
+            ? t("productItem:removeFromWishlist")
+            : t("productItem:addToWishlist")}
         </span>
         {isInWishlist ? (
           <AiFillHeart
@@ -119,7 +132,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           `}
           style={{ top: "50%", transform: "translateY(-50%)" }}
         >
-          Quick view
+          {t("productItem:quickView")}
         </span>
         <TiEyeOutline size={22} color="white" />
       </button>
@@ -134,7 +147,9 @@ const ProductItem: React.FC<ProductItemProps> = ({
           group-hover:opacity-100 group-hover:translate-x-0 delay-200"
         type="button"
         aria-label={isInCart ? "View product details" : "Add to cart"}
-        title={isInCart ? "View details" : "Add to cart"}
+        title={
+          isInCart ? t("productItem:viewDetails") : t("productItem:addToCart")
+        }
         onClick={() => (!isInCart ? addToCartHandler() : openDetailsPage())}
       >
         <span
@@ -147,11 +162,11 @@ const ProductItem: React.FC<ProductItemProps> = ({
             w-0 pl-0 pr-9
             transition-all duration-300
             z-10
-            group-hover/cart:w-36 group-hover/cart:pl-4
+            group-hover/cart:w-40 group-hover/cart:pl-4
           "
           style={{ lineHeight: "36px" }}
         >
-          {isInCart ? "View Details" : "Add to cart"}
+          {isInCart ? t("productItem:viewDetails") : t("productItem:addToCart")}
         </span>
         <span className="absolute top-0 right-0 z-20 bg-white border-2 rounded-full border-[#eab308] flex items-center justify-center h-9 w-9">
           <HiOutlineShoppingBag size={20} />

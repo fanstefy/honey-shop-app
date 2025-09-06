@@ -9,6 +9,7 @@ import {
   FaEnvelope,
   FaLock,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -28,6 +29,8 @@ const Register = () => {
   const { signUp, loginWithGoogle, currentUser, error, setError } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { t } = useTranslation();
 
   // Redirect ako je korisnik već ulogovan
   useEffect(() => {
@@ -168,8 +171,10 @@ const Register = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Registracija</h2>
-            <p className="mt-2 text-gray-600">Kreirajte vaš nalog</p>
+            <h2 className="text-3xl font-bold text-gray-900">
+              {t("auth:register")}
+            </h2>
+            <p className="mt-2 text-gray-600">{t("auth:createYourAccount")}</p>
           </div>
 
           {/* Error Alert */}
@@ -187,7 +192,7 @@ const Register = () => {
                 htmlFor="displayName"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Ime i prezime
+                {t("auth:fullName")}
               </label>
               <div className="relative">
                 <input
@@ -198,7 +203,7 @@ const Register = () => {
                   value={formData.displayName}
                   onChange={handleChange}
                   className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition duration-200"
-                  placeholder="Marko Marković"
+                  placeholder={t("auth:fullNamePlaceholder")}
                   disabled={isLoading}
                 />
                 <FaUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -211,7 +216,7 @@ const Register = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email adresa
+                {t("auth:email")}
               </label>
               <div className="relative">
                 <input
@@ -222,7 +227,7 @@ const Register = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition duration-200"
-                  placeholder="vasa.email@example.com"
+                  placeholder={t("auth:emailPlaceholder")}
                   disabled={isLoading}
                 />
                 <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -235,7 +240,7 @@ const Register = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Šifra
+                {t("auth:password")}
               </label>
               <div className="relative">
                 <input
@@ -246,7 +251,7 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition duration-200"
-                  placeholder="Unesite šifru"
+                  placeholder={t("auth:passwordPlaceholder")}
                   disabled={isLoading}
                 />
                 <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -287,7 +292,7 @@ const Register = () => {
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Potvrdite šifru
+                {t("auth:confirmPassword")}
               </label>
               <div className="relative">
                 <input
@@ -298,7 +303,7 @@ const Register = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className="w-full pl-12 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition duration-200"
-                  placeholder="Ponovite šifru"
+                  placeholder={t("auth:confirmPasswordPlaceholder")}
                   disabled={isLoading}
                 />
                 <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -316,11 +321,11 @@ const Register = () => {
                 <div className="mt-1">
                   {formData.password === formData.confirmPassword ? (
                     <p className="text-green-600 text-xs">
-                      ✓ Šifre se poklapaju
+                      ✓ {t("auth:passwordsMatch")}
                     </p>
                   ) : (
                     <p className="text-red-600 text-xs">
-                      ✗ Šifre se ne poklapaju
+                      ✗ {t("auth:passwordsDoNotMatch")}
                     </p>
                   )}
                 </div>
@@ -336,10 +341,10 @@ const Register = () => {
               {isLoading ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Registrujem...
+                  {t("auth:registering")}...
                 </div>
               ) : (
-                "Registrujte se"
+                t("auth:register")
               )}
             </button>
           </form>
@@ -351,7 +356,9 @@ const Register = () => {
                 <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">ili</span>
+                <span className="px-2 bg-white text-gray-500">
+                  {t("auth:or")}
+                </span>
               </div>
             </div>
           </div>
@@ -364,18 +371,20 @@ const Register = () => {
           >
             <FaGoogle className="text-red-500 mr-2" />
             <span className="text-gray-700 font-medium">
-              Registrujte se sa Google
+              {t("auth:signUpWithGoogle")}
             </span>
           </button>
 
           {/* Link to Login */}
           <div className="mt-8 text-center">
-            <span className="text-gray-600">Već imate nalog? </span>
+            <span className="text-gray-600">
+              {t("auth:alreadyHaveAnAccount")}{" "}
+            </span>
             <Link
               to="/login"
               className="text-yellow-600 hover:text-yellow-500 font-medium"
             >
-              Prijavite se
+              {t("auth:loginHere")}
             </Link>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Header from "./components/header/Header";
@@ -37,6 +37,7 @@ import ResetPassword from "./pages/ResetPassword";
 import { useAuthSync } from "./hooks/useAuthSync";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
+import { useTranslation } from "react-i18next";
 
 const initialProducts = [
   {
@@ -102,6 +103,8 @@ const AppContent: React.FC = () => {
   );
   const sidebarType = useSidebarStore((state) => state.rightSidebar.type);
   const closeSidebar = useSidebarStore((state) => state.closeRightSidebar);
+
+  const { t } = useTranslation();
 
   useAuthSync();
 
@@ -175,11 +178,11 @@ const AppContent: React.FC = () => {
         onClose={closeSidebar}
         title={
           sidebarType === "cart"
-            ? "My Cart"
+            ? t("sidebar:cartTitle")
             : sidebarType === "wishlist"
-            ? "Wishlist"
+            ? t("sidebar:wishlistTitle")
             : sidebarType === "quickview"
-            ? "Quick View"
+            ? t("sidebar:quickViewTitle")
             : ""
         }
         type={sidebarType || "custom"}

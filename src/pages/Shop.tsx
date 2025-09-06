@@ -2,10 +2,12 @@ import { useState } from "react";
 import ProductItem from "../components/ProductItem";
 import { useShopStore } from "../store/useShopStore";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 const Shop: React.FC = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const products = useShopStore((state) => state.products);
+  const { t } = useTranslation();
 
   return (
     <div className="mx-auto items-center mt-8 py-10 px-5 min-h-screen">
@@ -48,10 +50,10 @@ const Shop: React.FC = () => {
       </Helmet>
 
       <h1 className="text-4xl font-bold text-gray-700 mb-10 text-center">
-        Welcome to the Honey Shop
+        {t("shop:shopTitle", "Shop Our Honey Products")}
       </h1>
       <p className="text-lg text-gray-700 mb-5 text-center">
-        Explore our wide range of honey products.
+        {t("shop:shopSubtitle")}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
         {products.map((product) => (

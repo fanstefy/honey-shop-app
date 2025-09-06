@@ -10,17 +10,19 @@ import { Helmet } from "react-helmet-async";
 import {
   FaUser,
   FaMapMarkerAlt,
-  FaPhone,
   FaShoppingBag,
   FaMoneyBillWave,
   FaLock,
   FaUserPlus,
 } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const Checkout = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
-  const { cart, products, getProductById, clearCart } = useShopStore();
+  const { cart, getProductById, clearCart } = useShopStore();
+
+  const { t } = useTranslation();
 
   // Redirect ako je cart prazan
   useEffect(() => {
@@ -67,21 +69,21 @@ const Checkout = () => {
     const newErrors: { [key: string]: string } = {};
 
     if (!shippingData.fullName.trim()) {
-      newErrors.fullName = "Ime i prezime su obavezni";
+      newErrors.fullName = t("checkout:fullNameRequired");
     }
 
     if (!shippingData.city.trim()) {
-      newErrors.city = "Grad je obavezan";
+      newErrors.city = t("checkout:cityRequired");
     }
 
     if (!shippingData.address.trim()) {
-      newErrors.address = "Adresa je obavezna";
+      newErrors.address = t("checkout:addressRequired");
     }
 
     if (!shippingData.phone.trim()) {
-      newErrors.phone = "Broj telefona je obavezan";
+      newErrors.phone = t("checkout:phoneRequired");
     } else if (!/^[\+]?[0-9\s\-\(\)]{8,}$/.test(shippingData.phone)) {
-      newErrors.phone = "Neispavan format broja telefona";
+      newErrors.phone = t("checkout:phoneInvalid");
     }
 
     setErrors(newErrors);
@@ -154,10 +156,10 @@ const Checkout = () => {
   };
 
   const steps = [
-    { number: 1, title: "Verifikacija", icon: FaUser },
-    { number: 2, title: "Dostava", icon: FaMapMarkerAlt },
-    { number: 3, title: "Pregled", icon: FaShoppingBag },
-    { number: 4, title: "Potvrda", icon: FaLock },
+    { number: 1, title: t("checkout:verification"), icon: FaUser },
+    { number: 2, title: t("checkout:delivery"), icon: FaMapMarkerAlt },
+    { number: 3, title: t("checkout:overview"), icon: FaShoppingBag },
+    { number: 4, title: t("checkout:confirmation"), icon: FaLock },
   ];
 
   return (
@@ -175,7 +177,10 @@ const Checkout = () => {
             <div className="block sm:hidden">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-gray-600">
-                  Korak {currentStep} od {steps.length}
+                  {t("checkout:step")}
+                  {currentStep}
+                  {t("checkout:of")}
+                  {steps.length}
                 </span>
                 <span className="text-sm text-gray-500">
                   {steps[currentStep - 1]?.title}
@@ -232,7 +237,9 @@ const Checkout = () => {
             {/* Order Summary - Mobile First (shows at top on mobile) */}
             <div className="order-first lg:order-last lg:col-span-1">
               <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 sticky top-4">
-                <h3 className="text-lg font-bold mb-4">Pregled porudžbine</h3>
+                <h3 className="text-lg font-bold mb-4">
+                  {t("checkout:orderOverview")}
+                </h3>
 
                 {/* Cart Items - Collapsible on mobile */}
                 <div className="space-y-3 mb-4">
@@ -252,7 +259,7 @@ const Checkout = () => {
                             {product?.name}
                           </p>
                           <p className="text-gray-500 text-xs sm:text-sm">
-                            Količina: {quantity}
+                            {t("checkout:quantity")}: {quantity}
                           </p>
                         </div>
                       </div>
@@ -268,16 +275,16 @@ const Checkout = () => {
                 {/* Totals */}
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span>Subtotal:</span>
+                    <span>{t("checkout:subtotal")}:</span>
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Dostava:</span>
+                    <span>{t("checkout:delivery")}:</span>
                     <span>${shippingCost.toFixed(2)}</span>
                   </div>
                   <hr />
                   <div className="flex justify-between font-bold text-base sm:text-lg">
-                    <span>Ukupno:</span>
+                    <span>{t("checkout:total")}:</span>
                     <span>${total.toFixed(2)}</span>
                   </div>
                 </div>
@@ -291,7 +298,7 @@ const Checkout = () => {
                 {currentStep === 1 && (
                   <div>
                     <h2 className="text-xl sm:text-2xl font-bold mb-4">
-                      Verifikacija naloga
+                      {t("checkout:authentication")}
                     </h2>
 
                     {currentUser ? (
@@ -300,11 +307,12 @@ const Checkout = () => {
                           <FaUser className="text-green-600 mr-3 mt-1 sm:mt-0 flex-shrink-0" />
                           <div className="min-w-0 flex-1">
                             <p className="font-medium text-green-800 break-words">
-                              Ulogovani ste kao{" "}
+                              {t("checkout:youAreLoggedInAs")}{" "}
                               {currentUser.displayName || currentUser.email}
                             </p>
                             <p className="text-green-600 text-sm">
-                              Možete nastaviti sa porudžbinom
+                              {t("checkout:youCanProceedWithYourOrder")}{" "}
+                              {currentUser.email}
                             </p>
                           </div>
                         </div>
@@ -312,17 +320,17 @@ const Checkout = () => {
                           onClick={() => setCurrentStep(2)}
                           className="mt-4 w-full bg-yellow-500 text-white py-3 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 font-medium"
                         >
-                          Nastavi sa porudžbinom
+                          {t("checkout:continueWithOrder")}
                         </button>
                       </div>
                     ) : (
                       <div className="space-y-4">
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                          <h3 className="font-medium text-blue-800 mb-2">
-                            Imate nalog?
+                        <div className="bg-blue-50 border border-yellow-200 rounded-lg p-4">
+                          <h3 className="font-medium text-gray-600 mb-2">
+                            {t("checkout:youHaveAccount")}?
                           </h3>
-                          <p className="text-blue-600 text-sm mb-3">
-                            Ulogujte se da bi koristili sačuvane podatke
+                          <p className="text-gray-600 text-sm mb-3">
+                            {t("checkout:loginToContinue")}
                           </p>
                           <button
                             onClick={() =>
@@ -330,33 +338,32 @@ const Checkout = () => {
                                 state: { from: { pathname: "/checkout" } },
                               })
                             }
-                            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-200 font-medium"
+                            className="w-full bg-yellow-500 text-white py-3 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 font-medium"
                           >
-                            Ulogujte se
+                            {t("checkout:login")}
                           </button>
                         </div>
 
                         <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                           <h3 className="font-medium text-gray-800 mb-2">
-                            Nemate nalog?
+                            {t("checkout:noAccount")}
                           </h3>
                           <p className="text-gray-600 text-sm mb-3">
-                            Možete naručiti kao gost ili se registrovati za
-                            lakše buduće porudžbine
+                            {t("checkout:continueAsGuestOrRegister")}
                           </p>
                           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                             <button
                               onClick={() => setCurrentStep(2)}
                               className="flex-1 bg-yellow-500 text-white py-3 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 font-medium"
                             >
-                              Nastavi kao gost
+                              {t("checkout:continueAsGuest")}
                             </button>
                             <button
                               onClick={() => navigate("/register")}
                               className="flex-1 bg-gray-600 text-white py-3 px-4 rounded-lg hover:bg-gray-700 transition duration-200 flex items-center justify-center font-medium"
                             >
                               <FaUserPlus className="mr-2" />
-                              Registruj se
+                              {t("checkout:registerAccount")}
                             </button>
                           </div>
                         </div>
@@ -369,13 +376,13 @@ const Checkout = () => {
                 {currentStep === 2 && (
                   <div>
                     <h2 className="text-xl sm:text-2xl font-bold mb-4">
-                      Podaci za dostavu
+                      {t("checkout:shippingInformation")}
                     </h2>
 
                     <form onSubmit={handleShippingSubmit} className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Ime i prezime *
+                          {t("checkout:fullName")} *
                         </label>
                         <input
                           type="text"
@@ -400,7 +407,7 @@ const Checkout = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Grad *
+                            {t("checkout:city")} *
                           </label>
                           <input
                             type="text"
@@ -422,7 +429,7 @@ const Checkout = () => {
 
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Broj telefona *
+                            {t("checkout:phone")} *
                           </label>
                           <input
                             type="tel"
@@ -447,7 +454,7 @@ const Checkout = () => {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Adresa i broj *
+                          {t("checkout:address")} *
                         </label>
                         <input
                           type="text"
@@ -471,7 +478,7 @@ const Checkout = () => {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Napomene (opciono)
+                          {t("checkout:additionalNotes")}
                         </label>
                         <textarea
                           value={shippingData.notes}
@@ -480,7 +487,7 @@ const Checkout = () => {
                           }
                           rows={3}
                           className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"
-                          placeholder="Dodatne napomene za dostavu..."
+                          placeholder={t("checkout:notesPlaceholder")}
                         />
                       </div>
 
@@ -490,13 +497,13 @@ const Checkout = () => {
                           onClick={() => setCurrentStep(1)}
                           className="flex-1 border border-gray-300 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-50 transition duration-200 font-medium"
                         >
-                          Nazad
+                          {t("checkout:back")}
                         </button>
                         <button
                           type="submit"
                           className="flex-1 bg-yellow-500 text-white py-3 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 font-medium"
                         >
-                          Nastavi
+                          {t("checkout:continueToReview")}
                         </button>
                       </div>
                     </form>
@@ -507,18 +514,20 @@ const Checkout = () => {
                 {currentStep === 3 && (
                   <div>
                     <h2 className="text-xl sm:text-2xl font-bold mb-4">
-                      Pregled porudžbine
+                      {t("checkout:orderReview")}
                     </h2>
 
                     {/* Shipping Info Review */}
                     <div className="bg-gray-50 rounded-lg p-4 mb-6">
                       <div className="flex items-start justify-between mb-2">
-                        <h3 className="font-medium">Podaci za dostavu:</h3>
+                        <h3 className="font-medium">
+                          {t("checkout:shippingInformation")}:
+                        </h3>
                         <button
                           onClick={() => setCurrentStep(2)}
                           className="text-yellow-600 text-sm hover:underline flex-shrink-0 ml-2"
                         >
-                          Izmeni
+                          {t("checkout:edit")}
                         </button>
                       </div>
                       <div className="text-sm text-gray-600 space-y-1">
@@ -530,7 +539,8 @@ const Checkout = () => {
                         <p>{shippingData.phone}</p>
                         {shippingData.notes && (
                           <p className="mt-2">
-                            <strong>Napomene:</strong> {shippingData.notes}
+                            <strong>{t("checkout:notes")}</strong>{" "}
+                            {shippingData.notes}
                           </p>
                         )}
                       </div>
@@ -538,10 +548,14 @@ const Checkout = () => {
 
                     {/* Payment Method */}
                     <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                      <h3 className="font-medium mb-2">Način plaćanja:</h3>
+                      <h3 className="font-medium mb-2">
+                        {t("checkout:paymentMethod")}:
+                      </h3>
                       <div className="flex items-center">
                         <FaMoneyBillWave className="text-green-600 mr-2 flex-shrink-0" />
-                        <span className="text-sm">Plaćanje pouzećem</span>
+                        <span className="text-sm">
+                          {t("checkout:cashOnDelivery")}
+                        </span>
                       </div>
                     </div>
 
@@ -550,7 +564,7 @@ const Checkout = () => {
                         onClick={() => setCurrentStep(2)}
                         className="flex-1 border border-gray-300 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-50 transition duration-200 font-medium"
                       >
-                        Nazad
+                        {t("checkout:back")}
                       </button>
                       <button
                         onClick={handlePlaceOrder}
@@ -560,10 +574,10 @@ const Checkout = () => {
                         {isProcessing ? (
                           <div className="flex items-center justify-center">
                             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                            Obrađujem...
+                            {t("checkout:processingOrder")}
                           </div>
                         ) : (
-                          "Potvrdi porudžbinu"
+                          t("checkout:placeOrder")
                         )}
                       </button>
                     </div>

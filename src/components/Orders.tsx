@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { FaShoppingBag } from "react-icons/fa";
 import { Order } from "../services/ordersFirebaseService";
 import { formatFirebaseDate, translateStatus } from "../utils/utilities";
+import { useTranslation } from "react-i18next";
 
 interface OrdersProps {
   orders: Order[];
@@ -9,23 +10,24 @@ interface OrdersProps {
 
 const Orders: React.FC<OrdersProps> = ({ orders }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "delivered":
-      case "Isporučeno":
+      case t("orders:delivered"):
         return "bg-green-100 text-green-800";
       case "shipped":
-      case "Poslato":
+      case t("orders:sent"):
         return "bg-blue-100 text-blue-800";
       case "confirmed":
-      case "Potvrđeno":
+      case t("orders:confirmed"):
         return "bg-yellow-100 text-yellow-800";
       case "pending":
-      case "U pripremi":
+      case t("orders:pending"):
         return "bg-gray-100 text-gray-800";
       case "cancelled":
-      case "Otkazano":
+      case t("orders:canceled"):
         return "bg-red-100 text-red-800";
       default:
         return "bg-gray-100 text-gray-800";
@@ -36,21 +38,21 @@ const Orders: React.FC<OrdersProps> = ({ orders }) => {
     return (
       <div>
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
-          Moje porudžbine
+          {t("orders:myOrders")}
         </h2>
         <div className="text-center py-12">
           <FaShoppingBag className="mx-auto text-4xl sm:text-6xl text-gray-300 mb-4" />
           <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2">
-            Nemate porudžbine
+            {t("orders:dontHaveOrders")}
           </h3>
           <p className="text-gray-600 mb-6 text-sm sm:text-base px-4">
-            Kada napravite prvu porudžbinu, pojaviće se ovde
+            {t("orders:When you place your first order, it will appear here")}
           </p>
           <button
             onClick={() => navigate("/shop")}
             className="w-full sm:w-auto px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200"
           >
-            Idite u prodavnicu
+            {t("shop:shopNow")}
           </button>
         </div>
       </div>
@@ -60,7 +62,7 @@ const Orders: React.FC<OrdersProps> = ({ orders }) => {
   return (
     <div>
       <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
-        Moje porudžbine
+        {t("orders:myOrders")}
       </h2>
 
       <div className="space-y-4">
@@ -89,7 +91,7 @@ const Orders: React.FC<OrdersProps> = ({ orders }) => {
                     ${order.total.toFixed(2)}
                   </div>
                   <div className="text-xs sm:text-sm text-gray-600">
-                    Dostava: ${order.shippingCost.toFixed(2)}
+                    {t("orders:delivery")}: $ ${order.shippingCost.toFixed(2)}
                   </div>
                 </div>
               </div>
@@ -97,27 +99,31 @@ const Orders: React.FC<OrdersProps> = ({ orders }) => {
               {/* Order Details */}
               <div className="text-gray-600 space-y-1 text-sm">
                 <p>
-                  <strong>Datum:</strong>{" "}
+                  <strong>{t("orders:orderDate")}:</strong>{" "}
                   {order.createdAt
                     ? formatFirebaseDate(order.createdAt)
                     : "N/A"}
                 </p>
                 <p>
-                  <strong>Stavke:</strong> {order.items.length} proizvod(a)
+                  <strong>{t("orders:items")}</strong> {order.items.length}{" "}
+                  {order.items.length > 1
+                    ? t("orders:items")
+                    : t("orders:item")}
                 </p>
                 <p className="break-words">
-                  <strong>Dostava:</strong> {order.shippingAddress.fullName}
+                  <strong>{t("orders:delivery")}:</strong>{" "}
+                  {order.shippingAddress.fullName}
                 </p>
                 <p className="break-words">
-                  <strong>Adresa:</strong> {order.shippingAddress.address},{" "}
-                  {order.shippingAddress.city}
+                  <strong>{t("orders:address")}:</strong>{" "}
+                  {order.shippingAddress.address}, {order.shippingAddress.city}
                 </p>
               </div>
 
               {/* Order Items Preview */}
               <div className="bg-gray-50 rounded-lg p-3">
                 <h4 className="font-medium text-sm text-gray-700 mb-2">
-                  Proizvodi:
+                  {t("orders:itemsInOrder")}
                 </h4>
                 <div className="space-y-1">
                   {order.items.map((item: any, index: number) => (
@@ -141,7 +147,7 @@ const Orders: React.FC<OrdersProps> = ({ orders }) => {
                 onClick={() => navigate(`/order-success/${order.orderId}`)}
                 className="w-full sm:w-auto sm:self-end px-4 py-2 text-yellow-600 border border-yellow-600 rounded-lg hover:bg-yellow-50 transition duration-200 text-sm"
               >
-                Pogledaj detalje
+                {t("orders:viewDetails")}
               </button>
             </div>
           </div>

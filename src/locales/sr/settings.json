@@ -1,0 +1,18 @@
+{
+  "accountSettings": "Podesavanje naloga",
+  "security": "Bezbednost",
+  "changePassword": "Promeni lozinku",
+  "updatePasswod": "Azuriraj lozinku",
+  "change": "Promeni",
+  "notifications": "Obavestenja",
+  "emailNotifications": "Obavestenja e-mejlom",
+  "receiveOrderNotifications": "Primajte obaveštenja o porudžbinama",
+  "marketingMessages": "Marketing Poruke",
+  "receiveInfoAboutNewProducts": "Primajte informacije o novim proizvodima",
+  "dangerZone": "Zona Opasnosti",
+  "deleteAccount": "Obrisi Nalog",
+  "deleteAccountPermanently": "Trajno obrišite vaš nalog i sve podatke",
+  "logOut": "Odjavi se",
+  "loggingOut": "Odjavljivanje...",
+  "logOutOfYourAccount": "Odjavite se sa vaseg naloga"
+}

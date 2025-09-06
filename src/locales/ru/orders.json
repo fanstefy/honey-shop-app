@@ -1,0 +1,18 @@
+{
+  "myOrders": "Мои заказы",
+  "dontHaveOrders": "У вас нет заказов",
+  "firstOrderWillAppearHere": "Когда вы сделаете первый заказ, он появится здесь",
+  "shopNow": "Магазин",
+  "delivery": "Доставка",
+  "delivered": "Доставленный",
+  "orderDate": "Дата",
+  "items": "Продукты",
+  "item": "продукт",
+  "address": "Адрес",
+  "itemsInOrder": "Товары в заказе",
+  "viewDetails": "Посмотреть детали",
+  "confirmed": "Подтвержденный",
+  "sent": "Отправил",
+  "pending": "В процессе подготовки",
+  "cancelled": "Отменено"
+}

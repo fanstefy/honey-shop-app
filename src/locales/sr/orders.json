@@ -1,0 +1,17 @@
+{
+  "myOrders": "Moje porudžbine",
+  "dontHaveOrders": "Nemate porudžbine",
+  "firstOrderWillAppearHere": "Kada napravite prvu porudžbinu, pojaviće se ovde",
+  "shopNow": "Idite u prodavnicu",
+  "delivery": "Dostava",
+  "delivered": "Isporučeno",
+  "orderDate": "Datum",
+  "items": "Stavke",
+  "address": "Adresa",
+  "itemsInOrder": "Proizvodi",
+  "viewDetails": "Pogledaj detalje",
+  "confirmed": "Potvrdjeno",
+  "sent": "Poslato",
+  "pending": "U pripremi",
+  "cancelled": "Otkazano"
+}

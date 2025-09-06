@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FaHeart, FaTimes, FaShoppingCart } from "react-icons/fa";
 import { useShopStore } from "../store/useShopStore";
+import { useTranslation } from "react-i18next";
 
 interface Product {
   id: number;
@@ -18,30 +19,30 @@ interface FavoritesProps {
 const Favorites: React.FC<FavoritesProps> = ({ wishlistItems }) => {
   const navigate = useNavigate();
   const { removeFromWishlist, addToCart } = useShopStore();
+  const { t } = useTranslation();
 
   if (wishlistItems?.length === 0) {
     return (
       <div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-2 sm:space-y-0">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
-            Omiljeni proizvodi
+            {t("favorites:favoriteProducts")}
           </h2>
         </div>
 
         <div className="text-center py-12">
           <FaHeart className="mx-auto text-4xl sm:text-6xl text-gray-300 mb-4" />
           <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2">
-            Još uvek nemate omiljene proizvode
+            {t("favorites:noFavoriteProducts")}
           </h3>
           <p className="text-gray-600 mb-6 text-sm sm:text-base px-4">
-            Počnite da dodajete proizvode u omiljene dok pretražujete naš
-            katalog
+            {t("favorites:startAddingProducts")}
           </p>
           <button
             onClick={() => navigate("/shop")}
             className="w-full sm:w-auto px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200"
           >
-            Idite u prodavnicu
+            {t("favorites:shopNow")}
           </button>
         </div>
       </div>
@@ -52,11 +53,8 @@ const Favorites: React.FC<FavoritesProps> = ({ wishlistItems }) => {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-2 sm:space-y-0">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
-          Omiljeni proizvodi
+          {t("favorites:favoriteProducts")}
         </h2>
-        <span className="text-gray-600 text-sm">
-          {wishlistItems.length} proizvoda
-        </span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
@@ -105,13 +103,13 @@ const Favorites: React.FC<FavoritesProps> = ({ wishlistItems }) => {
                     className="flex-1 sm:flex-initial flex items-center justify-center space-x-1 px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200 text-sm"
                   >
                     <FaShoppingCart className="text-xs" />
-                    <span>Dodaj</span>
+                    <span>{t("favorites:add")}</span>
                   </button>
                   <button
                     onClick={() => navigate(`/shop/product/${product.id}`)}
                     className="flex-1 sm:flex-initial px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-200 text-sm"
                   >
-                    Detalji
+                    {t("favorites:details")}
                   </button>
                 </div>
               </div>

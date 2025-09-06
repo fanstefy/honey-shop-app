@@ -1,0 +1,12 @@
+{
+  "title": "Korpa",
+  "product": "Proizvod",
+  "price": "Cena",
+  "quantity": "Količina",
+  "subtotal": "Međuzbir",
+  "cartTotals": "Ukupno u korpi",
+  "discount": "Popust",
+  "total": "Ukupno",
+  "youSaved": "Uštedeli ste",
+  "proceedToCheckout": "Nastavi na naplatu"
+}

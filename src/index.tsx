@@ -4,6 +4,7 @@ import App from "./App";
 import "./styles/app.css";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
+import "./i18n";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);

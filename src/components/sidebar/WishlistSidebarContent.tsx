@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../../store/useShopStore";
 import { useSidebarStore } from "../../store/useSidebarStore";
 import { RxCross1 } from "react-icons/rx";
+import { useTranslation } from "react-i18next";
 
 const WishlistSidebarContent: React.FC = () => {
   const wishlist = useShopStore((state) => state.wishlist);
@@ -10,6 +11,8 @@ const WishlistSidebarContent: React.FC = () => {
   const removeFromWishlist = useShopStore((state) => state.removeFromWishlist);
   const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
   const closeRightSidebar = useSidebarStore((state) => state.closeRightSidebar);
+
+  const { t } = useTranslation();
 
   const wishlistItems = products?.filter((product) =>
     wishlist.includes(product.id)
@@ -51,7 +54,7 @@ const WishlistSidebarContent: React.FC = () => {
       </Helmet>
 
       <h2 id="wishlist-title" className="sr-only">
-        Your Wishlist
+        {t("sidebar:title")}
       </h2>
 
       {/* Scrollable list area */}
@@ -93,7 +96,7 @@ const WishlistSidebarContent: React.FC = () => {
                 className="text-green-600 uppercase text-xs font-thin mt-1 hover:text-yellow-700 transition-colors duration-300"
                 aria-label={`Add ${product.name} to cart`}
               >
-                Add to cart
+                {t("sidebar:addToCart")}
               </button>
             </article>
 

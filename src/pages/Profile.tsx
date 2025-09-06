@@ -19,6 +19,7 @@ import Favorites from "../components/Favorites";
 import Orders from "../components/Orders";
 import AdminOrders from "../components/AdminOrders";
 import PersonalInformation from "../components/PersonalInformation";
+import { useTranslation } from "react-i18next";
 
 interface TabItem {
   id: string;
@@ -43,6 +44,8 @@ const Profile = () => {
 
   // Add state for pending orders count
   const [pendingOrdersCount, setPendingOrdersCount] = useState(0);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Load pending orders count for admin
@@ -111,7 +114,12 @@ const Profile = () => {
   // Dynamic tabs based on user role
   const tabs = useMemo(() => {
     const baseTabs: TabItem[] = [
-      { id: "profile", label: "Profil", shortLabel: "Prof", icon: FaUser },
+      {
+        id: "profile",
+        label: t("profile:profile"),
+        shortLabel: "Prof",
+        icon: FaUser,
+      },
     ];
 
     if (userIsAdmin) {
@@ -121,7 +129,7 @@ const Profile = () => {
       );
       baseTabs.push({
         id: "admin-orders",
-        label: "Admin Porudžbine",
+        label: t("profile:adminOrders"),
         shortLabel: "Admin",
         icon: FaCrown,
         isAdmin: true,
@@ -130,7 +138,7 @@ const Profile = () => {
     } else {
       baseTabs.push({
         id: "orders",
-        label: "Porudžbine",
+        label: t("profile:orders"),
         shortLabel: "Ord",
         icon: FaShoppingBag,
         count: userStats.totalOrders,
@@ -140,16 +148,27 @@ const Profile = () => {
     baseTabs.push(
       {
         id: "favorites",
-        label: "Omiljeno",
+        label: t("profile:favorites"),
         shortLabel: "Fav",
         icon: FaHeart,
         count: wishlist.length,
       },
-      { id: "settings", label: "Podešavanja", shortLabel: "Set", icon: FaCog }
+      {
+        id: "settings",
+        label: t("profile:settings"),
+        shortLabel: "Set",
+        icon: FaCog,
+      }
     );
 
     return baseTabs;
-  }, [userIsAdmin, userStats.totalOrders, wishlist.length, pendingOrdersCount]);
+  }, [
+    userIsAdmin,
+    userStats.totalOrders,
+    wishlist.length,
+    pendingOrdersCount,
+    t,
+  ]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-orange-100 py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
@@ -198,7 +217,7 @@ const Profile = () => {
                   </h1>
                   {userIsAdmin && (
                     <span className="bg-white/20 px-2 py-1 rounded-full text-xs font-medium">
-                      ADMIN
+                      {t("profile:admin")}
                     </span>
                   )}
                 </div>
@@ -215,7 +234,7 @@ const Profile = () => {
                   } text-xs sm:text-sm mt-2`}
                 >
                   <FaCalendarAlt className="inline mr-1 flex-shrink-0" />
-                  Član od:{" "}
+                  {t("profile:memberSince")}{" "}
                   {formatDate(
                     currentUser?.metadata?.creationTime ||
                       new Date().toISOString()
@@ -243,21 +262,25 @@ const Profile = () => {
                           {userStats.totalOrders}
                         </div>
                         <div className="text-yellow-100 text-xs">
-                          Porudžbina
+                          {t("profile:order")}
                         </div>
                       </div>
                       <div className="bg-white/10 rounded-lg p-3 text-center">
                         <div className="text-lg font-bold">
                           ${userStats.totalSpent.toFixed(2)}
                         </div>
-                        <div className="text-yellow-100 text-xs">Ukupno</div>
+                        <div className="text-yellow-100 text-xs">
+                          {t("profile:total")}
+                        </div>
                       </div>
                     </div>
                   )}
                   {showMobileStats && userIsAdmin && (
                     <div className="bg-white/10 rounded-lg p-3 text-center">
                       <FaCrown className="mx-auto mb-2 text-lg" />
-                      <div className="text-sm">Administratorski pristup</div>
+                      <div className="text-sm">
+                        {t("profile:administrator")}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -269,13 +292,17 @@ const Profile = () => {
                       <div className="text-2xl font-bold">
                         {userStats.totalOrders}
                       </div>
-                      <div className="text-yellow-100 text-sm">Porudžbina</div>
+                      <div className="text-yellow-100 text-sm">
+                        {t("profile:order")}
+                      </div>
                     </div>
                     <div className="bg-white/10 rounded-lg p-4 text-center">
                       <div className="text-2xl font-bold">
                         ${userStats.totalSpent.toFixed(2)}
                       </div>
-                      <div className="text-yellow-100 text-sm">Ukupno</div>
+                      <div className="text-yellow-100 text-sm">
+                        {t("profile:total")}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -284,7 +311,9 @@ const Profile = () => {
                 {userIsAdmin && (
                   <div className="hidden sm:block bg-white/10 rounded-lg p-4 text-center">
                     <FaCrown className="mx-auto mb-2 text-2xl" />
-                    <div className="text-sm font-medium">Administrator</div>
+                    <div className="text-sm font-medium">
+                      {t("profile:administrator")}
+                    </div>
                   </div>
                 )}
               </div>

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const ForgotPassword: React.FC = () => {
   const { resetPassword, error } = useAuth();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,16 +25,16 @@ const ForgotPassword: React.FC = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-4">
-          Zaboravljena lozinka
+          {t("auth:forgotPassword")}
         </h2>
         <p className="text-gray-600 text-center mb-6">
-          Unesi email adresu i poslaćemo ti link za resetovanje lozinke.
+          {t("auth:enterYourEmailToReceivePasswordResetLink")}
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
-            placeholder="Email adresa"
+            placeholder={t("auth:email")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -39,9 +42,9 @@ const ForgotPassword: React.FC = () => {
           />
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition"
+            className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white py-3 px-4 rounded-lg hover:from-yellow-600 hover:to-orange-600 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 font-medium"
           >
-            Pošalji link
+            {t("auth:sendResetLink")}
           </button>
         </form>
 
@@ -53,8 +56,8 @@ const ForgotPassword: React.FC = () => {
         )}
 
         <div className="mt-6 text-center">
-          <a href="/login" className="text-blue-600 hover:underline">
-            Vrati se na prijavu
+          <a href="/login" className="text-yellow-600 hover:underline">
+            {t("auth:backToLogin")}
           </a>
         </div>
       </div>

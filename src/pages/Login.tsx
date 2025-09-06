@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 import { trackUserLogin } from "../utils/trackUserLogin";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,6 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const {
     login: signIn,
     loginWithGoogle,
@@ -21,6 +21,7 @@ const Login = () => {
   } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
 
   // Redirect ako je korisnik već ulogovan
   useEffect(() => {
@@ -76,18 +77,18 @@ const Login = () => {
   // Funkcija za prevod Firebase error poruka
   const getErrorMessage = (error: string) => {
     if (error.includes("user-not-found")) {
-      return "Korisnik sa ovim email-om ne postoji";
+      return t("auth:theUserWithThisEmailDoesNotExist");
     }
     if (error.includes("wrong-password")) {
-      return "Neispravna šifra";
+      return t("auth:wrongPassword");
     }
     if (error.includes("invalid-email")) {
-      return "Neispravna email adresa";
+      return t("auth:wrongEmail");
     }
     if (error.includes("too-many-requests")) {
-      return "Previše neuspešnih pokušaja. Pokušajte kasnije.";
+      return t("auth:tooManyRequestsTryLater");
     }
-    return "Greška pri prijavi. Pokušajte ponovo.";
+    return t("auth:anErrorOccurredPleaseTryAgain");
   };
 
   return (
@@ -96,8 +97,12 @@ const Login = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Prijava</h2>
-            <p className="mt-2 text-gray-600">Prijavite se na vaš nalog</p>
+            <h2 className="text-3xl font-bold text-gray-900">
+              {t("auth:login")}
+            </h2>
+            <p className="mt-2 text-gray-600">
+              {t("auth:loginToYourYourAccount")}
+            </p>
           </div>
 
           {/* Error Alert */}
@@ -115,7 +120,7 @@ const Login = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email adresa
+                {t("auth:email")}
               </label>
               <input
                 id="email"
@@ -125,7 +130,7 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition duration-200"
-                placeholder="vasa.email@example.com"
+                placeholder={t("auth:emailPlaceholder")}
                 disabled={isLoading}
               />
             </div>
@@ -136,7 +141,7 @@ const Login = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Šifra
+                {t("auth:password")}
               </label>
               <div className="relative">
                 <input
@@ -147,7 +152,7 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition duration-200"
-                  placeholder="Unesite vašu šifru"
+                  placeholder={t("auth:passwordPlaceholder")}
                   disabled={isLoading}
                 />
                 <button
@@ -170,10 +175,10 @@ const Login = () => {
               {isLoading ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Prijavljujem...
+                  {t("auth:logingIn")}
                 </div>
               ) : (
-                "Prijavite se"
+                t("auth:login")
               )}
             </button>
           </form>
@@ -185,7 +190,9 @@ const Login = () => {
                 <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">ili</span>
+                <span className="px-2 bg-white text-gray-500">
+                  {t("auth:or")}
+                </span>
               </div>
             </div>
           </div>
@@ -198,7 +205,7 @@ const Login = () => {
           >
             <FaGoogle className="text-red-500 mr-2" />
             <span className="text-gray-700 font-medium">
-              Prijavite se sa Google
+              {t("auth:singInWithGoogle")}
             </span>
           </button>
 
@@ -209,16 +216,17 @@ const Login = () => {
                 to="/forgot-password"
                 className="text-yellow-600 hover:text-yellow-500 text-sm font-medium"
               >
-                Zaboravili ste šifru?
+                {t("auth:forgotPassword")}
               </Link>
             </div>
             <div className="text-gray-600">
-              <span>Nemate nalog? </span>
+              <span>{t("auth:dontHaveAnAccount")}</span>
               <Link
                 to="/register"
                 className="text-yellow-600 hover:text-yellow-500 font-medium"
               >
-                Registrujte se
+                {" "}
+                {t("auth:register")}
               </Link>
             </div>
           </div>

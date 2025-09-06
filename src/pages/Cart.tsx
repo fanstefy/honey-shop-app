@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../store/useShopStore";
 import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CartPage: React.FC = () => {
   const cart = useShopStore((state) => state.cart);
@@ -15,6 +16,8 @@ const CartPage: React.FC = () => {
   const removeFromCart = useShopStore((state) => state.removeFromCart);
 
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const cartItems = cart
     .map((cartItem) => {
@@ -44,7 +47,7 @@ const CartPage: React.FC = () => {
       </Helmet>
 
       <main className="container min-h-screen mx-auto px-4 py-[75px] oveflow-y-scroll">
-        <h1 className="text-2xl font-bold mb-6">Shopping Cart</h1>
+        <h1 className="text-2xl font-bold mb-6">{t("cart:title")}</h1>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* LEFT SIDE */}
@@ -53,10 +56,10 @@ const CartPage: React.FC = () => {
               <table className="min-w-full text-left">
                 <thead className="border-b font-semibold">
                   <tr>
-                    <th className="py-2">Product</th>
-                    <th className="py-2">Price</th>
-                    <th className="py-2">Quantity</th>
-                    <th className="py-2">Subtotal</th>
+                    <th className="py-2">{t("cart:product")}</th>
+                    <th className="py-2">{t("cart:price")}</th>
+                    <th className="py-2">{t("cart:quantity")}</th>
+                    <th className="py-2">{t("cart:subtotal")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -159,7 +162,7 @@ const CartPage: React.FC = () => {
                   </div>
 
                   <div className="flex justify-between text-sm">
-                    <span>Quantity:</span>
+                    <span>{t("cart:quantity")}</span>
                     <div className="flex items-center border border-gray-300 rounded">
                       <button
                         className="px-2 py-1 text-sm font-bold hover:bg-gray-100 border-r"
@@ -195,7 +198,7 @@ const CartPage: React.FC = () => {
                   </div>
 
                   <div className="flex justify-between text-sm mt-2">
-                    <span>Subtotal:</span>
+                    <span>{t("cart:subtotal")}:</span>
                     <span>${(product!.price * quantity).toFixed(2)}</span>
                   </div>
                 </div>
@@ -205,22 +208,24 @@ const CartPage: React.FC = () => {
 
           {/* RIGHT SIDE */}
           <aside className="w-full lg:w-1/3 space-y-8 border p-6 rounded shadow-md h-fit lg:sticky lg:top-20">
-            <h2 className="text-xl font-semibold mb-4">Cart Totals</h2>
+            <h2 className="text-xl font-semibold mb-4">
+              {t("cart:cartTotals")}
+            </h2>
             <div className="space-y-4 text-sm">
               <div className="flex justify-between">
-                <span>Subtotal</span>
+                <span>{t("cart:subtotal")}</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span>Discount</span>
+                <span>{t("cart:discount")}</span>
                 <span>-${discount.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-bold border-t pt-2">
-                <span>Total</span>
+                <span>{t("cart:total")}</span>
                 <span>${total.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-xs text-green-600 italic">
-                <span>You saved:</span>
+                <span>{t("cart:youSaved")}:</span>
                 <span>${discount.toFixed(2)}</span>
               </div>
             </div>
@@ -230,7 +235,7 @@ const CartPage: React.FC = () => {
                 onClick={() => navigate("/checkout")}
                 className="w-full sm:max-w-[300px] bg-yellow-500 text-white text-sm uppercase rounded-full py-2 font-semibold hover:bg-yellow-600 transition"
               >
-                Proceed to Checkout
+                {t("cart:proceedToCheckout")}
               </button>
             </div>
           </aside>

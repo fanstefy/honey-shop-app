@@ -1,0 +1,12 @@
+{
+  "title": "Kорзина",
+  "product": "Продукт",
+  "price": "Цена",
+  "quantity": "Количество",
+  "subtotal": "Промежуточный итог",
+  "cartTotals": "Итоги корзины",
+  "discount": "Скидка",
+  "total": "Итого",
+  "youSaved": "Вы сэкономили",
+  "proceedToCheckout": "Перейти к оформлению заказа"
+}
