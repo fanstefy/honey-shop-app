@@ -57,6 +57,10 @@ import enSettings from "./locales/en/settings.json";
 import srSettings from "./locales/sr/settings.json";
 import ruSettings from "./locales/ru/settings.json";
 
+import enQuickView from "./locales/en/quickView.json";
+import srQuickView from "./locales/sr/quickView.json";
+import ruQuickView from "./locales/ru/quickView.json";
+
 const savedLanguage = localStorage.getItem("i18nextLng") || "sr";
 
 i18n
@@ -79,6 +83,7 @@ i18n
         orders: enOrders,
         favorites: enFavorites,
         settings: enSettings,
+        quickView: enQuickView,
       },
       ru: {
         navbar: ruNavbar,
@@ -95,6 +100,7 @@ i18n
         orders: ruOrders,
         favorites: ruFavorites,
         settings: ruSettings,
+        quickView: ruQuickView,
       },
       sr: {
         navbar: srNavbar,
@@ -111,6 +117,7 @@ i18n
         orders: srOrders,
         favorites: srFavorites,
         settings: srSettings,
+        quickView: srQuickView,
       },
     },
     lng: savedLanguage, // koristi sačuvani jezik

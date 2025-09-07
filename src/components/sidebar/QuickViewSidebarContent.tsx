@@ -7,10 +7,12 @@ import {
 } from "react-icons/ti";
 import { useShopStore } from "../../store/useShopStore";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useShopStore();
+  const { t } = useTranslation();
 
   if (!product)
     return (
@@ -118,7 +120,7 @@ const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
           onClick={handleAddToCart}
           aria-label="Add product to cart"
         >
-          Add to Cart
+          {t("quickView:addToCart")}
         </button>
 
         <button
@@ -128,7 +130,7 @@ const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
           }}
           aria-label="Buy product now"
         >
-          Buy Now
+          {t("quickView:buyNow")}
         </button>
       </section>
 
@@ -137,7 +139,9 @@ const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
         aria-label="Share product"
       >
         <CiShare2 size={20} />
-        <span className="font-semibold font-poppins">Share</span>
+        <span className="font-semibold font-poppins">
+          {t("quickView:share")}
+        </span>
         <button
           className="hover:opacity-80"
           title="Share on Facebook"
