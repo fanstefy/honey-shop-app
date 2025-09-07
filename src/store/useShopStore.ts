@@ -36,6 +36,7 @@ interface ShopState {
   // Wishlist funkcije
   addToWishlist: (id: number) => void;
   removeFromWishlist: (id: number) => void;
+  clearWishlist: () => void;
 
   // User management
   setCurrentUser: (user: User | null) => void;
@@ -203,6 +204,21 @@ export const useShopStore = create<ShopState>()(
             };
 
             // Async sync sa Firebase ako je korisnik ulogovan
+            setTimeout(() => {
+              const currentState = get();
+              if (currentState.currentUser) {
+                currentState.syncWishlistToFirebase().catch(console.error);
+              }
+            }, 0);
+
+            return newState;
+          }),
+
+        clearWishlist: () =>
+          set((state) => {
+            const newState = { ...state, wishlist: [] };
+
+            // Async sync sa Firebase
             setTimeout(() => {
               const currentState = get();
               if (currentState.currentUser) {

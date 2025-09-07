@@ -3,17 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { useShopStore } from "../store/useShopStore";
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
+  const { clearCart, clearWishlist } = useShopStore();
 
   const handleLogout = async () => {
     setIsLoading(true);
     try {
       await logout();
+      clearCart();
+      clearWishlist();
       navigate("/", { replace: true });
     } catch (error) {
       console.error("Logout error:", error);
