@@ -1,5 +1,7 @@
 {
   "addToCart": "Add To Cart",
   "buyNow": "Buy Now",
-  "share": "Share"
+  "share": "Share",
+  "noProductSelected": "No product selected.",
+  "addedToBasket": "added to basket!"
 }

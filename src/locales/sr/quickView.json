@@ -1,5 +1,7 @@
 {
   "addToCart": "Dodaj u korpu",
   "buyNow": "Kupi",
-  "share": "Podeli"
+  "share": "Podeli",
+  "noProductSelected": "Није изабран ниједан производ.",
+  "addedToBasket": "dodat u korpu!"
 }

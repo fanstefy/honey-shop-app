@@ -38,6 +38,7 @@ import { useAuthSync } from "./hooks/useAuthSync";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import { useTranslation } from "react-i18next";
+import ToastContainer from "./components/ui/ToastContainer";
 
 const initialProducts = [
   {
@@ -48,6 +49,7 @@ const initialProducts = [
     price: 10,
     discount: "0%",
     description: "A rich and floral honey gathered from wildflowers.",
+    additionalInfo: "bla bla",
   },
   {
     id: 2,
@@ -56,6 +58,7 @@ const initialProducts = [
     price: 12,
     discount: "0%",
     description: "Light and mild, ideal for tea and baking.",
+    additionalInfo: "bla bla",
   },
   {
     id: 3,
@@ -64,6 +67,7 @@ const initialProducts = [
     price: 25,
     discount: "0%",
     description: "Premium medicinal honey from the Manuka tree.",
+    additionalInfo: "bla bla",
   },
   {
     id: 4,
@@ -73,6 +77,7 @@ const initialProducts = [
     price: 15,
     discount: "0%",
     description: "Sweet citrus flavor from orange blossoms.",
+    additionalInfo: "bla bla",
   },
   {
     id: 5,
@@ -82,14 +87,17 @@ const initialProducts = [
     discount: "0%",
     description:
       "Clear, mild, and slow to crystallize — perfect for every day.",
+    additionalInfo: "bla bla",
   },
 ];
 
 const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ToastContainer>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ToastContainer>
   );
 };
 
