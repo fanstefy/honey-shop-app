@@ -10,6 +10,8 @@ import {
 } from "react-icons/ti";
 import { CiDeliveryTruck, CiShare2 } from "react-icons/ci";
 import { IoArrowBackOutline } from "react-icons/io5";
+import Reviews from "../components/review/Reviews";
+import { useTranslation } from "react-i18next";
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,6 +23,7 @@ const ProductDetails: React.FC = () => {
   const { addToCart } = useShopStore();
   const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
@@ -35,14 +38,13 @@ const ProductDetails: React.FC = () => {
     for (let i = 0; i < quantity; i++) {
       addToCart(Number(product.id));
     }
-    // Kada implementiraš checkout, ova ruta će raditi odmah
     navigate("/checkout");
   };
 
   if (!product) {
     return (
       <div className="max-w-2xl mx-auto mt-20 text-center text-xl text-red-600">
-        Product not found.
+        {t("productDetails:productNotFound")}
       </div>
     );
   }
@@ -71,7 +73,7 @@ const ProductDetails: React.FC = () => {
           className="flex items-center w-fit text-sm mb-6 px-2 py-2 text-yellow-500 border border-transparent rounded-lg hover:text-yellow-600 hover:border-yellow-500 transition-colors duration-300"
         >
           <IoArrowBackOutline className="mr-1" />
-          Back
+          {t("productDetails:back")}
         </button>
 
         <div className="flex flex-col md:flex-row gap-8">
@@ -126,27 +128,31 @@ const ProductDetails: React.FC = () => {
                 className="bg-yellow-500 hover:bg-yellow-600 text-xs sm:text-lg text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300"
                 onClick={handleAddToCart}
               >
-                Add to Cart
+                {t("productDetails:addToCart")}
               </button>
               <button
                 className="bg-yellow-500 hover:bg-yellow-600 text-xs sm:text-lg text-white font-normal py-2 px-6 rounded-l-xl rounded-r-xl transition-colors duration-300"
                 onClick={handleBuyNow}
               >
-                Buy Now
+                {t("productDetails:buyNow")}
               </button>
             </div>
 
             <div className="flex items-center gap-2 mt-20 mb-3">
               <CiDeliveryTruck size={20} />
               <p className="inline-block ml-1 text-sm text-gray-600 font-poppins">
-                <span className="font-semibold">Estimated delivery: </span>
+                <span className="font-semibold">
+                  {t("productDetails:estimatedDelivery")}
+                </span>
                 {" Mon, Jul 21 – Thu, Jul 24 (Excl Sat, Sun) "}
               </p>
             </div>
 
             <div className="flex gap-3 mb-6 items-center text-sm">
               <CiShare2 size={20} />
-              <span className="font-semibold font-poppins">Share</span>
+              <span className="font-semibold font-poppins">
+                {t("productDetails:share")}
+              </span>
               <button className="hover:opacity-80" title="Share on Facebook">
                 <TiSocialFacebook size={20} color="gray" />
               </button>
@@ -170,7 +176,7 @@ const ProductDetails: React.FC = () => {
               }`}
               onClick={() => setActiveTab("description")}
             >
-              Description
+              {t("productDetails:description")}
             </button>
             <button
               className={`px-2 sm:px-4 py-2 font-semibold ${
@@ -180,7 +186,7 @@ const ProductDetails: React.FC = () => {
               }`}
               onClick={() => setActiveTab("additional")}
             >
-              Additional Information
+              {t("productDetails:additionalInformation")}
             </button>
             <button
               className={`px-2 sm:px-4 py-2 font-semibold ${
@@ -190,7 +196,7 @@ const ProductDetails: React.FC = () => {
               }`}
               onClick={() => setActiveTab("reviews")}
             >
-              Reviews
+              {t("productDetails:reviews")}
             </button>
           </div>
           <div className="mt-4">
@@ -198,9 +204,7 @@ const ProductDetails: React.FC = () => {
             {activeTab === "additional" && (
               <p>{product.additionalInfo || "No additional information."}</p>
             )}
-            {activeTab === "reviews" && (
-              <p className="text-gray-500 italic">No reviews yet.</p>
-            )}
+            {activeTab === "reviews" && <Reviews productId={Number(id)} />}
           </div>
         </div>
       </div>

@@ -123,10 +123,6 @@ const Profile = () => {
     ];
 
     if (userIsAdmin) {
-      console.log(
-        "userIsAdmin is true, pendingOrdersCount:",
-        pendingOrdersCount
-      );
       baseTabs.push({
         id: "admin-orders",
         label: t("profile:adminOrders"),
