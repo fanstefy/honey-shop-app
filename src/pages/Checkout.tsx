@@ -395,7 +395,7 @@ const Checkout = () => {
                               ? "border-red-500"
                               : "border-gray-300"
                           }`}
-                          placeholder="Marko Marković"
+                          placeholder=""
                         />
                         {errors.fullName && (
                           <p className="text-red-500 text-xs mt-1">
@@ -418,7 +418,7 @@ const Checkout = () => {
                             className={`w-full px-3 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent ${
                               errors.city ? "border-red-500" : "border-gray-300"
                             }`}
-                            placeholder="Beograd"
+                            placeholder=""
                           />
                           {errors.city && (
                             <p className="text-red-500 text-xs mt-1">
@@ -442,7 +442,7 @@ const Checkout = () => {
                                 ? "border-red-500"
                                 : "border-gray-300"
                             }`}
-                            placeholder="+381 60 123 4567"
+                            placeholder=""
                           />
                           {errors.phone && (
                             <p className="text-red-500 text-xs mt-1">
@@ -467,7 +467,7 @@ const Checkout = () => {
                               ? "border-red-500"
                               : "border-gray-300"
                           }`}
-                          placeholder="Knez Mihailova 42"
+                          placeholder=""
                         />
                         {errors.address && (
                           <p className="text-red-500 text-xs mt-1">

@@ -165,12 +165,8 @@ const Home: React.FC = () => {
           <div className="feature-card flex items-start gap-4 px-4 py-6 border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaShippingFast size={24} className="text-yellow-600 mt-1" />
             <div>
-              <h3 className="text-md font-semibold text-gray-800">
-                Free Shipping
-              </h3>
-              <p className="text-sm text-gray-600">
-                Enjoy Free Shipping On All Orders
-              </p>
+              <h3 className="text-md font-semibold text-gray-800">Shipping</h3>
+              <p className="text-sm text-gray-600">Shipping across Serbia</p>
             </div>
           </div>
 

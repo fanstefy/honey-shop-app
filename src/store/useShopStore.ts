@@ -229,18 +229,6 @@ export const useShopStore = create<ShopState>()(
             return newState;
           }),
 
-        // User management sa cart sync
-        // setCurrentUser: (user) => {
-        //   set({ currentUser: user });
-
-        //   // Kada se korisnik uloguje, sync postojeći wishlist i cart sa Firebase
-        //   if (user) {
-        //     setTimeout(() => {
-        //       get().syncAllToFirebase().catch(console.error);
-        //     }, 0);
-        //   }
-        // },
-
         syncWishlistToFirebase: async () => {
           const { currentUser, wishlist } = get();
           if (!currentUser) return;
@@ -292,58 +280,24 @@ export const useShopStore = create<ShopState>()(
 
         // Nova funkcija za merge
         mergeWithFirebase: async () => {
-          const {
-            currentUser,
-            wishlist: localWishlist,
-            cart: localCart,
-          } = get();
+          const { currentUser } = get();
           if (!currentUser) return;
 
           try {
-            // Učitaj postojeće podatke iz Firebase
             const [firebaseWishlist, firebaseCart] = await Promise.all([
               loadUserWishlist(currentUser.uid),
               loadUserCart(currentUser.uid),
             ]);
 
-            // Merge wishlist - kombinuj bez duplikata
-            const mergedWishlist = Array.from(
-              new Set([...firebaseWishlist, ...localWishlist])
-            );
-
-            // Merge cart - kombinuj količine za iste proizvode
-            const mergedCart = [...firebaseCart];
-
-            localCart.forEach((localItem) => {
-              const existingIndex = mergedCart.findIndex(
-                (item) => item.id === localItem.id
-              );
-              if (existingIndex >= 0) {
-                // Proizvod već postoji u Firebase cart-u, dodaj količinu
-                mergedCart[existingIndex].quantity += localItem.quantity;
-              } else {
-                // Novi proizvod, dodaj u cart
-                mergedCart.push(localItem);
-              }
-            });
-
-            // Ažuriraj lokalni state
+            // Jednostavno prepiši sa Firebase podacima
             set({
-              wishlist: mergedWishlist,
-              cart: mergedCart,
+              wishlist: firebaseWishlist,
+              cart: firebaseCart,
             });
 
-            // Sačuvaj merged podatke u Firebase
-            await Promise.all([
-              saveUserWishlist(currentUser.uid, mergedWishlist),
-              saveUserCart(currentUser.uid, mergedCart),
-            ]);
-
-            console.log("Successfully merged local data with Firebase");
+            console.log("Synced with Firebase");
           } catch (error) {
-            console.error("Error merging data with Firebase:", error);
-            // Fallback: samo sync-uj postojeće lokalne podatke
-            await get().syncAllToFirebase();
+            console.error("Error syncing with Firebase:", error);
           }
         },
       }),
