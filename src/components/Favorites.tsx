@@ -74,10 +74,10 @@ const Favorites: React.FC<FavoritesProps> = ({ wishlistItems }) => {
                 onClick={() => removeFromWishlist(product.id)}
                 className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md hover:bg-gray-50 transition duration-200"
               >
-                <FaTimes className="text-red-500 text-sm" />
+                <FaTimes className="text-gray-500 text-sm" />
               </button>
               {product.discount && product.discount !== "0%" && (
-                <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-medium">
+                <div className="absolute top-2 left-2 bg-gray-500 text-white px-2 py-1 rounded text-xs font-medium">
                   {product.discount}
                 </div>
               )}
