@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { FaHeart, FaTimes, FaShoppingCart } from "react-icons/fa";
 import { useShopStore } from "../store/useShopStore";
 import { useTranslation } from "react-i18next";
+import { useToast } from "../hooks/useToast";
+import Toast from "./ui/Toast";
 
 interface Product {
   id: number;
@@ -20,6 +22,12 @@ const Favorites: React.FC<FavoritesProps> = ({ wishlistItems }) => {
   const navigate = useNavigate();
   const { removeFromWishlist, addToCart } = useShopStore();
   const { t } = useTranslation();
+  const { toast, showToast, hideToast } = useToast();
+
+  const handleAddToCart = (product: Product) => {
+    addToCart(product.id);
+    showToast(`${product.name} ${t("quickView:addedToBasket")}`, "success");
+  };
 
   if (wishlistItems?.length === 0) {
     return (
@@ -51,6 +59,12 @@ const Favorites: React.FC<FavoritesProps> = ({ wishlistItems }) => {
 
   return (
     <div>
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+      />
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-2 sm:space-y-0">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
           {t("favorites:favoriteProducts")}
@@ -99,7 +113,7 @@ const Favorites: React.FC<FavoritesProps> = ({ wishlistItems }) => {
                 </div>
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => addToCart(product.id)}
+                    onClick={() => handleAddToCart(product)}
                     className="flex-1 sm:flex-initial flex items-center justify-center space-x-1 px-3 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-200 text-sm"
                   >
                     <FaShoppingCart className="text-xs" />

@@ -54,8 +54,8 @@ const Toast: React.FC<ToastProps> = ({
 
   return (
     <div
-      className={`fixed w-4/5 top-36 left-1/2 bg-yellow-400 transform -translate-x-1/2 -translate-y-1/2 z-50 px-6 py-4 rounded-lg shadow-lg flex items-center transition-all ease-in duration-300 ${
-        isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
+      className={`fixed w-[300px] top-1/3 left-1/2 bg-yellow-400 transform -translate-x-1/2 -translate-y-1/2 z-50 px-6 py-4 rounded-lg shadow-lg flex items-center transition-all ease-in duration-300 ${
+        isVisible ? "scale-100 opacity-90" : "scale-95 opacity-0"
       } ${getToastStyles()}`}
       role="alert"
     >
