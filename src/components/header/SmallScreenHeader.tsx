@@ -3,7 +3,7 @@ import { FaUserCircle, FaRegHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FiMenu } from "react-icons/fi";
 import { useState } from "react";
-import logo from "../../assets/images/logo_sace_pcela_3.png";
+import logo from "../../assets/images/logo_sace_pcela_3_edit.png";
 import Sidebar from "../sidebar/Sidebar";
 import { useSidebarStore } from "../../store/useSidebarStore";
 import { useTranslation } from "react-i18next";

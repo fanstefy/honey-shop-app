@@ -1,4 +1,4 @@
-import logo from "../../assets/images/logo_sace_pcela_3.png";
+import logo from "../../assets/images/logo_sace_pcela_3_edit.png";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useShopStore } from "../../store/useShopStore";

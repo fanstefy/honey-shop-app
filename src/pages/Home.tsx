@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import coverImage from "../assets/images/cover.jpg";
 import { Link } from "react-router-dom";
@@ -24,57 +24,57 @@ const Home: React.FC = () => {
   const featureCardsRef = useRef<HTMLDivElement>(null);
 
   const bestSellingProducts = useMemo(() => {
+    console.log("render home");
     return [...products].sort(() => 0.5 - Math.random()).slice(0, 3);
   }, [products]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const ctx = gsap.context(() => {
-        gsap.set(
-          [
-            coverTextRef.current,
-            coverImageRef.current,
-            buttonRef.current,
-            featureCardsRef.current,
-          ],
-          { opacity: 0 }
-        );
-
-        gsap.to(coverTextRef.current, {
-          x: 20,
-          opacity: 1,
-          duration: 1,
-          ease: "power2.out",
-        });
-        gsap.to(coverImageRef.current, {
-          x: 30,
-          opacity: 1,
-          duration: 1,
-          ease: "power2.out",
-          delay: 0.1,
-        });
-        gsap.to(buttonRef.current, {
-          y: 30,
-          opacity: 1,
-          duration: 0.8,
-          ease: "back.out(1.7)",
-          delay: 0.2,
-        });
-
-        const cards = featureCardsRef.current;
-        gsap.to(cards, {
-          opacity: 1,
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.set(
+        [
+          coverTextRef.current,
+          coverImageRef.current,
+          buttonRef.current,
+          featureCardsRef.current,
+        ],
+        {
+          opacity: 0,
           y: 0,
-          duration: 1,
-          stagger: 0.2,
-          delay: 0.2,
-          ease: "back.out(1.7)",
-        });
-      });
-      return () => ctx.revert();
-    }, 150); // 150ms mali delay pre paljenja animacije
+        }
+      );
 
-    return () => clearTimeout(timeout);
+      const tl = gsap.timeline();
+
+      tl.to(coverTextRef.current, {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        ease: "power2.out",
+      })
+        .to(
+          coverImageRef.current,
+          { opacity: 1, x: -15, duration: 0.7, ease: "power2.out" },
+          "-=0.5"
+        )
+        .to(
+          buttonRef.current,
+          { opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.7)" },
+          "-=0.4"
+        )
+        .to(
+          featureCardsRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.2,
+            ease: "back.out(1.7)",
+          },
+          "-=0.4"
+        );
+    });
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -119,7 +119,7 @@ const Home: React.FC = () => {
       <section className="py-12 px-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="md:w-1/2 text-center md:text-left pl-4 pr-1">
-            <div ref={coverTextRef} className="opacity-0">
+            <div ref={coverTextRef} className="opacity-0 will-change-transform">
               <h1 className="text-[25px] font-bold leading-[35px] mb-2 text-gray-700">
                 Discover 100% Organic Honey – Straight from Nature
               </h1>
@@ -131,7 +131,7 @@ const Home: React.FC = () => {
             </div>
             <div
               ref={buttonRef}
-              className="w-full text-center mt-[50px]  opacity-0"
+              className="w-full text-center mt-[50px] opacity-0 will-change-transform"
             >
               <Link
                 to="/shop"
@@ -147,11 +147,14 @@ const Home: React.FC = () => {
             </div>
           </div>
 
-          <div ref={coverImageRef} className="opacity-0 md:w-1/2">
+          <div
+            ref={coverImageRef}
+            className=" md:w-1/2 opacity-0 will-change-transform"
+          >
             <img
               src={coverImage}
               alt="Jars of organic honey"
-              className="rounded-lg w-[92%] max-h-[400px] object-cover"
+              className="rounded-lg w-[92%] max-h-[400px] object-cover "
               loading="lazy"
             />
           </div>
@@ -160,7 +163,7 @@ const Home: React.FC = () => {
         {/* Feature Cards */}
         <div
           ref={featureCardsRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 max-w-7xl mx-auto px-4 opacity-0"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 max-w-7xl mx-auto px-4 opacity-0 will-change-transform"
         >
           <div className="feature-card flex items-start gap-4 px-4 py-6 border-yellow-100 hover:bg-yellow-300 rounded-lg shadow-md transition-all duration-300">
             <FaShippingFast size={24} className="text-yellow-600 mt-1" />
