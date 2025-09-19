@@ -39,6 +39,7 @@ import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import { useTranslation } from "react-i18next";
 import ToastContainer from "./components/ui/ToastContainer";
+import ScrollResetWrapper from "./components/ScrollResetWrapper";
 
 const initialProducts = [
   {
@@ -138,48 +139,47 @@ const AppContent: React.FC = () => {
       {" "}
       <div className="grid grid-rows-layout min-h-screen">
         <Header />
-        <ScrollToTop />
 
         {/* reCAPTCHA container - potreban za phone auth (nevidljiv) */}
         <div id="recaptcha-container"></div>
 
-        <Routes>
-          {/* Postojeće rute */}
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/shop/product/:id" element={<ProductDetails />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/cart" element={<Cart />} />
+        <ScrollResetWrapper>
+          <Routes>
+            {/* Postojeće rute */}
+            <Route path="/" element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/shop/product/:id" element={<ProductDetails />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<Cart />} />
 
-          {/* Auth rute */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+            {/* Auth rute */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-          {/* Privatne rute */}
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/my-orders"
-            element={
-              <PrivateRoute>
-                <div>My Orders - Coming Soon</div>
-              </PrivateRoute>
-            }
-          />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/order-success/:orderId" element={<OrderSuccess />} />
-        </Routes>
-
-        <ScrollToTop />
+            {/* Privatne rute */}
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/my-orders"
+              element={
+                <PrivateRoute>
+                  <div>My Orders - Coming Soon</div>
+                </PrivateRoute>
+              }
+            />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/order-success/:orderId" element={<OrderSuccess />} />
+          </Routes>
+        </ScrollResetWrapper>
 
         <Footer />
       </div>

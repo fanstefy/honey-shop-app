@@ -24,7 +24,6 @@ const Home: React.FC = () => {
   const featureCardsRef = useRef<HTMLDivElement>(null);
 
   const bestSellingProducts = useMemo(() => {
-    console.log("render home");
     return [...products].sort(() => 0.5 - Math.random()).slice(0, 3);
   }, [products]);
 
