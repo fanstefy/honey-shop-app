@@ -4,7 +4,7 @@ import Spinner from "./Spinner";
 
 function ScrollResetWrapper({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(true);
 
   useEffect(() => {
     if (window.scrollY < 150) return;

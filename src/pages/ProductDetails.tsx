@@ -156,9 +156,15 @@ const ProductDetails: React.FC = () => {
               <button className="hover:opacity-80" title="Share on Facebook">
                 <TiSocialFacebook size={20} color="gray" />
               </button>
-              <button className="hover:opacity-80" title="Share on Instagram">
+              <a
+                href="https://www.instagram.com/nektarikaa/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80"
+                title="Instagram"
+              >
                 <TiSocialInstagram size={20} color="gray" />
-              </button>
+              </a>
               <button className="hover:opacity-80" title="Share on X">
                 <TiSocialTwitter size={20} color="gray" />
               </button>

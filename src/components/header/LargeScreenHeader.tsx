@@ -192,19 +192,19 @@ const LargeScreenHeader: React.FC = () => {
               <div className="absolute right-0 mt-2 w-22 bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 transition duration-300 z-50">
                 <button
                   onClick={() => i18n.changeLanguage("sr")}
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
                 >
                   SR
                 </button>
                 <button
                   onClick={() => i18n.changeLanguage("en")}
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
                 >
                   EN
                 </button>
                 <button
                   onClick={() => i18n.changeLanguage("ru")}
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
                 >
                   RU
                 </button>

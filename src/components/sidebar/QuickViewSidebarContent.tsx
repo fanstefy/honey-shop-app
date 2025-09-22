@@ -182,13 +182,15 @@ const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
           >
             <TiSocialFacebook size={20} color="gray" />
           </button>
-          <button
+          <a
+            href="https://www.instagram.com/nektarikaa/"
+            target="_blank"
             className="hover:opacity-80"
             title="Share on Instagram"
             aria-label="Share on Instagram"
           >
             <TiSocialInstagram size={20} color="gray" />
-          </button>
+          </a>
           <button
             className="hover:opacity-80"
             title="Share on X"

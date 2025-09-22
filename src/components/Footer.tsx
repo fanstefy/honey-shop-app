@@ -54,7 +54,8 @@ const Footer: React.FC = () => {
                 <FaTwitter size={16} />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/nektarikaa/"
+                target="_blank"
                 className="hover:bg-white/20 p-2 rounded-full transition"
                 title="Instagram"
                 aria-label="Instagram"
