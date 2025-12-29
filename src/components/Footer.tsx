@@ -37,7 +37,8 @@ const Footer: React.FC = () => {
             <p className="text-sm leading-relaxed mb-4">{t("footer:about")}</p>
             <div className="flex gap-4 mt-4" aria-label="Social media links">
               <a
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61585376957368"
+                target="_blank"
                 className="hover:bg-white/20 p-2 rounded-full transition"
                 title="Facebook"
                 aria-label="Facebook"

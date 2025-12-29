@@ -263,9 +263,16 @@ const ProductDetails: React.FC = () => {
                         {t("productDetails:share")}
                       </span>
                       <div className="flex gap-2">
-                        <button className="w-10 h-10 rounded-full bg-white hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:text-white text-gray-600 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110">
-                          <TiSocialFacebook size={22} />
-                        </button>
+                        <a
+                          href="https://www.facebook.com/profile.php?id=61585376957368"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-full bg-white hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 hover:text-white text-gray-600 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110"
+                        >
+                          <button className="w-10 h-10 rounded-full bg-white hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:text-white text-gray-600 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110">
+                            <TiSocialFacebook size={22} />
+                          </button>
+                        </a>
                         <a
                           href="https://www.instagram.com/nektarikaa/"
                           target="_blank"

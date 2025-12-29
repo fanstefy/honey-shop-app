@@ -97,14 +97,14 @@ const CartSidebarContent: React.FC = () => {
               <div className="flex items-center mt-1">
                 <button
                   onClick={() => decreaseCartQuantity(id)}
-                  className="p-1 border rounded-l-xl text-sm hover:bg-gray-200 transition-colors duration-300"
+                  className="p-1 border rounded-l-xl hover:bg-yellow-400 hover:text-white transition-colors duration-300"
                   aria-label={`Decrease quantity of ${product?.name}`}
                 >
-                  <RxMinus size={10} />
+                  <RxMinus size={12} />
                 </button>
 
                 <span
-                  className="min-w-[22px] border-b border-t text-[12px] text-center"
+                  className="min-w-[22px] border-b border-t text-[13px] text-center"
                   aria-label={`Quantity: ${quantity}`}
                 >
                   {quantity}
@@ -112,10 +112,10 @@ const CartSidebarContent: React.FC = () => {
 
                 <button
                   onClick={() => increaseCartQuantity(id)}
-                  className="p-1 border rounded-r-xl text-sm hover:bg-gray-200 transition-colors duration-300"
+                  className="p-1 border rounded-r-xl hover:bg-yellow-400 hover:text-white transition-colors duration-300"
                   aria-label={`Increase quantity of ${product?.name}`}
                 >
-                  <RxPlus size={10} />
+                  <RxPlus size={12} />
                 </button>
               </div>
 
