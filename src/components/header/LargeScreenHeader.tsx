@@ -1,6 +1,6 @@
-import logo from "../../assets/images/logo_sace_pcela_3_edit.png";
+import logo from "../../assets/images/nektarika-logo-final.svg";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useShopStore } from "../../store/useShopStore";
 import { useSidebarStore } from "../../store/useSidebarStore";
 import { FaUserCircle } from "react-icons/fa";
@@ -9,6 +9,7 @@ import { BsCart3 } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
 import { MdLanguage } from "react-icons/md";
+import { useAuth } from "../../contexts/AuthContext";
 
 const LargeScreenHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,7 +17,8 @@ const LargeScreenHeader: React.FC = () => {
   const wishlist = useShopStore((state) => state.wishlist);
   const cart = useShopStore((state) => state.cart);
   const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
-
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -28,6 +30,20 @@ const LargeScreenHeader: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // U Header komponenti
+  const handleAccountClick = () => {
+    console.log("currentUser: ", currentUser);
+    if (currentUser && !currentUser.isAnonymous) {
+      console.log("Navigating to profile"); // Debug
+
+      navigate("/profile");
+    } else {
+      console.log("Navigating to login"); // Debug
+
+      navigate("/login");
+    }
+  };
+
   return (
     <header className={`${isScrolled ? "shadow-md mb-[60px]" : ""}`}>
       <div className="w-full bg-white border-b-[1px]">
@@ -35,13 +51,20 @@ const LargeScreenHeader: React.FC = () => {
           <span className="text-primary text-2xl" title="My Account">
             <FaUserCircle />
           </span>
-          <Link
+          {/* <Link
             to="/profile"
             className="text-black text-sm text-yellow-600 hover:text-yellow-500 transition duration-300"
             aria-label="Go to My Account"
           >
             {t("myAccount")}
-          </Link>
+          </Link> */}
+          <button
+            onClick={handleAccountClick}
+            className="text-black text-sm text-yellow-600 hover:text-yellow-500 transition duration-300"
+            aria-label="Go to My Account"
+          >
+            {t("myAccount")}
+          </button>
         </div>
       </div>
 

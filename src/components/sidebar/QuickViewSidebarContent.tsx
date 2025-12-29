@@ -8,10 +8,10 @@ import {
 import { useShopStore } from "../../store/useShopStore";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../store/useSidebarStore";
 import { useToast } from "../../hooks/useToast"; // ili contexts/ToastContext ako koristiš Context
 import Toast from "../ui/Toast";
+import { useNavigate } from "react-router-dom";
 
 const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
@@ -19,7 +19,6 @@ const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
   const { closeRightSidebar } = useSidebarStore();
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   // Toast state
   const { toast, showToast, hideToast } = useToast();
 

@@ -1,9 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../../store/useShopStore";
 import { RxCross1, RxMinus, RxPlus } from "react-icons/rx";
-import { useNavigate } from "react-router-dom";
 import { useSidebarStore } from "../../store/useSidebarStore";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const CartSidebarContent: React.FC = () => {
   const cart = useShopStore((state) => state.cart);
@@ -16,10 +16,10 @@ const CartSidebarContent: React.FC = () => {
   );
   const removeFromCart = useShopStore((state) => state.removeFromCart);
 
-  const navigate = useNavigate();
   const closeAllSidebars = useSidebarStore((state) => state.closeAllSidebars);
 
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const cartItems = cart
     .map((cartItem) => {
@@ -50,7 +50,7 @@ const CartSidebarContent: React.FC = () => {
             content="Your shopping cart is currently empty."
           />
         </Helmet>
-        <p className="text-gray-500">Your cart is empty.</p>
+        <p className="text-gray-500">{t("sidebar:emptyCart")}</p>
       </section>
     );
   }
@@ -172,7 +172,7 @@ const CartSidebarContent: React.FC = () => {
           </button>
 
           <button
-            className="w-full bg-yellow-500 text-white rounded-full py-2 text-sm font-semibold hover:bg-yellow-600 transition"
+            className="w-full bg-yellow-500 bg-gradient-to-r from-yellow-400 to-orange-400 text-white rounded-full py-2 text-sm font-semibold hover:bg-yellow-600 transition"
             onClick={() => {
               closeAllSidebars();
               navigate("/checkout");

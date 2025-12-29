@@ -4,6 +4,8 @@ import {
   Auth,
   GoogleAuthProvider,
   RecaptchaVerifier,
+  signInAnonymously,
+  User,
 } from "firebase/auth";
 import { getFirestore, Firestore } from "firebase/firestore";
 import { getAnalytics, logEvent } from "firebase/analytics";
@@ -43,6 +45,17 @@ export const setupRecaptcha = (containerId: string): RecaptchaVerifier => {
       console.log("reCAPTCHA solved");
     },
   });
+};
+
+export const signInAsGuest = async (): Promise<User | null> => {
+  try {
+    const result = await signInAnonymously(auth);
+    console.log("Guest signed in:", result.user.uid);
+    return result.user;
+  } catch (error) {
+    console.error("Error signing in anonymously:", error);
+    return null;
+  }
 };
 
 export default app;

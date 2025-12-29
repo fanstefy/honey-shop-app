@@ -3,13 +3,13 @@
   "back": "Nazad",
   "addToCart": "Dodaj u korpu",
   "buyNow": "Kupi",
-  "estimatedDelivery": "Ocekivano vreme dostave:",
+  "estimatedDelivery": "Ocekivano vreme isporuke:",
   "share": "Podeli",
   "description": "Opis",
   "additionalInformation": "Dodatne Informacije",
   "reviews": "Recenzije",
-
   "review": "recenzija",
+  "reviewsSmallCase": "recenzije",
   "alreadyReviewedProduct": "Vec ste ostavili recenziju za ovaj proizvod",
   "customerReviews": "Recenzije Korisnika",
   "noReviewsYet": "Још увек нема рецензија. Молимо вас да оставите рецензију!",
@@ -30,5 +30,13 @@
   "loading": "Ucitavanje...",
   "loadMoreReviews": "Ucitaj jos recenzija",
   "deleteReview": "Obrisi recenziju",
-  "editReview": "Izmeni recenziju"
+  "editReview": "Izmeni recenziju",
+  "featured": "Istaknuto",
+  "100percentNatural": "100% prirodno",
+  "cleanAndNatural": "Čisto i prirodno",
+  "deliveryInfo": "Dostava širom Srbije",
+  "fastAndSecure": "Brza i sigurna dostava",
+  "qualityGuarantee": "Garancija kvaliteta",
+  "100percentSatisfaction": "100% zadovoljstvo",
+  "deliveryTimeframe": "2 do 5 dana"
 }

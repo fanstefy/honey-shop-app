@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 import { trackUserLogin } from "../utils/trackUserLogin";
@@ -25,10 +25,14 @@ const Login = () => {
 
   // Redirect ako je korisnik već ulogovan
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && !currentUser.isAnonymous) {
       const from = location.state?.from?.pathname || "/profile";
       navigate(from, { replace: true });
     }
+    // else if (currentUser && currentUser.isAnonymous) {
+    //   // Anonymous korisnik - ostaje na login stranici ili ide na homepage
+    //   navigate("/login", { replace: true });
+    // }
   }, [currentUser, navigate, location]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

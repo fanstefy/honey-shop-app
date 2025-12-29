@@ -93,7 +93,7 @@ const Contact: React.FC = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
-      <div className="max-w-md w-full mx-auto items-center mb-[100px] mt-8 px-5">
+      <div className="md:min-w-[540px] mx-auto items-center mb-[100px] mt-8 px-5">
         <h1 className="text-4xl font-bold text-center my-8">
           {t("contact:contactUs")}
         </h1>
@@ -168,7 +168,7 @@ const Contact: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full py-3 px-4 rounded-md font-medium transition duration-300 ${
+                className={`w-full py-3 px-4 rounded-3xl font-medium transition duration-300 bg-gradient-to-r from-yellow-400 to-orange-400 ${
                   isLoading
                     ? "bg-gray-400 cursor-not-allowed text-gray-200"
                     : "bg-yellow-500 hover:bg-yellow-600 text-white hover:shadow-lg"
@@ -263,7 +263,7 @@ const Contact: React.FC = () => {
           <div className="mt-8 pt-6 border-t border-gray-200 text-center text-gray-600">
             <p className="text-sm">{t("contact:contactUsDirectly")}</p>
             <p className="text-sm font-medium">
-              {t("contact:email")}: spredolac87@gmail.com
+              {t("contact:email")}: nektarika.info@gmail.rs
             </p>
           </div>
         </div>

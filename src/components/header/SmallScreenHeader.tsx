@@ -1,14 +1,15 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaUserCircle, FaRegHeart } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { FiMenu } from "react-icons/fi";
 import { useState } from "react";
-import logo from "../../assets/images/logo_sace_pcela_3_edit.png";
+import logo from "../../assets/images/nektarika-logo-final.svg";
 import Sidebar from "../sidebar/Sidebar";
 import { useSidebarStore } from "../../store/useSidebarStore";
 import { useTranslation } from "react-i18next";
 import { MdLanguage } from "react-icons/md";
 import i18n from "../../i18n";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SmallScreenHeader: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -19,8 +20,18 @@ const SmallScreenHeader: React.FC = () => {
   const isLeftSidebarOpen = useSidebarStore(
     (state) => state.leftSidebar.isOpen
   );
-
   const { t } = useTranslation();
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleAccountClick = () => {
+    console.log("currentUser: ", currentUser);
+    if (currentUser && !currentUser.isAnonymous) {
+      navigate("/profile");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-300">
@@ -150,7 +161,7 @@ const SmallScreenHeader: React.FC = () => {
           </div>
           <div className="flex items-center space-x-4">
             <FaUserCircle className="text-yellow-600 text-2xl" />
-            <Link
+            {/* <Link
               to="/profile"
               className="text-yellow-600 hover:text-yellow-500 transition duration-300"
               onClick={() => {
@@ -160,7 +171,14 @@ const SmallScreenHeader: React.FC = () => {
               aria-label="Go to My Account"
             >
               {t("myAccount")}
-            </Link>
+            </Link> */}
+            <button
+              onClick={handleAccountClick}
+              className="text-black text-sm text-yellow-600 hover:text-yellow-500 transition duration-300"
+              aria-label="Go to My Account"
+            >
+              {t("myAccount")}
+            </button>
           </div>
           {/* Language Selector */}
           <div className="relative mt-4 group">

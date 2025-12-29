@@ -65,78 +65,205 @@ import enProductDetails from "./locales/en/productDetails.json";
 import srProductDetails from "./locales/sr/productDetails.json";
 import ruProductDetails from "./locales/ru/productDetails.json";
 
-const savedLanguage = localStorage.getItem("i18nextLng") || "sr";
+import enHome from "./locales/en/home.json";
+import srHome from "./locales/sr/home.json";
+import ruHome from "./locales/ru/home.json";
 
-i18n
-  .use(initReactI18next) // spaja i18next sa React-om
-  .init({
-    defaultNS: "navbar",
-    resources: {
-      en: {
-        navbar: enNavbar,
-        auth: enAuth,
-        contact: enContact,
-        shop: enShop,
-        productItem: enProductItem,
-        sidebar: enSidebar,
-        cart: enCart,
-        checkout: enCheckout,
-        orderSuccess: enOrderSuccess,
-        profile: enProfile,
-        personalInformation: enPersonalInformation,
-        orders: enOrders,
-        favorites: enFavorites,
-        settings: enSettings,
-        quickView: enQuickView,
-        productDetails: enProductDetails,
-      },
-      ru: {
-        navbar: ruNavbar,
-        auth: ruAuth,
-        contact: ruContact,
-        shop: ruShop,
-        productItem: ruProductItem,
-        sidebar: ruSidebar,
-        cart: ruCart,
-        checkout: ruCheckout,
-        orderSuccess: ruOrderSuccess,
-        profile: ruProfile,
-        personalInformation: ruPersonalInformation,
-        orders: ruOrders,
-        favorites: ruFavorites,
-        settings: ruSettings,
-        quickView: ruQuickView,
-        productDetails: ruProductDetails,
-      },
-      sr: {
-        navbar: srNavbar,
-        auth: srAuth,
-        contact: srContact,
-        shop: srShop,
-        productItem: srProductItem,
-        sidebar: srSidebar,
-        cart: srCart,
-        checkout: srCheckout,
-        orderSuccess: srOrderSuccess,
-        profile: srProfile,
-        personalInformation: srPersonalInformation,
-        orders: srOrders,
-        favorites: srFavorites,
-        settings: srSettings,
-        quickView: srQuickView,
-        productDetails: srProductDetails,
-      },
-    },
-    lng: savedLanguage, // koristi sačuvani jezik
-    fallbackLng: "en", // ako nema prevoda
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+import enAbout from "./locales/en/about.json";
+import srAbout from "./locales/sr/about.json";
+import ruAbout from "./locales/ru/about.json";
 
-// Dodaj event listener za čuvanje jezika
+import enFooter from "./locales/en/footer.json";
+import srFooter from "./locales/sr/footer.json";
+import ruFooter from "./locales/ru/footer.json";
+
+// const savedLanguage = localStorage.getItem("i18nextLng") || "sr";
+
+// i18n
+//   .use(initReactI18next) // spaja i18next sa React-om
+//   .init({
+//     defaultNS: "navbar",
+//     resources: {
+//       en: {
+//         navbar: enNavbar,
+//         auth: enAuth,
+//         contact: enContact,
+//         shop: enShop,
+//         productItem: enProductItem,
+//         sidebar: enSidebar,
+//         cart: enCart,
+//         checkout: enCheckout,
+//         orderSuccess: enOrderSuccess,
+//         profile: enProfile,
+//         personalInformation: enPersonalInformation,
+//         orders: enOrders,
+//         favorites: enFavorites,
+//         settings: enSettings,
+//         quickView: enQuickView,
+//         productDetails: enProductDetails,
+//         home: enHome,
+//         about: enAbout,
+//         footer: enFooter,
+//       },
+//       ru: {
+//         navbar: ruNavbar,
+//         auth: ruAuth,
+//         contact: ruContact,
+//         shop: ruShop,
+//         productItem: ruProductItem,
+//         sidebar: ruSidebar,
+//         cart: ruCart,
+//         checkout: ruCheckout,
+//         orderSuccess: ruOrderSuccess,
+//         profile: ruProfile,
+//         personalInformation: ruPersonalInformation,
+//         orders: ruOrders,
+//         favorites: ruFavorites,
+//         settings: ruSettings,
+//         quickView: ruQuickView,
+//         productDetails: ruProductDetails,
+//         home: ruHome,
+//         about: ruAbout,
+//         footer: ruFooter,
+//       },
+//       sr: {
+//         navbar: srNavbar,
+//         auth: srAuth,
+//         contact: srContact,
+//         shop: srShop,
+//         productItem: srProductItem,
+//         sidebar: srSidebar,
+//         cart: srCart,
+//         checkout: srCheckout,
+//         orderSuccess: srOrderSuccess,
+//         profile: srProfile,
+//         personalInformation: srPersonalInformation,
+//         orders: srOrders,
+//         favorites: srFavorites,
+//         settings: srSettings,
+//         quickView: srQuickView,
+//         productDetails: srProductDetails,
+//         home: srHome,
+//         about: srAbout,
+//         footer: srFooter,
+//       },
+//     },
+//     lng: savedLanguage, // koristi sačuvani jezik
+//     fallbackLng: "en", // ako nema prevoda
+//     interpolation: {
+//       escapeValue: false,
+//     },
+//   });
+
+// // Dodaj event listener za čuvanje jezika
+// i18n.on("languageChanged", (lng) => {
+//   localStorage.setItem("i18nextLng", lng);
+// });
+
+// export default i18n;
+
+const SUPPORTED_LANGUAGES = ["sr", "en", "ru"];
+const DEFAULT_LANGUAGE = "sr";
+
+// Funkcija za dobijanje jezika iz URL-a
+const getLanguageFromURL = (): string => {
+  const pathParts = window.location.pathname.split("/");
+  const langFromURL = pathParts[1]; // prvi segment posle /
+
+  if (langFromURL && SUPPORTED_LANGUAGES.includes(langFromURL)) {
+    return langFromURL;
+  }
+
+  // Fallback na localStorage ili default
+  const savedLanguage = localStorage.getItem("i18nextLng");
+  if (savedLanguage && SUPPORTED_LANGUAGES.includes(savedLanguage)) {
+    return savedLanguage;
+  }
+
+  return DEFAULT_LANGUAGE;
+};
+
+const initialLanguage = getLanguageFromURL();
+
+i18n.use(initReactI18next).init({
+  defaultNS: "navbar",
+  resources: {
+    // ... resources ostaju isti ...
+    en: {
+      navbar: enNavbar,
+      auth: enAuth,
+      contact: enContact,
+      shop: enShop,
+      productItem: enProductItem,
+      sidebar: enSidebar,
+      cart: enCart,
+      checkout: enCheckout,
+      orderSuccess: enOrderSuccess,
+      profile: enProfile,
+      personalInformation: enPersonalInformation,
+      orders: enOrders,
+      favorites: enFavorites,
+      settings: enSettings,
+      quickView: enQuickView,
+      productDetails: enProductDetails,
+      home: enHome,
+      about: enAbout,
+      footer: enFooter,
+    },
+    ru: {
+      navbar: ruNavbar,
+      auth: ruAuth,
+      contact: ruContact,
+      shop: ruShop,
+      productItem: ruProductItem,
+      sidebar: ruSidebar,
+      cart: ruCart,
+      checkout: ruCheckout,
+      orderSuccess: ruOrderSuccess,
+      profile: ruProfile,
+      personalInformation: ruPersonalInformation,
+      orders: ruOrders,
+      favorites: ruFavorites,
+      settings: ruSettings,
+      quickView: ruQuickView,
+      productDetails: ruProductDetails,
+      home: ruHome,
+      about: ruAbout,
+      footer: ruFooter,
+    },
+    sr: {
+      navbar: srNavbar,
+      auth: srAuth,
+      contact: srContact,
+      shop: srShop,
+      productItem: srProductItem,
+      sidebar: srSidebar,
+      cart: srCart,
+      checkout: srCheckout,
+      orderSuccess: srOrderSuccess,
+      profile: srProfile,
+      personalInformation: srPersonalInformation,
+      orders: srOrders,
+      favorites: srFavorites,
+      settings: srSettings,
+      quickView: srQuickView,
+      productDetails: srProductDetails,
+      home: srHome,
+      about: srAbout,
+      footer: srFooter,
+    },
+  },
+  lng: initialLanguage,
+  fallbackLng: "en",
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+// Čuvaj jezik u localStorage kada se promeni
 i18n.on("languageChanged", (lng) => {
   localStorage.setItem("i18nextLng", lng);
 });
 
 export default i18n;
+export { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE };

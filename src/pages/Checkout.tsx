@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useShopStore } from "../store/useShopStore";
 import {
@@ -16,6 +15,7 @@ import {
   FaUserPlus,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -318,7 +318,7 @@ const Checkout = () => {
                         </div>
                         <button
                           onClick={() => setCurrentStep(2)}
-                          className="mt-4 w-full bg-yellow-500 text-white py-3 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 font-medium"
+                          className="mt-4 w-full bg-gradient-to-r min-w-max from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white py-3 px-4 rounded-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 font-medium"
                         >
                           {t("checkout:continueWithOrder")}
                         </button>
@@ -354,7 +354,7 @@ const Checkout = () => {
                           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                             <button
                               onClick={() => setCurrentStep(2)}
-                              className="flex-1 bg-yellow-500 text-white py-3 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 font-medium"
+                              className="flex-1 bg-gradient-to-r min-w-max from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white py-3 px-4 rounded-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 font-medium"
                             >
                               {t("checkout:continueAsGuest")}
                             </button>
@@ -501,7 +501,7 @@ const Checkout = () => {
                         </button>
                         <button
                           type="submit"
-                          className="flex-1 bg-yellow-500 text-white py-3 px-4 rounded-lg hover:bg-yellow-600 transition duration-200 font-medium"
+                          className="flex-1 bg-gradient-to-r min-w-max from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white py-3 px-4 rounded-lg hover:shadow-xl transform transition-all duration-300 font-medium"
                         >
                           {t("checkout:continueToReview")}
                         </button>

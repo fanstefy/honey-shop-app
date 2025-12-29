@@ -7,5 +7,7 @@
   "price": "Cena",
   "subtotal": "Međuzbir",
   "viewCart": "Pogledaj korpu",
-  "checkout": "ZAVRŠI KUPOVINU"
+  "checkout": "ZAVRŠI KUPOVINU",
+  "emptyCart": "Vaša korpa je prazna.",
+  "emptyWishlist": "Vaša lista želja je prazna."
 }

@@ -38,3 +38,6 @@ node_modules/
 
 # custom files
 beleske.txt
+.env
+
+logo.psd

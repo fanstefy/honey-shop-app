@@ -1,6 +1,6 @@
 const Spinner: React.FC = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white opacity-90 z-[9999]">
+    <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
       <div className="relative w-32 h-32 animate-orbit">
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 animate-counterOrbit animate-orbit">
           <BeeIcon />

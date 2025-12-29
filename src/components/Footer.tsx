@@ -5,9 +5,12 @@ import { BiRecycle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useTranslation } from "react-i18next";
 
 const Footer: React.FC = () => {
   const footerLinksRef = useRef<HTMLDivElement>(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -23,19 +26,15 @@ const Footer: React.FC = () => {
   }, []);
 
   return (
-    <footer className="" role="contentinfo">
+    <footer role="contentinfo">
       <div className="bg-[#90C785] text-white py-8">
         <div className="container mx-auto px-6 flex flex-col md:flex-row gap-8 md:gap-0 justify-around">
           {/* Column 1: About Us */}
           <section className="w-full md:w-1/3" aria-labelledby="footer-about">
             <h3 id="footer-about" className="text-xl font-semibold mb-4">
-              About Us
+              {t("about:aboutNektarika")}
             </h3>
-            <p className="text-sm leading-relaxed mb-4">
-              Vanalaya was founded on a passion for quality, value and health of
-              people. Our mission is to improve the quality of people's lives by
-              offering the freshest, most nutrient-dense food on the planet.
-            </p>
+            <p className="text-sm leading-relaxed mb-4">{t("footer:about")}</p>
             <div className="flex gap-4 mt-4" aria-label="Social media links">
               <a
                 href="#"
@@ -74,30 +73,31 @@ const Footer: React.FC = () => {
               id="footer-certifications"
               className="text-xl font-semibold mb-4"
             >
-              Why Choose Us
+              {t("footer:whyChooseUs")}
             </h3>
             <ul className="space-y-2 text-sm" role="list">
               <li role="listitem" className="flex items-center gap-2">
-                <MdPrivacyTip className="text-white" /> Certified Organic
+                <MdPrivacyTip className="text-white" />{" "}
+                {t("footer:naturalProducts")}
               </li>
               <li role="listitem" className="flex items-center gap-2">
-                <AiOutlineFileProtect className="text-white" /> Guaranteed
-                Quality
+                <AiOutlineFileProtect className="text-white" />{" "}
+                {t("footer:guaranteedQuality")}
               </li>
               <li role="listitem" className="flex items-center gap-2">
-                <BiRecycle className="text-white" /> Zero Chemical
+                <BiRecycle className="text-white" /> {t("footer:zeroChemical")}
               </li>
             </ul>
-            <address className="text-sm mt-4 not-italic">
-              If you have any business queries, please contact us at:
-              <br />
-              <a
-                href="mailto:predolac_stefan@yahoo.com"
-                className="underline hover:text-white/80 transition"
-              >
-                predolac_stefan@yahoo.com
-              </a>
-            </address>
+            {/* <address className="text-sm mt-4 not-italic">
+                If you have any business queries, please contact us at:
+                <br />
+                <a
+                  href="mailto:predolac_stefan@yahoo.com"
+                  className="underline hover:text-white/80 transition"
+                >
+                  predolac_stefan@yahoo.com
+                </a>
+              </address> */}
           </section>
 
           {/* Column 3: Site Links */}
@@ -107,10 +107,10 @@ const Footer: React.FC = () => {
             role="navigation"
           >
             <h3 id="footer-links" className="text-xl font-semibold mb-4">
-              Site Links
+              {t("footer:importantLinks")}
             </h3>
             <ul className="space-y-2 text-sm" role="list">
-              <li role="listitem">
+              {/* <li role="listitem">
                 <Link to="/privacy-policy" className="hover:underline">
                   Privacy Policy
                 </Link>
@@ -124,10 +124,10 @@ const Footer: React.FC = () => {
                 <Link to="/return-refunds" className="hover:underline">
                   Return & Refunds
                 </Link>
-              </li>
+              </li> */}
               <li role="listitem">
                 <Link to="/contact" className="hover:underline">
-                  Contact Us
+                  {t("footer:contactUs")}
                 </Link>
               </li>
             </ul>
@@ -136,7 +136,8 @@ const Footer: React.FC = () => {
       </div>
 
       <div className="text-center my-2 text-xs">
-        &copy; {new Date().getFullYear()} Stefan. All rights reserved.
+        &copy; {new Date().getFullYear()} Nektarika.{" "}
+        {t("footer:allRightsReserved")}
       </div>
     </footer>
   );

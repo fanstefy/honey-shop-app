@@ -1,0 +1,56 @@
+{
+  "aboutNektarika": "About Nektarika",
+  "aboutOurBeekeepingJourney": "About Our Beekeeping Journey",
+  "aboutIntroTitle": "Welcome to Nektarika",
+  "aboutIntroParagraph": "Nektarika is a small beekeeping project built on friendship, passion, and more than ten years of hands-on experience. Our apiaries are located at the foot of the Mojsinje Mountains, near the South Morava River, surrounded by acacia forests that give our honey its characteristic acacia flavor - light, clear, and slow to crystallize.",
+  "aboutPhilosophyTitle": "Our Beekeeping Philosophy",
+  "aboutPhilosophyParagraph": "We are a small, dedicated team that approaches each hive with care. Our honey is raw, unheated, and minimally processed - every jar is filled directly from the hive to preserve natural nutrients and flavor.",
+  "aboutPhilosophyParagraph2": "While bees naturally collect nectar wherever they find it, the dominant acacia forests create honey that retains the characteristic acacia flavor and aroma.",
+  "aboutProductsTitle": "What We Offer",
+  "nektarikaIsNotIndustry": "Nektarika is not an industry - we are a friendly team that works carefully, responsibly, and with great respect for nature. Healthy bees produce healthy honey, so we care for each hive individually, without overburdening the bees and without using harmful practices that would compromise quality.",
+  "ourProductAreNotHeated": "Our products are not heated, nor filtered to the extent that they lose pollen and nutrients - every jar comes directly from the hive.",
+  "aboutProductsList": [
+    "Propolis tincture",
+    "Bee pollen",
+    "Beeswax",
+    "Creamed honey",
+    "Seasonal honey varieties"
+  ],
+  "everythingIs100Natural": "Everything is 100% natural and directly from the beekeepers.",
+  "aboutWhyChooseTitle": "Why choose Nektarika?",
+  "aboutWhyChooseList": [
+    "Over 10 years of beekeeping experience",
+    "Natural environment rich in acacia",
+    "Raw and minimally processed honey",
+    "Small and dedicated team",
+    "Direct purchase from beekeepers",
+    "Customer-focused approach"
+  ],
+  "weBeleaveHoneyIsMoreThanProduct": "At Nektarika, we believe that honey is more than just a product - it is a part of nature that we share with everyone who seeks something truly valuable.",
+  "aboutHabitatTitle": "Our Natural Habitat",
+  "aboutOurLocation": "Our apiaries are located at the foot of the Mojsinje Mountains, near the banks of the South Morava River. This area is ideal for beekeeping due to its rich acacia forests and untouched nature.",
+  "ourAddressLabel": "Address:",
+  "ourAddress": "Foot of the Mojsinje Mountains, vicinity of South Morava",
+  "ourSurroundingsLabel": "Surroundings:",
+  "ourSurroundings": "Acacia forests, natural habitat for bees",
+  "regionLabel": "Region:",
+  "region": "Braljina, Maćija - Rasina District",
+  "contactLabel": "Want to visit our apiary or have questions about our products?",
+  "alt": {
+    "mojsinje": "Mojsinje Mountains",
+    "apiary": "Our apiary"
+  },
+  "aboutVisitTitle": "Visit Our Location",
+  "cta": {
+    "title": "Experience nature from our hives",
+    "subtitle": "Taste the pure flavor of acacia honey and other bee products.",
+    "button": "View Products"
+  },
+  "meta": {
+    "about": {
+      "title": "Nektarika — Acacia Honey from Mojsinje Mountains | About Us",
+      "description": "Nektarika produces natural acacia honey at the foot of Mojsinje Mountains. Over 10 years of beekeeping experience, raw honey and direct sales from beekeepers.",
+      "keywords": "acacia honey, natural honey, beekeeper Serbia, beekeeping, Mojsinje"
+    }
+  }
+}

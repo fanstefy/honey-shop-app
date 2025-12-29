@@ -33,7 +33,7 @@ const WishlistSidebarContent: React.FC = () => {
             content="Your wishlist is currently empty."
           />
         </Helmet>
-        <p className="text-gray-500">Your wishlist is empty.</p>
+        <p className="text-gray-500">{t("sidebar:emptyWishlist")}</p>
       </section>
     );
   }

@@ -7,5 +7,7 @@
   "price": "Price",
   "subtotal": "Subtotal",
   "viewCart": "View Cart",
-  "checkout": "CHECKOUT"
+  "checkout": "CHECKOUT",
+  "emptyCart": "Your cart is empty.",
+  "emptyWishlist": "Your wishlist is empty."
 }

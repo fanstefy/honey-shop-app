@@ -57,6 +57,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const unsubscribe = onAuthChange((user) => {
       setCurrentUser(user);
       setLoading(false);
+
+      // DODATI OVO - automatska redirekcija ako nema korisnika
+      if (!user && window.location.pathname === "/profile") {
+        window.location.href = "/login"; // ili koristite navigate
+      }
     });
     return unsubscribe;
   }, []);

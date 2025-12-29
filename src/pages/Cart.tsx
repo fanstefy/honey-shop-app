@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../store/useShopStore";
 import { RxCross1 } from "react-icons/rx";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const CartPage: React.FC = () => {
   const cart = useShopStore((state) => state.cart);
@@ -35,7 +35,7 @@ const CartPage: React.FC = () => {
   );
   const discount = subtotal * 0.1; // 10% discount
   const total = subtotal - discount;
-
+  console.log("stefan cartItems: ", cartItems);
   return (
     <>
       <Helmet>
@@ -233,7 +233,10 @@ const CartPage: React.FC = () => {
             <div className="mt-6 flex flex-col items-center sm:items-stretch">
               <button
                 onClick={() => navigate("/checkout")}
-                className="w-full sm:max-w-[300px] bg-yellow-500 text-white text-sm uppercase rounded-full py-2 font-semibold hover:bg-yellow-600 transition"
+                className={`w-full sm:max-w-[300px] bg-gradient-to-r min-w-max from-yellow-400 to-orange-400 text-white text-sm uppercase rounded-full py-2 font-semibold hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 ${
+                  cartItems.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={cartItems.length === 0}
               >
                 {t("cart:proceedToCheckout")}
               </button>

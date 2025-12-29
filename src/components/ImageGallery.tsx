@@ -2,84 +2,142 @@ import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
 
 // Import slika - dodajte vaše slike ovde
-import beekeeper1 from "../assets/images/beekeeper1.jpg";
-import beekeeper2 from "../assets/images/beekeeper2.jpg";
-import beekeeper3 from "../assets/images/beekeeper3.jpg";
-import beekeeper4 from "../assets/images/beekeeper4.jpg";
-import beekeeper5 from "../assets/images/beekeeper5.jpg";
-import beekeeper6 from "../assets/images/beekeeper6.jpg";
-import beekeeper7 from "../assets/images/beekeeper7.jpg";
-import beekeeper8 from "../assets/images/beekeeper8.jpg";
-import beekeeper9 from "../assets/images/beekeeper9.jpg";
-import beekeeper10 from "../assets/images/beekeeper10.jpg";
+// import beekeeper1 from "../assets/images/beekeeper1.jpg";
+// import beekeeper2 from "../assets/images/beekeeper2.jpg";
+// import beekeeper3 from "../assets/images/beekeeper3.jpg";
+// import beekeeper4 from "../assets/images/beekeeper4.jpg";
+// import beekeeper5 from "../assets/images/beekeeper5.jpg";
+// import beekeeper6 from "../assets/images/beekeeper6.jpg";
+// import beekeeper7 from "../assets/images/beekeeper7.jpg";
+// import beekeeper8 from "../assets/images/beekeeper8.jpg";
+// import beekeeper9 from "../assets/images/beekeeper9.jpg";
+// import beekeeper10 from "../assets/images/beekeeper10.jpg";
 
-// Sample images - zamenite sa vašim slikama
-const galleryImages = [
-  {
-    id: 1,
-    src: beekeeper1,
-    alt: "Wildflower honey production",
-    title: "Wildflower Honey",
-  },
-  {
-    id: 2,
-    src: beekeeper2,
-    alt: "Beehive in nature",
-    title: "Natural Beehives",
-  },
-  {
-    id: 3,
-    src: beekeeper3,
-    alt: "Honey harvest process",
-    title: "Honey Harvesting",
-  },
-  {
-    id: 4,
-    src: beekeeper4,
-    alt: "Organic certification",
-    title: "Organic Certified",
-  },
-  {
-    id: 5,
-    src: beekeeper5,
-    alt: "Beekeeper at work",
-    title: "Expert Beekeepers",
-  },
-  {
-    id: 6,
-    src: beekeeper6,
-    alt: "Honey jar collection",
-    title: "Premium Collection",
-  },
-  {
-    id: 7,
-    src: beekeeper7,
-    alt: "Manuka honey",
-    title: "Manuka Honey",
-  },
-  {
-    id: 8,
-    src: beekeeper8,
-    alt: "Clover honey",
-    title: "Clover Honey",
-  },
-  {
-    id: 9,
-    src: beekeeper9,
-    alt: "Clover honey",
-    title: "Clover Honey",
-  },
-  {
-    id: 10,
-    src: beekeeper10,
-    alt: "Clover honey",
-    title: "Clover Honey",
-  },
-];
+import beekeeper1 from "../assets/images/pcelinjak_0.jpg";
+import beekeeper2 from "../assets/images/pcelinjak_1.jpg";
+import beekeeper3 from "../assets/images/pcelinjak_2.jpg";
+import beekeeper4 from "../assets/images/pcelinjak_3.jpg";
+import beekeeper5 from "../assets/images/pcelinjak_4.jpg";
+import beekeeper6 from "../assets/images/pcelinjak_5.jpg";
+import beekeeper7 from "../assets/images/pcelinjak_6.jpg";
+import beekeeper8 from "../assets/images/pcelinjak_7.jpg";
+import beekeeper9 from "../assets/images/pcelinjak_8.jpg";
+import beekeeper10 from "../assets/images/pcelinjak_9.jpg";
+import beekeeper11 from "../assets/images/pcelinjak_10.jpg";
+import beekeeper12 from "../assets/images/pcelinjak_11.jpg";
+import { useTranslation } from "react-i18next";
 
 const ImageGallery: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const { t } = useTranslation();
+
+  // Minimum swipe distance (in px) to trigger swipe
+  const minSwipeDistance = 50;
+
+  // Sample images - zamenite sa vašim slikama
+  const galleryImages = [
+    {
+      id: 1,
+      src: beekeeper1,
+      alt: "Wildflower honey production",
+      title: t("home:natureInServiceOfBeekeeping"),
+    },
+    {
+      id: 2,
+      src: beekeeper2,
+      alt: "Beehive in nature",
+      title: t("home:regularInspectionOfHives"),
+    },
+    {
+      id: 3,
+      src: beekeeper3,
+      alt: "Honey harvest process",
+      title: t("home:hiveMaintenance"),
+    },
+    {
+      id: 4,
+      src: beekeeper4,
+      alt: "Organic certification",
+      title: t("home:calmBeesHealthyBees"),
+    },
+    {
+      id: 5,
+      src: beekeeper5,
+      alt: "Beekeeper at work",
+      title: t("home:winterHoneyForBees"),
+    },
+    {
+      id: 6,
+      src: beekeeper6,
+      alt: "Honey jar collection",
+      title: t("home:nectarCarriedByBees"),
+    },
+    {
+      id: 7,
+      src: beekeeper7,
+      alt: "Manuka honey",
+      title: t("home:hiveBaseJastrebac"),
+    },
+    {
+      id: 8,
+      src: beekeeper8,
+      alt: "Clover honey",
+      title: t("home:crowdBeforeFlight"),
+    },
+    {
+      id: 9,
+      src: beekeeper9,
+      alt: "Clover honey",
+      title: t("home:fullFrameOfBees"),
+    },
+    {
+      id: 10,
+      src: beekeeper10,
+      alt: "Clover honey",
+      title: t("home:720mAboveSeaLevel"),
+    },
+    {
+      id: 11,
+      src: beekeeper11,
+      alt: "Clover honey",
+      title: t("home:honeycomb"),
+    },
+    {
+      id: 12,
+      src: beekeeper12,
+      alt: "Clover honey",
+      title: t("home:fullFrameOfBees2"),
+    },
+  ];
+
+  // Touch event handlers for swipe
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null); // Reset touchEnd
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goToNext();
+    }
+    if (isRightSwipe) {
+      goToPrevious();
+    }
+  };
 
   // Keyboard navigation
   useEffect(() => {
@@ -140,16 +198,14 @@ const ImageGallery: React.FC = () => {
   return (
     <>
       {/* Gallery Section */}
-      <section className="py-16">
+      <section className="container mx-auto py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl font-bold text-gray-700 mb-4 tracking-wide">
-              Our Natural Process
+              {t("home:ourNaturalProcessTitle")}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              From beehive to your table - discover the journey of our premium
-              organic honey through these beautiful moments captured at our
-              facilities.
+              {t("home:ourNaturalProcessDescription")}
             </p>
           </div>
 
@@ -175,7 +231,9 @@ const ImageGallery: React.FC = () => {
                     <h3 className="font-semibold text-sm md:text-base">
                       {image.title}
                     </h3>
-                    <p className="text-xs mt-1">Click to view</p>
+                    <p className="text-xs mt-1">
+                      {t("home:clickForLargerImage")}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -222,15 +280,19 @@ const ImageGallery: React.FC = () => {
             <FaChevronRight size={32} />
           </button>
 
-          {/* Image Container */}
+          {/* Image Container with Touch Events */}
           <div
-            className="relative max-w-4xl max-h-full"
+            className="relative max-w-4xl max-h-full touch-pan-y"
             onClick={(e) => e.stopPropagation()}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
             <img
               src={getCurrentImage().src}
               alt={getCurrentImage().alt}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
+              className="max-w-full max-h-[80vh] object-contain rounded-lg select-none"
+              draggable={false}
             />
 
             {/* Image Info */}
@@ -239,7 +301,8 @@ const ImageGallery: React.FC = () => {
                 {getCurrentImage().title}
               </h3>
               <p className="text-gray-300 text-sm">
-                Image {currentIndex + 1} of {galleryImages.length}
+                {t("home:image")} {currentIndex + 1} {t("home:of")}{" "}
+                {galleryImages.length}
               </p>
             </div>
           </div>

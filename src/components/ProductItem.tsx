@@ -54,7 +54,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
     >
       {/* Heart Icon */}
       <button
-        className="absolute top-3 right-2 z-10 flex items-center"
+        className="absolute top-3 right-2 z-10 flex items-center "
         onClick={() =>
           isInWishlist
             ? removeFromWishlist(product.id)
@@ -144,7 +144,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           text-yellow-500 h-9 w-9 rounded-full overflow-visible
           transition-all duration-300 group/cart shadow
           opacity-0 translate-x-3
-          group-hover:opacity-100 group-hover:translate-x-0 delay-200"
+          group-hover:opacity-100 group-hover:translate-x-0 delay-200 "
         type="button"
         aria-label={isInCart ? "View product details" : "Add to cart"}
         title={
@@ -163,6 +163,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
             transition-all duration-300
             z-10
             group-hover/cart:w-40 group-hover/cart:pl-4
+            bg-gradient-to-r from-yellow-400 to-orange-400
           "
           style={{ lineHeight: "36px" }}
         >

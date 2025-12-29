@@ -8,8 +8,8 @@
   "description": "Описание",
   "additionalInformation": "Дополнительная информация",
   "reviews": "Обзоры",
-
   "review": "обзор",
+  "reviewsSmallCase": "обзоры",
   "alreadyReviewedProduct": "Вы уже оставили отзыв об этом продукте",
   "customerReviews": "Отзывы клиентов",
   "noReviewsYet": "Отзывов пока нет. Оставьте отзыв первым!",
@@ -30,5 +30,13 @@
   "loading": "Загрузка...",
   "loadMoreReviews": "Загрузить больше отзывов",
   "deleteReview": "Удалить отзыв",
-  "editReview": "Редактировать отзыв"
+  "editReview": "Редактировать отзыв",
+  "featured": "Рекомендуемые",
+  "100percentNatural": "100% натуральный",
+  "cleanAndNatural": "Чистый и натуральный",
+  "deliveryInfo": "Доставка по всей Сербии",
+  "fastAndSecure": "Быстрая и безопасная доставка",
+  "qualityGuarantee": "Гарантия качества",
+  "100percentSatisfaction": "100% удовлетворение",
+  "deliveryTimeframe": "2 до 5 дней"
 }

@@ -8,8 +8,8 @@
   "description": "Description",
   "additionalInformation": "Additional Information",
   "reviews": "Reviews",
-
   "review": "review",
+  "reviewsSmallCase": "reviews",
   "alreadyReviewedProduct": "You have already reviewed this product",
   "customerReviews": "Customer Reviews",
   "noReviewsYet": "No reviews yet. Be the first to review this product!",
@@ -30,5 +30,13 @@
   "loading": "Loading...",
   "loadMoreReviews": "Load More Reviews",
   "deleteReview": "Delete review",
-  "editReview": "Edit review"
+  "editReview": "Edit review",
+  "featured": "Featured",
+  "100percentNatural": "100% natural",
+  "cleanAndNatural": "Clean and Natural",
+  "deliveryInfo": "Delivery across Serbia",
+  "fastAndSecure": "Fast and Secure Delivery",
+  "qualityGuarantee": "Quality Guarantee",
+  "100percentSatisfaction": "100% Satisfaction",
+  "deliveryTimeframe": "2 to 5 days"
 }
