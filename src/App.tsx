@@ -41,6 +41,8 @@ import { useTranslation } from "react-i18next";
 import ToastContainer from "./components/ui/ToastContainer";
 import ScrollResetWrapper from "./components/ScrollResetWrapper";
 
+import LanguageRedirect from "./components/LanguageRedirect";
+
 const initialProducts = [
   {
     id: 1,
@@ -140,12 +142,19 @@ const AppContent: React.FC = () => {
       <div className="grid grid-rows-layout min-h-screen">
         <Header />
 
-        {/* reCAPTCHA container - potreban za phone auth (nevidljiv) */}
         <div id="recaptcha-container"></div>
 
         <ScrollResetWrapper>
           <Routes>
-            {/* Postojeće rute */}
+            {/* Jezičke rute - samo redirectuju nakon što se jezik setuje u i18n.ts */}
+            <Route path="/en/*" element={<LanguageRedirect />} />
+            <Route path="/ru/*" element={<LanguageRedirect />} />
+            <Route path="/sr/*" element={<LanguageRedirect />} />
+            <Route path="/en" element={<LanguageRedirect />} />
+            <Route path="/ru" element={<LanguageRedirect />} />
+            <Route path="/sr" element={<LanguageRedirect />} />
+
+            {/* Postojeće rute - NEPROMENJENE */}
             <Route path="/" element={<Home />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/shop/product/:id" element={<ProductDetails />} />
@@ -153,11 +162,9 @@ const AppContent: React.FC = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />
 
-            {/* Auth rute */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            {/* Privatne rute */}
             <Route
               path="/profile"
               element={
