@@ -3,15 +3,11 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../store/useShopStore";
 import { useSidebarStore } from "../store/useSidebarStore";
-import {
-  TiSocialFacebook,
-  TiSocialInstagram,
-  TiSocialTwitter,
-} from "react-icons/ti";
+import { TiSocialFacebook, TiSocialInstagram } from "react-icons/ti";
 import { CiDeliveryTruck, CiShare2 } from "react-icons/ci";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { FaCheckCircle, FaStar } from "react-icons/fa";
-import { MdLocalShipping, MdSecurity, MdVerified } from "react-icons/md";
+import { FaCheckCircle, FaStar, FaTiktok } from "react-icons/fa";
+import { MdLocalShipping, MdVerified } from "react-icons/md";
 import Reviews from "../components/review/Reviews";
 import { useTranslation } from "react-i18next";
 
@@ -283,9 +279,16 @@ const ProductDetails: React.FC = () => {
                             <TiSocialInstagram size={20} />
                           </button>
                         </a>
-                        <button className="w-10 h-10 rounded-full bg-white hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:text-white text-gray-600 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110">
-                          <TiSocialTwitter size={20} />
-                        </button>
+                        <a
+                          href="https://www.tiktok.com/@nektarika?_r=1&_t=ZM-92f6IX776xH"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-full bg-white hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 hover:text-white text-gray-600 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110"
+                        >
+                          <button className="w-10 h-10 rounded-full bg-white hover:bg-gradient-to-r hover:from-yellow-400 hover:to-orange-400 hover:text-white text-gray-600 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110">
+                            <FaTiktok size={20} />
+                          </button>
+                        </a>
                       </div>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTiktok } from "react-icons/fa";
 import { MdPrivacyTip } from "react-icons/md";
 import { AiOutlineFileProtect } from "react-icons/ai";
 import { BiRecycle } from "react-icons/bi";
@@ -46,14 +46,6 @@ const Footer: React.FC = () => {
                 <FaFacebookF size={16} />
               </a>
               <a
-                href="#"
-                className="hover:bg-white/20 p-2 rounded-full transition"
-                title="Twitter"
-                aria-label="Twitter"
-              >
-                <FaTwitter size={16} />
-              </a>
-              <a
                 href="https://www.instagram.com/nektarikaa/"
                 target="_blank"
                 className="hover:bg-white/20 p-2 rounded-full transition"
@@ -61,6 +53,15 @@ const Footer: React.FC = () => {
                 aria-label="Instagram"
               >
                 <FaInstagram size={16} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@nektarika?_r=1&_t=ZM-92f6IX776xH"
+                target="_blank"
+                className="hover:bg-white/20 p-2 rounded-full transition"
+                title="Twitter"
+                aria-label="Twitter"
+              >
+                <FaTiktok size={16} />
               </a>
             </div>
           </section>
