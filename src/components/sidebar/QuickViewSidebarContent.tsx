@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { CiShare2 } from "react-icons/ci";
-import {
-  TiSocialFacebook,
-  TiSocialInstagram,
-  TiSocialTwitter,
-} from "react-icons/ti";
+import { TiSocialFacebook, TiSocialInstagram } from "react-icons/ti";
 import { useShopStore } from "../../store/useShopStore";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
@@ -12,6 +8,7 @@ import { useSidebarStore } from "../../store/useSidebarStore";
 import { useToast } from "../../hooks/useToast"; // ili contexts/ToastContext ako koristiš Context
 import Toast from "../ui/Toast";
 import { useNavigate } from "react-router-dom";
+import { FaTiktok } from "react-icons/fa";
 
 const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
@@ -174,13 +171,15 @@ const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
           <span className="font-semibold font-poppins">
             {t("quickView:share")}
           </span>
-          <button
+          <a
+            href="https://www.facebook.com/profile.php?id=61585376957368"
+            target="_blank"
             className="hover:opacity-80"
             title="Share on Facebook"
             aria-label="Share on Facebook"
           >
-            <TiSocialFacebook size={20} color="gray" />
-          </button>
+            <TiSocialFacebook size={24} color="gray" />
+          </a>
           <a
             href="https://www.instagram.com/nektarikaa/"
             target="_blank"
@@ -188,15 +187,17 @@ const QuickViewSidebarContent: React.FC<{ product: any }> = ({ product }) => {
             title="Share on Instagram"
             aria-label="Share on Instagram"
           >
-            <TiSocialInstagram size={20} color="gray" />
+            <TiSocialInstagram size={22} color="gray" />
           </a>
-          <button
+          <a
+            href="https://www.tiktok.com/@nektarika?_r=1&_t=ZM-92f6IX776xH"
+            target="_blank"
             className="hover:opacity-80"
             title="Share on X"
             aria-label="Share on X"
           >
-            <TiSocialTwitter size={20} color="gray" />
-          </button>
+            <FaTiktok size={19} color="gray" />
+          </a>
         </section>
       </article>
     </>
