@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
-import ScrollToTop from "./components/ScrollToTop";
+// import ScrollToTop from "./components/ScrollToTop";
 import Sidebar from "./components/sidebar/Sidebar";
 
 import Home from "./pages/Home";
@@ -31,7 +31,7 @@ import honey_1_back from "./assets/images/honey_1_back.jpg";
 import honey_4_back from "./assets/images/honey_4_back.jpg";
 
 import "./styles/app.css";
-import { MdOutlineKeyboardArrowUp } from "react-icons/md";
+// import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { AuthProvider } from "./contexts/AuthContext";
 import ResetPassword from "./pages/ResetPassword";
 import { useAuthSync } from "./hooks/useAuthSync";
@@ -42,6 +42,7 @@ import ToastContainer from "./components/ui/ToastContainer";
 import ScrollResetWrapper from "./components/ScrollResetWrapper";
 
 import LanguageRedirect from "./components/LanguageRedirect";
+import ChatWidget from "./components/ChatWidget";
 
 const initialProducts = [
   {
@@ -106,7 +107,7 @@ const App: React.FC = () => {
 
 // Kreira wrapper komponentu koja koristi hook-ove
 const AppContent: React.FC = () => {
-  const [isScrollToTopBtnVisible, setIsScrollToTopBtnVisible] = useState(false);
+  // const [isScrollToTopBtnVisible, setIsScrollToTopBtnVisible] = useState(false);
 
   const setProducts = useShopStore((state) => state.setProducts);
   const isRightSidebarOpen = useSidebarStore(
@@ -119,22 +120,22 @@ const AppContent: React.FC = () => {
 
   useAuthSync();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrollToTopBtnVisible(window.scrollY > 300);
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setIsScrollToTopBtnVisible(window.scrollY > 300);
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   useEffect(() => {
     setProducts(initialProducts);
   }, [setProducts]);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  // const scrollToTop = () => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // };
 
   return (
     <>
@@ -204,7 +205,7 @@ const AppContent: React.FC = () => {
         }
         type={sidebarType || "custom"}
       />
-      {isScrollToTopBtnVisible && (
+      {/* {isScrollToTopBtnVisible && (
         <button
           onClick={scrollToTop}
           className="fixed bottom-5 right-5 z-50 bg-yellow-500 hover:bg-yellow-600 opacity-70 text-white p-3 rounded-full shadow-lg transition duration-300"
@@ -212,7 +213,7 @@ const AppContent: React.FC = () => {
         >
           <MdOutlineKeyboardArrowUp />
         </button>
-      )}
+      )} */}
     </>
   );
 };
