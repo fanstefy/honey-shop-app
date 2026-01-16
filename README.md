@@ -80,13 +80,6 @@ Nektarika is a modern, full-featured e-commerce web application for selling orga
    REACT_APP_FIREBASE_APP_ID=your_app_id
 ```
 
-4. **Configure Tawk.to**:
-   
-   Update `src/components/TawkToChat.tsx` with your Tawk.to credentials:
-```typescript
-   s1.src = 'https://embed.tawk.to/YOUR_PROPERTY_ID/YOUR_WIDGET_ID';
-```
-
 ### Running the Application
 
 **Development server**:
@@ -250,76 +243,3 @@ service cloud.firestore {
 }
 ```
 
-## 🌐 Deployment
-
-### Netlify (Recommended)
-
-1. Build the project:
-```bash
-   npm run build
-```
-
-2. Create `_redirects` file in `public/` folder:
-```
-   /*    /index.html   200
-```
-
-3. Deploy to Netlify:
-```bash
-   netlify deploy --prod
-```
-
-### Environment Variables on Netlify
-
-Add these in **Site settings → Environment variables**:
-- `REACT_APP_FIREBASE_API_KEY`
-- `REACT_APP_FIREBASE_AUTH_DOMAIN`
-- `REACT_APP_FIREBASE_PROJECT_ID`
-- etc.
-
-## 📱 Live Chat Setup (Tawk.to)
-
-1. Sign up at [Tawk.to](https://www.tawk.to/)
-2. Create a new property for your website
-3. Get your **Property ID** and **Widget ID**
-4. Update `src/components/TawkToChat.tsx`
-5. Download the Tawk.to mobile app for notifications
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👨‍💻 Author
-
-**Your Name**
-- Website: [nektarika.rs](https://nektarika.rs)
-- GitHub: [@yourusername](https://github.com/yourusername)
-
-## 🙏 Acknowledgments
-
-- React team for the amazing library
-- Firebase for backend services
-- Tawk.to for customer support solution
-- Tailwind CSS for styling framework
-- All open-source contributors
-
-## 📧 Contact
-
-For support or inquiries:
-- Email: info@nektarika.rs
-- Phone: +381 60 123 4567
-- Live Chat: Available on website
-
----
-
-Made with 🍯 and ❤️ by Nektarika Team
