@@ -214,6 +214,7 @@ const AppContent: React.FC = () => {
           <MdOutlineKeyboardArrowUp />
         </button>
       )} */}
+      <ChatWidget />
     </>
   );
 };

@@ -152,6 +152,19 @@ const LargeScreenHeader: React.FC = () => {
                   {t("contact")}
                 </Link>
               </li>
+              {cart.length > 0 && (
+                <li>
+                  <Link
+                    to="/cart"
+                    className={`relative text-yellow-600 transition duration-300 after-effect ${
+                      pathname === "/cart" && "active"
+                    }`}
+                    aria-current={pathname === "/cart" ? "page" : undefined}
+                  >
+                    {t("cart")}
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
 
