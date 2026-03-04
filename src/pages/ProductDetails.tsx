@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useShopStore } from "../store/useShopStore";
 import { useSidebarStore } from "../store/useSidebarStore";
@@ -10,6 +10,7 @@ import { FaCheckCircle, FaStar, FaTiktok } from "react-icons/fa";
 import { MdLocalShipping, MdVerified } from "react-icons/md";
 import Reviews from "../components/review/Reviews";
 import { useTranslation } from "react-i18next";
+import { calculateAverageRating } from "../services/reviewService";
 
 const siteUrl = "https://nektarika.rs";
 
@@ -17,13 +18,25 @@ const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const product = useShopStore((state) => state.getProductById(Number(id)));
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState<
-    "description" | "additional" | "reviews"
-  >("description");
+  const [activeTab, setActiveTab] = useState<"description" | "reviews">(
+    "description",
+  );
+  const [averageRating, setAverageRating] = useState(0);
   const { addToCart } = useShopStore();
   const openRightSidebar = useSidebarStore((state) => state.openRightSidebar);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  console.log("stefan averageRating: ", averageRating);
+  // Učitaj prosečnu ocenu
+  const loadAverageRating = async () => {
+    try {
+      const { averageRating: avg, totalReviews: total } =
+        await calculateAverageRating(Number(id));
+      setAverageRating(avg);
+    } catch (error) {
+      console.error("Error loading average rating:", error);
+    }
+  };
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
@@ -39,6 +52,10 @@ const ProductDetails: React.FC = () => {
     }
     navigate("/checkout");
   };
+
+  useEffect(() => {
+    loadAverageRating();
+  }, []);
 
   if (!product) {
     return (
@@ -147,7 +164,8 @@ const ProductDetails: React.FC = () => {
                         ))}
                       </div>
                       <span className="text-sm text-gray-600">
-                        (4.9/5 {t("productDetails:reviewsSmallCase")})
+                        ({averageRating}/5{" "}
+                        {t("productDetails:reviewsSmallCase")})
                       </span>
                     </div>
                     <div className="flex items-baseline gap-3">
@@ -324,16 +342,7 @@ const ProductDetails: React.FC = () => {
                 >
                   {t("productDetails:description")}
                 </button>
-                <button
-                  className={`px-2 py-3 font-semibold transition-all duration-300 ${
-                    activeTab === "additional"
-                      ? "border-b-4 border-yellow-500 text-yellow-700 -mb-[2px] bg-yellow-50/50"
-                      : "text-gray-600 hover:text-yellow-600 hover:bg-yellow-50/30"
-                  }`}
-                  onClick={() => setActiveTab("additional")}
-                >
-                  {t("productDetails:additionalInformation")}
-                </button>
+
                 <button
                   className={`px-2 py-3 font-semibold transition-all duration-300 ${
                     activeTab === "reviews"
@@ -348,15 +357,50 @@ const ProductDetails: React.FC = () => {
 
               <div className="bg-white rounded-xl p-6 shadow-inner border border-gray-100 min-h-[200px]">
                 {activeTab === "description" && (
-                  <p className="text-gray-700 leading-relaxed">
-                    {product.description}
-                  </p>
+                  <div className="space-y-8 text-gray-700 leading-relaxed">
+                    {/* Uvodni opis */}
+                    <p>{product.description}</p>
+
+                    {/* Additional Info */}
+                    {product.additionalInfo && (
+                      <>
+                        <div>
+                          <h3 className="text-lg font-semibold text-yellow-700 mb-2">
+                            Preporučuje se:
+                          </h3>
+                          <ul className="list-disc list-inside space-y-1">
+                            {product.additionalInfo.recommendedFor.map(
+                              (item, index) => (
+                                <li key={index}>{item}</li>
+                              ),
+                            )}
+                          </ul>
+                        </div>
+
+                        <div>
+                          <h3 className="text-lg font-semibold text-yellow-700 mb-2">
+                            Poznata svojstva:
+                          </h3>
+                          <ul className="list-disc list-inside space-y-1">
+                            {product.additionalInfo.properties.map(
+                              (item, index) => (
+                                <li key={index}>{item}</li>
+                              ),
+                            )}
+                          </ul>
+                        </div>
+
+                        <div>
+                          <h3 className="text-lg font-semibold text-yellow-700 mb-2">
+                            Način upotrebe:
+                          </h3>
+                          <p>{product.additionalInfo.usage}</p>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 )}
-                {activeTab === "additional" && (
-                  <p className="text-gray-700 leading-relaxed">
-                    {product.additionalInfo || "No additional information."}
-                  </p>
-                )}
+
                 {activeTab === "reviews" && <Reviews productId={Number(id)} />}
               </div>
             </div>

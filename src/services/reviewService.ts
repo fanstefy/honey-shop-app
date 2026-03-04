@@ -38,7 +38,7 @@ export const addReview = async (
   userId: string,
   userName: string,
   userEmail: string,
-  reviewData: ReviewFormData
+  reviewData: ReviewFormData,
 ): Promise<string> => {
   try {
     const reviewRef = await addDoc(collection(db, "reviews"), {
@@ -63,14 +63,14 @@ export const addReview = async (
 export const getReviewsForProduct = async (
   productId: number,
   limitCount: number = 10,
-  lastDoc?: DocumentSnapshot
+  lastDoc?: DocumentSnapshot,
 ): Promise<{ reviews: Review[]; lastDocument: DocumentSnapshot | null }> => {
   try {
     let q = query(
       collection(db, "reviews"),
       where("productId", "==", productId),
       orderBy("createdAt", "desc"),
-      limit(limitCount)
+      limit(limitCount),
     );
 
     if (lastDoc) {
@@ -96,14 +96,14 @@ export const getReviewsForProduct = async (
 // Proveri da li je korisnik već ostavio review za proizvod
 export const hasUserReviewedProduct = async (
   productId: number,
-  userId: string
+  userId: string,
 ): Promise<boolean> => {
   try {
     const q = query(
       collection(db, "reviews"),
       where("productId", "==", productId),
       where("userId", "==", userId),
-      limit(1)
+      limit(1),
     );
 
     const snapshot = await getDocs(q);
@@ -117,7 +117,7 @@ export const hasUserReviewedProduct = async (
 // Ažuriraj review
 export const updateReview = async (
   reviewId: string,
-  reviewData: ReviewFormData
+  reviewData: ReviewFormData,
 ): Promise<void> => {
   try {
     const reviewRef = doc(db, "reviews", reviewId);
@@ -143,12 +143,12 @@ export const deleteReview = async (reviewId: string): Promise<void> => {
 
 // Kalkuliši prosečnu ocenu za proizvod
 export const calculateAverageRating = async (
-  productId: number
+  productId: number,
 ): Promise<{ averageRating: number; totalReviews: number }> => {
   try {
     const q = query(
       collection(db, "reviews"),
-      where("productId", "==", productId)
+      where("productId", "==", productId),
     );
 
     const snapshot = await getDocs(q);

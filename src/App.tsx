@@ -31,7 +31,6 @@ import honey_1_back from "./assets/images/honey_1_back.jpg";
 import honey_4_back from "./assets/images/honey_4_back.jpg";
 
 import "./styles/app.css";
-// import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import { AuthProvider } from "./contexts/AuthContext";
 import ResetPassword from "./pages/ResetPassword";
 import { useAuthSync } from "./hooks/useAuthSync";
@@ -44,54 +43,173 @@ import ScrollResetWrapper from "./components/ScrollResetWrapper";
 import LanguageRedirect from "./components/LanguageRedirect";
 import ChatWidget from "./components/ChatWidget";
 
-const initialProducts = [
+export const initialProducts = [
   {
     id: 1,
-    name: "Wildflower Honey",
+    name: "Med sa semenom koprive",
     image: honey_1,
     backImage: honey_1_back,
     price: 10,
     discount: "0%",
-    description: "A rich and floral honey gathered from wildflowers.",
-    additionalInfo: "bla bla",
+    description:
+      "Med sa semenom koprive predstavlja pažljivo izbalansiran spoj prirodnog domaćeg meda i jedne od najcenjenijih biljaka u tradicionalnoj upotrebi. Namenjen je svakodnevnoj podršci organizmu.",
+    additionalInfo: {
+      recommendedFor: [
+        "podrška imunitetu",
+        "umor i iscrpljenost",
+        "dodatna energija i vitalnost",
+      ],
+      properties: [
+        "tradicionalno se koristi za jačanje organizma",
+        "prirodni izvor minerala",
+        "doprinosi opštem balansu tela",
+      ],
+      usage: "1–2 kašičice dnevno, samostalno ili uz napitak.",
+    },
   },
+
   {
     id: 2,
-    name: "Clover Honey",
+    name: "Med sa suvom malinom",
     image: honey_2,
-    price: 12,
-    discount: "0%",
-    description: "Light and mild, ideal for tea and baking.",
-    additionalInfo: "bla bla",
-  },
-  {
-    id: 3,
-    name: "Manuka Honey",
-    image: honey_3,
-    price: 25,
-    discount: "0%",
-    description: "Premium medicinal honey from the Manuka tree.",
-    additionalInfo: "bla bla",
-  },
-  {
-    id: 4,
-    name: "Orange Blossom Honey",
-    image: honey_4,
-    backImage: honey_4_back,
-    price: 15,
-    discount: "0%",
-    description: "Sweet citrus flavor from orange blossoms.",
-    additionalInfo: "bla bla",
-  },
-  {
-    id: 5,
-    name: "Acacia Honey",
-    image: honey_5,
-    price: 18,
+    backImage: honey_1_back,
+    price: 11,
     discount: "0%",
     description:
-      "Clear, mild, and slow to crystallize — perfect for every day.",
-    additionalInfo: "bla bla",
+      "Spoj domaćeg meda i suve maline daje prijatan voćni ukus i prirodnu svežinu, idealnu za svakodnevnu upotrebu.",
+    additionalInfo: {
+      recommendedFor: [
+        "podrška imunitetu",
+        "sezonske promene",
+        "osveženje organizma",
+      ],
+      properties: [
+        "bogata antioksidansima",
+        "tradicionalno se koristi u narodnoj ishrani",
+        "prijatnog i osvežavajućeg ukusa",
+      ],
+      usage: "1 kašičica dnevno ili kao dodatak čaju i doručku.",
+    },
+  },
+
+  {
+    id: 3,
+    name: "Med sa borovnicom",
+    image: honey_3,
+    backImage: honey_1_back,
+    price: 12,
+    discount: "0%",
+    description:
+      "Med sa borovnicom kombinuje domaći med i jedno od najcenjenijih šumskih plodova, poznato po bogatom sastavu.",
+    additionalInfo: {
+      recommendedFor: [
+        "mentalni i fizički napor",
+        "svakodnevnu vitalnost",
+        "opšte zdravlje",
+      ],
+      properties: [
+        "bogata prirodnim antioksidansima",
+        "doprinosi balansu organizma",
+        "tamne boje i punog ukusa",
+      ],
+      usage: "1 kašičica dnevno, samostalno ili uz obrok.",
+    },
+  },
+
+  {
+    id: 4,
+    name: "Med sa koštunjavim voćem",
+    image: honey_4,
+    backImage: honey_4_back,
+    price: 13,
+    discount: "0%",
+    description:
+      "Energetski bogat proizvod koji spaja domaći med i pažljivo odabrano koštunjavo voće.",
+    additionalInfo: {
+      recommendedFor: [
+        "za fizički aktivne osobe",
+        "za sportiste",
+        "za dugotrajnu energiju",
+      ],
+      properties: [
+        "prirodni izvor zdravih masti",
+        "bogat i hranljiv sastav",
+        "doprinosi osećaju sitosti",
+      ],
+      usage: "Idealan za doručak ili kao zdrava užina.",
+    },
+  },
+
+  {
+    id: 5,
+    name: "Med sa suvom jagodom",
+    image: honey_5,
+    backImage: honey_1_back,
+    price: 11,
+    discount: "0%",
+    description:
+      "Blag i aromatičan proizvod koji spaja domaći med i suvu jagodu, prijatan za sve uzraste.",
+    additionalInfo: {
+      recommendedFor: [
+        "svakodnevnu upotrebu",
+        "decu i odrasle",
+        "prirodnu zamenu za slatkiše",
+      ],
+      properties: [
+        "osvežavajuć i blag ukus",
+        "prirodni izvor vitamina",
+        "lagan i prijatan za konzumaciju",
+      ],
+      usage: "Samostalno ili kao dodatak desertima.",
+    },
+  },
+
+  {
+    id: 6,
+    name: "Med sa mlevenim šipurkom",
+    image: honey_5,
+    backImage: honey_1_back,
+    price: 12,
+    discount: "0%",
+    description:
+      "Tradicionalni spoj domaćeg meda i mlevenog šipurka, poznatog po bogatom nutritivnom sastavu.",
+    additionalInfo: {
+      recommendedFor: [
+        "podršku imunitetu",
+        "zimski period",
+        "otpornost organizma",
+      ],
+      properties: [
+        "bogat prirodnim vitaminima",
+        "tradicionalno korišćen u narodnoj ishrani",
+        "blago kiselkastog ukusa",
+      ],
+      usage: "1 kašičica dnevno, po potrebi.",
+    },
+  },
+
+  {
+    id: 7,
+    name: "Med sa reishi gljivom",
+    image: honey_5,
+    backImage: honey_1_back,
+    price: 14,
+    discount: "0%",
+    description:
+      "Jedinstven proizvod koji spaja domaći med i reishi gljivu, cenjenu u tradicionalnim kulturama.",
+    additionalInfo: {
+      recommendedFor: [
+        "podršku imunitetu",
+        "periode stresa",
+        "balans organizma",
+      ],
+      properties: [
+        "tradicionalno korišćena u istočnim kulturama",
+        "povezuje se sa ravnotežom i otpornošću",
+        "pogodna za dugoročnu upotrebu",
+      ],
+      usage: "1 kašičica dnevno, u kontinuitetu.",
+    },
   },
 ];
 
@@ -107,11 +225,9 @@ const App: React.FC = () => {
 
 // Kreira wrapper komponentu koja koristi hook-ove
 const AppContent: React.FC = () => {
-  // const [isScrollToTopBtnVisible, setIsScrollToTopBtnVisible] = useState(false);
-
   const setProducts = useShopStore((state) => state.setProducts);
   const isRightSidebarOpen = useSidebarStore(
-    (state) => state.rightSidebar.isOpen
+    (state) => state.rightSidebar.isOpen,
   );
   const sidebarType = useSidebarStore((state) => state.rightSidebar.type);
   const closeSidebar = useSidebarStore((state) => state.closeRightSidebar);
@@ -120,22 +236,9 @@ const AppContent: React.FC = () => {
 
   useAuthSync();
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     setIsScrollToTopBtnVisible(window.scrollY > 300);
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
   useEffect(() => {
     setProducts(initialProducts);
   }, [setProducts]);
-
-  // const scrollToTop = () => {
-  //   window.scrollTo({ top: 0, behavior: "smooth" });
-  // };
 
   return (
     <>
@@ -198,10 +301,10 @@ const AppContent: React.FC = () => {
           sidebarType === "cart"
             ? t("sidebar:cartTitle")
             : sidebarType === "wishlist"
-            ? t("sidebar:wishlistTitle")
-            : sidebarType === "quickview"
-            ? t("sidebar:quickViewTitle")
-            : ""
+              ? t("sidebar:wishlistTitle")
+              : sidebarType === "quickview"
+                ? t("sidebar:quickViewTitle")
+                : ""
         }
         type={sidebarType || "custom"}
       />

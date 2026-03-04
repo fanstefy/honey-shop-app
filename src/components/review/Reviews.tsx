@@ -27,7 +27,7 @@ const Reviews: React.FC<ReviewsProps> = ({ productId }) => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMoreReviews, setHasMoreReviews] = useState(false);
   const [lastDocument, setLastDocument] = useState<DocumentSnapshot | null>(
-    null
+    null,
   );
   const [showForm, setShowForm] = useState(false);
   const [hasUserReviewed, setHasUserReviewed] = useState(false);
@@ -42,7 +42,7 @@ const Reviews: React.FC<ReviewsProps> = ({ productId }) => {
         await getReviewsForProduct(
           productId,
           5,
-          reset ? undefined : lastDocument || undefined
+          reset ? undefined : lastDocument || undefined,
         );
 
       if (reset) {
@@ -80,7 +80,7 @@ const Reviews: React.FC<ReviewsProps> = ({ productId }) => {
     try {
       const hasReviewed = await hasUserReviewedProduct(
         productId,
-        currentUser.uid
+        currentUser.uid,
       );
       setHasUserReviewed(hasReviewed);
     } catch (error) {
@@ -114,7 +114,7 @@ const Reviews: React.FC<ReviewsProps> = ({ productId }) => {
           currentUser.email?.split("@")[0] ||
           "Anonymous",
         currentUser.email || "",
-        reviewData
+        reviewData,
       );
 
       // Refresh podatke
@@ -134,7 +134,7 @@ const Reviews: React.FC<ReviewsProps> = ({ productId }) => {
   // Ažuriraj review
   const handleEditReview = async (
     reviewId: string,
-    reviewData: ReviewFormData
+    reviewData: ReviewFormData,
   ) => {
     try {
       await updateReview(reviewId, reviewData);
@@ -142,8 +142,8 @@ const Reviews: React.FC<ReviewsProps> = ({ productId }) => {
       // Ažuriraj lokalno
       setReviews((prev) =>
         prev.map((review) =>
-          review.id === reviewId ? { ...review, ...reviewData } : review
-        )
+          review.id === reviewId ? { ...review, ...reviewData } : review,
+        ),
       );
 
       // Refresh prosečnu ocenu

@@ -15,7 +15,11 @@ interface Product {
   price: number;
   discount?: string;
   description?: string;
-  additionalInfo?: string;
+  additionalInfo?: {
+    recommendedFor: string[];
+    properties: string[];
+    usage: string;
+  };
 }
 
 interface ShopState {
@@ -74,7 +78,7 @@ export const useShopStore = create<ShopState>()(
                 cart: state.cart.map((item) =>
                   item.id === id
                     ? { ...item, quantity: item.quantity + 1 }
-                    : item
+                    : item,
                 ),
               };
             } else {
@@ -133,7 +137,9 @@ export const useShopStore = create<ShopState>()(
             const newState = {
               ...state,
               cart: state.cart.map((item) =>
-                item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+                item.id === id
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item,
               ),
             };
 
@@ -159,7 +165,7 @@ export const useShopStore = create<ShopState>()(
                         ...item,
                         quantity: item.quantity > 1 ? item.quantity - 1 : 1,
                       }
-                    : item
+                    : item,
                 )
                 .filter((item) => item.quantity > 0),
             };
@@ -308,7 +314,7 @@ export const useShopStore = create<ShopState>()(
           cart: state.cart,
           wishlist: state.wishlist, // Ovo će se persist-ovati
         }),
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
