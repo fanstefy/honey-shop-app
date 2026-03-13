@@ -35,7 +35,7 @@ jobs:
 
       # 6️⃣ Zip build folder
       - name: Zip build folder
-        run: zip -r build.zip build
+        run: cd build && zip -r ../build.zip *
 
       # 7️⃣ Upload artifact
       - name: Upload artifact
