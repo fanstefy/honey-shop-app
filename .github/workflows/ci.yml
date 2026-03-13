@@ -1,0 +1,44 @@
+name: React CI
+
+# Run on push to main branch
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 3️⃣ Install dependencies (ignore peer conflicts)
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      # 4️⃣ Run tests once
+      - name: Run tests
+        run: npm test -- --watchAll=false
+
+      # 5️⃣ Build project
+      - name: Build project
+        run: npm run build
+
+      # 6️⃣ Zip build folder
+      - name: Zip build folder
+        run: zip -r build.zip build
+
+      # 7️⃣ Upload artifact
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: build.zip
